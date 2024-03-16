@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedJP_TTF_Bd.ttf") format("truetype"),
+         url("assets/fonts/LINESeedJP_TTF_Eb.ttf") format("truetype"),
+         url("assets/fonts/LINESeedJP_TTF_Rg.ttf") format("truetype"),
+         url("assets/fonts/LINESeedJP_TTF_Th.ttf") format("truetype"),
+         url("assets/fonts/LINESeedSansTH_Bd.ttf") format("truetype"),
+         url("assets/fonts/LINESeedSansTH_He.ttf") format("truetype"),
+         url("assets/fonts/LINESeedSansTH_Rg.ttf") format("truetype"),
+         url("assets/fonts/LINESeedSansTH_Th.ttf") format("truetype"),
+         url("assets/fonts/LINESeedSansTH_XBd.ttf") format("truetype");
+}
+
+.line-font {
+    font-family: "Lineseed";
+}
+
+h1, h2, h3, h4, h5, h6, nav, a {
+    font-family: "Lineseed";
+}
+
+html {
+    scroll-behavior: smooth;
+}
