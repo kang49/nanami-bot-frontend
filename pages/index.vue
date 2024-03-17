@@ -1,7 +1,7 @@
 <template>
     <Navbar @update:istoggle="handleToggleMenu" />
 
-    <div class="w-screen h-screen pt-[60px] bg-[#02071A] overflow-x-hidden">
+    <div class="w-screen h-screen pt-[60px] bg-[#02071A] overflow-hidden">
         <div :class="{ 'opacity-30': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="px-[20px]">
                 <NuxtImg class="scale-[200%] translate-y-[170px] bg-fixed" src="/img/Nanami-Text.png"></NuxtImg>
@@ -33,7 +33,7 @@
         </div>
         <NuxtImg class="translate-y-[-100px] translate-x-[90px]" src="/img/Nanami_LandingPage.png"></NuxtImg>
     </div>
-    <div class="w-screen h-screen pt-[60px] bg-[#DDEEEF] overflow-x-hidden"></div>
+    <div class="w-screen h-screen pt-[60px] bg-[#DDEEEF] overflow-hidden"></div>
 </template>
 
 

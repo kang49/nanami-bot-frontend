@@ -17,24 +17,24 @@
         </div>
         <div class="w-sceeen flex justify-end fixed right-0 top-0 w-screen transition-all duration-200"
             :class="{ 'translate-x-[0]': istoggle, 'translate-x-[100vw]': !istoggle }">
-            <div class="lg:hidden space-y-[30px] bg-gradient-to-l from-white/5 from-[-20%] to-transparent h-screen rounded-l-[20px] text-end pr-[50px] pt-[100px] transition-all duration-200 overflow-hidden"
-                :class="{ 'w-0': !istoggle, 'w-[60%]': istoggle }">
-                <div class="text-white font-bold text-[16px] transition-opacity duration-[500ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
+            <div class="lg:hidden space-y-[30px] bg-gradient-to-l from-[-20%] to-transparent h-screen rounded-l-[20px] text-end pr-[50px] pt-[100px] transition-all duration-200 overflow-hidden"
+                :class="{ 'w-0': !istoggle, 'w-[60%]': istoggle, 'from-white/5': pagesTheme, 'from-black/20': !pagesTheme }">
+                <div class="font-bold text-[16px] transition-all duration-[500ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
                     <NuxtLink @click="hamberBTN('menu')" to="/">
                         <h6><i class="fas fa-home-alt mr-2"></i>Home</h6>
                     </NuxtLink>
                 </div>
-                <div class="text-white font-bold text-[16px] transition-opacity duration-[700ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
+                <div class="font-bold text-[16px] transition-all duration-[700ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
                     <NuxtLink @click="hamberBTN('menu')" to="/">
                         <h6><i class="far fa-dot-circle mr-2"></i>Support</h6>
                     </NuxtLink>
                 </div>
-                <div class="text-white font-bold text-[16px] transition-opacity duration-[1100ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
+                <div class="font-bold text-[16px] transition-all duration-[900ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
                     <NuxtLink @click="hamberBTN('menu')" to="/">
                         <h6><i class="fad fa-hands-helping mr-2"></i>Partners</h6>
                     </NuxtLink>
                 </div>
-                <div class="text-white font-bold text-[16px] transition-opacity duration-[900ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
+                <div class="font-bold text-[16px] transition-all duration-[1100ms]" :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
                     <NuxtLink @click="hamberBTN('menu')" to="/">
                         <h6><i class="far fa-code mr-2"></i>Developers</h6>
                     </NuxtLink>
@@ -44,7 +44,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, defineEmits, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const istoggle = ref(false);
 let pagesTheme = ref(true);
