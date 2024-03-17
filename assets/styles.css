@@ -1,24 +1,84 @@
+/* Font */
 @font-face {
     font-family: "Lineseed";
-    src: url("assets/fonts/LINESeedJP_TTF_Bd.ttf") format("truetype"),
-         url("assets/fonts/LINESeedJP_TTF_Eb.ttf") format("truetype"),
-         url("assets/fonts/LINESeedJP_TTF_Rg.ttf") format("truetype"),
-         url("assets/fonts/LINESeedJP_TTF_Th.ttf") format("truetype"),
-         url("assets/fonts/LINESeedSansTH_Bd.ttf") format("truetype"),
-         url("assets/fonts/LINESeedSansTH_He.ttf") format("truetype"),
-         url("assets/fonts/LINESeedSansTH_Rg.ttf") format("truetype"),
-         url("assets/fonts/LINESeedSansTH_Th.ttf") format("truetype"),
-         url("assets/fonts/LINESeedSansTH_XBd.ttf") format("truetype");
+    src: url("assets/fonts/LINESeedJP_TTF_Th.ttf") format("truetype");
+    font-weight: 300;
+    unicode-range: U+3000-9FFF; /* Range for Japanese */
+}
+  
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedJP_TTF_Rg.ttf") format("truetype");
+    font-weight: 400;
+    unicode-range: U+3000-9FFF; /* Range for Japanese */
 }
 
-.line-font {
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedJP_TTF_Bd.ttf") format("truetype");
+    font-weight: 700;
+    unicode-range: U+3000-9FFF; /* Range for Japanese */
+}
+
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedSansTH_Th.ttf") format("truetype");
+    font-weight: 300;
+    unicode-range: U+0020-007F, U+0E00-0E7F; /* Range for English and Thai */
+}
+  
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedSansTH_Rg.ttf") format("truetype");
+    font-weight: 400;
+    unicode-range: U+0020-007F, U+0E00-0E7F; /* Range for English and Thai */
+}
+
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedSansTH_Bd.ttf") format("truetype");
+    font-weight: 700;
+    unicode-range: U+0020-007F, U+0E00-0E7F; /* Range for English and Thai */
+}
+
+
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedSansTH_XBd.ttf") format("truetype");
+    font-weight: 800;
+    unicode-range: U+0020-007F, U+0E00-0E7F; /* Range for English and Thai */
+}
+
+@font-face {
+    font-family: "Lineseed";
+    src: url("assets/fonts/LINESeedSansTH_He.ttf") format("truetype");
+    font-weight: 900;
+    unicode-range: U+0020-007F, U+0E00-0E7F; /* Range for English and Thai */
+}
+
+.line-font, h1, h2, h3, h4, h5, h6, nav, a {
     font-family: "Lineseed";
 }
 
-h1, h2, h3, h4, h5, h6, nav, a {
-    font-family: "Lineseed";
-}
+
+
+
 
 html {
     scroll-behavior: smooth;
+}
+
+
+/* Animation */
+@keyframes blinkCursor {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+.typing-cursor {
+    /* @apply cannot be used here since it does not work with keyframes */
+    animation: blinkCursor 0.7s infinite;
+    /* Add Tailwind classes as standard classes if needed, for example: */
+    display: inline-flex;
+    margin-right: 0.5rem; /* This represents mr-2 in Tailwind */
 }
