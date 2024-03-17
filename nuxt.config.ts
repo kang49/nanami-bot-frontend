@@ -1,11 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   ssr: true,
   experimental: {
     payloadExtraction: false,
   },
-
   components: {
     dirs: ["~/components"],
   },
@@ -16,7 +15,7 @@ export default defineNuxtConfig({
       charset: 'utf-16',
       viewport: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
       meta: [
-        { name: 'theme-color', content: '#1cb7d9' },
+        { name: 'theme-color', content: '#02071A' },
         { hid: 'description', name: 'description', content: 'Share anime from Bilibili to social | instagram | facebook story.' },
         { hid: 'keywords', name: 'keywords', content: 'Share Bilibili, Share anime, anime, Bilibili, Share anime to instragram, แชร์อนิเมะลงไอจี, แชร์อนิเมะ, แชร์ bilibili, แชร์อนิเมะแบบ apple music' },
         { hid: 'robots', name: 'robots', content: 'index, follow' },
@@ -31,6 +30,5 @@ export default defineNuxtConfig({
       title: 'Nanami Bot ที่น่ารักสำหรับทุกคน',
       script: [],
     },
-    
   }
 });
