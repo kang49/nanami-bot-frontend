@@ -40,8 +40,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
-//Animation Var
-const nanami_ta = 'Nanami Bot';
+//Animation Variables
+const nanami_ta = ['Nanami Bot', 'บอทนานามิ', 'なな美ボット'];
 const nanami_ta_ref = ref('');
 let isOnMounted = ref(false);
 const istoggleMenu = ref(false);
@@ -49,23 +49,28 @@ const istoggleMenu = ref(false);
 onMounted(() => {
     //Animation Scripts
     setTimeout(() => {
-        isOnMounted.value = (true);
+        isOnMounted.value = true;
     }, 200);
+
+    let currentStringIndex = 0; // Added to keep track of which string to display
 
     function updateNanamiTa() {
         nanami_ta_ref.value = '';
-        let nanami_ta_index = 0;
+        let charIndex = 0; // Reset character index for new string
         const interval = setInterval(() => {
-            if (nanami_ta_index < nanami_ta.length) {
-                nanami_ta_ref.value += nanami_ta[nanami_ta_index];
-                nanami_ta_index++;
+            if (charIndex < nanami_ta[currentStringIndex].length) {
+                nanami_ta_ref.value += nanami_ta[currentStringIndex][charIndex];
+                charIndex++;
             } else {
                 clearInterval(interval); // Stop the interval when finished
+                // Toggle between 0 and 1 to switch between the two strings for the next cycle
+                currentStringIndex = (currentStringIndex + 1) % nanami_ta.length;
             }
         }, 100);
     }
+
     updateNanamiTa();
-    setInterval(updateNanamiTa, 5000); //loop restart Nanami Text Animation
+    setInterval(updateNanamiTa, 5000); // Loop to restart Nanami text animation
 });
 
 function handleToggleMenu(value: boolean) {
