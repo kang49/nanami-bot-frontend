@@ -1,13 +1,15 @@
 <template>
     <Navbar @update:istoggle="handleToggleMenu" />
 
-    <div class="w-full h-[calc(100dvh)] pt-[60px] bg-[#02071A] overflow-hidden relative transition-all duration-[99999s]">
+    <div
+        class="w-full h-[calc(100dvh)] pt-[60px] bg-[#02071A] overflow-hidden relative transition-all duration-[1000ms]">
         <div :class="{ 'opacity-30': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="px-[20px]">
                 <NuxtImg
-                    class="scale-[200%] translate-y-[170px] bg-fixed xl:scale-[200%] xl:translate-y-[0] xl:translate-x-[30vw] 2xl:translate-y-[200px]"
+                    class="scale-[200%] translate-y-[170px] bg-fixed xl:scale-[300%] xl:translate-y-[170px] xl:translate-x-[30vw] 2xl:scale-[230%] 2xl:translate-y-[130px]"
                     src="/img/Nanami-Text.webp"></NuxtImg>
-                <div class="px-[10px] translate-y-[-80px] xl:translate-y-[-500px] xl:px-[30px] 2xl:px-[60px]">
+                <div
+                    class="px-[10px] relative z-20 translate-y-[-80px] lg:translate-y-[-300px] xl:translate-y-[-200px] xl:px-[30px] 2xl:px-[50px] 2xl:translate-y-[-400px]">
                     <h1 class="text-white text-[43px] font-bold lg:text-[50px] 2xl:text-[70px]">{{ nanami_ta_ref }}
                         <h1 class="typing-cursor">|</h1>
                     </h1>
@@ -37,18 +39,21 @@
                     </div>
                 </div>
             </div>
-            <NuxtImg :class="{ 'translate-x-[500px] md:translate-x-[900px] lg:translate-x-[1400px] xl:translate-x-[1600px] 2xl:translate-x-[3000px] opacity-0': !isOnMounted, 'translate-x-[0] opacity-1': isOnMounted }" class="absolute transition-all duration-[1000ms] right-[-70px] bottom-[0px] scale-[80%] md:scale-[70%] md:right-[-140px] md:bottom-[0px] lg:scale-[80%] lg:right-[-200px] lg:bottom-[60px] xl:scale-[55%] xl:bottom-[-200px] xl:right-[-400px] 2xl:scale-[50%] 2xl:right-[-600px] 2xl:bottom-[-500px]" src="/img/Nanami_LandingPage.webp"></NuxtImg>
+            <NuxtImg
+                :class="{ 'translate-x-[500px] md:translate-x-[900px] lg:translate-x-[1400px] xl:translate-x-[1600px] 2xl:translate-x-[3000px] opacity-0': !isOnMounted, 'translate-x-[0] opacity-1': isOnMounted }"
+                class="absolute z-10 transition-all duration-[1000ms] right-[-70px] bottom-[0px] scale-[80%] md:scale-[70%] md:right-[-140px] md:bottom-[0px] lg:scale-[80%] lg:right-[-200px] lg:bottom-[-60px] xl:scale-[55%] xl:bottom-[-200px] xl:right-[-400px] 2xl:scale-[50%] 2xl:right-[-600px] 2xl:bottom-[-500px]"
+                src="/img/Nanami_LandingPage.webp"></NuxtImg>
         </div>
     </div>
-    <div class="w-screen h-screen pt-[60px] bg-[#DDEEEF] overflow-hidden">
+    <div class="w-screen h-[calc(100dvh)] pt-[60px] bg-[#DDEEEF]">
         <div :class="{ 'opacity-30': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="px-[20px]">
                 <h2 class="font-bold text-[24px]">Bot Status</h2>
                 <div class="h-max w-full">
-                    <div class="grid grid-rows-5 gap-2 pt-[40px]">
+                    <div class="grid grid-rows-2 gap-2 pt-[40px]">
                         <div class="flex justify-start items-center w-[80%] space-x-[10px]">
                             <NuxtImg class="w-[80px]" src="/img/server.webp"></NuxtImg>
-                            <h4 class="text-[14px] font-bold" v-if="!isLoadingBotStatus">{{ botstatusData.server_name }}\
+                            <h4 class="text-[14px] font-bold" v-if="!isLoadingBotStatus">{{ botstatusData.server_name }}
                             </h4>
                             <div v-else
                                 class="w-full h-[20px] rounded-full overflow-hidden relative bg-gray-200 animate-pulse">
@@ -73,6 +78,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="w-full flex justify-start items-start">
+                        <div>
+                            <CPU_Usage_Chart :botstatusData="botstatusData" />
+                            <Memory_Usage_Chart :botstatusData="botstatusData" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,6 +93,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import CPU_Usage_Chart from '~/components/CPU_Usage_Chart.vue';
 
 //Animation Variables
 const nanami_ta = ['Nanami Bot', 'บอทนานามิ', 'なな美ボット'];
@@ -124,21 +136,33 @@ function handleToggleMenu(value: boolean) {
     istoggleMenu.value = value;
 }
 
-//Get bot status
+//BotStatus
 let botstatusData = ref();
 const isLoadingBotStatus = ref(true);
-onMounted(async () => {
-    const botStatusRes = await fetch('http://g49node0.ddns.net:3002', {
-        method: 'GET',
-    });
-    let botStatusResData = await botStatusRes.json();
-    botstatusData.value = botStatusResData;
-    isLoadingBotStatus.value = false; // Set loading to false after fetching
-});
 
+let statusInterval: string | number | NodeJS.Timeout | undefined;
+async function GetBotStatus() {
+    try {
+        const botStatusRes = await fetch('https://nanami.tensormik.com/statusapi', {
+            method: 'GET',
+        });
+        let botStatusResData = await botStatusRes.json();
+        botstatusData.value = botStatusResData;
+        isLoadingBotStatus.value = false; // Set loading to false after fetching
+    } catch {
+        clearInterval(statusInterval);
+        statusInterval = setTimeout(() => {
+            GetBotStatus();
+        }, 1000);
+    }
+}
 onMounted(() => {
-    setInterval(() => {
-        console.log(window.innerWidth, window.innerHeight)
-    }, 100);
-})
+    statusInterval = setInterval(() => {
+        GetBotStatus();
+    }, 1000);
+});
+// Clear the interval when the component is unmounted to avoid memory leaks
+onUnmounted(() => {
+    clearInterval(statusInterval);
+});
 </script>
