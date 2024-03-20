@@ -45,15 +45,19 @@
                 src="/img/Nanami_LandingPage.webp"></NuxtImg>
         </div>
     </div>
-    <div class="w-screen h-[calc(100dvh)] pt-[60px] bg-[#DDEEEF]">
+    <div
+        class="w-screen h-[calc(100dvh)] pt-[60px] bg-[#DDEEEF] overflow-hidden transition-all duration-[1000ms] lg:pt-[100px] xl:pt-[130px]">
         <div :class="{ 'opacity-30': istoggleMenu, 'opacity-100': !istoggleMenu }">
-            <div class="px-[20px]">
-                <h2 class="font-bold text-[24px]">Bot Status</h2>
-                <div class="h-max w-full">
-                    <div class="grid grid-rows-2 gap-2 pt-[40px]">
-                        <div class="flex justify-start items-center w-[80%] space-x-[10px]">
-                            <NuxtImg class="w-[80px]" src="/img/server.webp"></NuxtImg>
-                            <h4 class="text-[14px] font-bold" v-if="!isLoadingBotStatus">{{ botstatusData.server_name }}
+            <div class="px-[20px] 2xl:px-[70px] relative">
+                <h2 class="font-bold text-[24px] md:text-[29px] lg:text-[33px] 2xl:text-[40px]">Bot Status</h2>
+                <div class="h-max w-full xl:flex justify-between">
+                    <div class="grid grid-rows-2 gap-2 pt-[20px] lg:gap-7 lg:pt-[40px]xl:w-[40%]">
+                        <div
+                            class="flex justify-start items-center w-[80%] space-x-[10px] md:space-x-[20px] lg:space-x-[30px] xl:w-full">
+                            <NuxtImg class="w-[80px] md:w-[120px] lg:w-[160px] xl:w-[130px] 2xl:w-[170px]"
+                                src="/img/server.webp"></NuxtImg>
+                            <h4 class="text-[14px] font-bold md:text-[20px] lg:text-[25px] xl:text-[20px] 2xl:text-[27px]"
+                                v-if="!isLoadingBotStatus">{{ botstatusData.server_name }}
                             </h4>
                             <div v-else
                                 class="w-full h-[20px] rounded-full overflow-hidden relative bg-gray-200 animate-pulse">
@@ -64,9 +68,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex justify-start items-center w-[80%] space-x-[10px]">
-                            <NuxtImg class="w-[80px]" src="/img/cpu.webp"></NuxtImg>
-                            <h4 class="text-[14px] font-bold" v-if="!isLoadingBotStatus">{{ botstatusData.cpu_name }}
+                        <div
+                            class="flex justify-start items-center w-[80%] space-x-[10px] md:space-x-[20px] lg:space-x-[30px] xl:w-full">
+                            <NuxtImg class="w-[80px] md:w-[120px] lg:w-[160px] xl:w-[130px] 2xl:w-[170px]"
+                                src="/img/cpu.webp"></NuxtImg>
+                            <h4 class="text-[14px] font-bold md:text-[20px] lg:text-[25px] xl:text-[20px] 2xl:text-[27px]"
+                                v-if="!isLoadingBotStatus">{{ botstatusData.cpu_name }}
                             </h4>
                             <div v-else
                                 class="w-full h-[20px] rounded-full overflow-hidden relative bg-gray-200 animate-pulse">
@@ -78,13 +85,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full flex justify-start items-start">
-                        <div>
+                    <div class="w-full flex justify-start items-start xl:justify-end xl:w-max">
+                        <div class="xl:flex">
                             <CPU_Usage_Chart :botstatusData="botstatusData" />
                             <Memory_Usage_Chart :botstatusData="botstatusData" />
                         </div>
                     </div>
                 </div>
+                <NuxtImg class="hidden w-[500px] absolute right-[-180px] bottom-[-80px] md:block lg:w-[750px] lg:right-[-250px] lg:bottom-[-250px] xl:w-[500px] xl:right-0 xl:left-[-180px] xl:bottom-[-280px] 2xl:w-[700px] 2xl:bottom-[-400px] 2xl:left-[-250px]" src="/img/nanami_point.webp"></NuxtImg>
             </div>
         </div>
     </div>
@@ -150,10 +158,7 @@ async function GetBotStatus() {
         botstatusData.value = botStatusResData;
         isLoadingBotStatus.value = false; // Set loading to false after fetching
     } catch {
-        clearInterval(statusInterval);
-        statusInterval = setTimeout(() => {
-            GetBotStatus();
-        }, 1000);
+
     }
 }
 onMounted(() => {
@@ -165,4 +170,10 @@ onMounted(() => {
 onUnmounted(() => {
     clearInterval(statusInterval);
 });
+
+onMounted(() => {
+    setInterval(() => {
+        console.log(window.innerWidth, window.innerHeight)
+    }, 100);
+})
 </script>

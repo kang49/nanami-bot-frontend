@@ -1,6 +1,6 @@
 <template>
     <ClientOnly>
-        <div id="chart" class="w-[250px] h-[200px] left-0 top-0">
+        <div id="chart" class="w-[250px] h-[200px] left-0 top-0 md:w-[400px] md:h-[280px] lg:w-[500px] lg:h-[300px] xl:h-[260px] xl:w-[400px] 2xl:w-[550px] 2xl:h-[350px]">
             <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
         </div>
     </ClientOnly>
@@ -24,7 +24,15 @@ const computeYAxisBounds = (dataPoints) => {
     const maxY = Math.max(...allYValues);
     return {
         min: Math.floor(minY),
-        max: Math.ceil(maxY)
+        max: Math.ceil(maxY),
+        labels: {
+            style: {
+                fontSize: "7px",
+                color: '#666',
+                fontFamily: 'Lineseed',
+                fontWeight: 400
+            }
+        }
     };
 };
 
@@ -54,6 +62,12 @@ const initialChartOptions = {
         labels: {
             formatter: function (value, timestamp) {
                 return new Date(timestamp).toLocaleTimeString();
+            },
+            style: {
+                fontSize: "7px",
+                color: '#666',
+                fontFamily: 'Lineseed',
+                fontWeight: 400
             }
         }
     },
@@ -90,7 +104,7 @@ const initialChartOptions = {
     },
     responsive: [
         {
-            breakpoint: 640,
+            breakpoint: 767,
             options: {
                 title: {
                     style: {
@@ -111,6 +125,87 @@ const initialChartOptions = {
                     labels: {
                         style: {
                             fontSize: "7px"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            breakpoint: 1023,
+            options: {
+                title: {
+                    style: {
+                        fontSize: "20px"
+                    }
+                },
+                stroke: {
+                    width: 5
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            fontSize: "14px"
+                        }
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        style: {
+                            fontSize: "14px"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            breakpoint: 1279,
+            options: {
+                title: {
+                    style: {
+                        fontSize: "25px"
+                    }
+                },
+                stroke: {
+                    width: 5
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            fontSize: "15px"
+                        }
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        style: {
+                            fontSize: "15px"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            breakpoint: 1000000,
+            options: {
+                title: {
+                    style: {
+                        fontSize: "25px"
+                    }
+                },
+                stroke: {
+                    width: 5
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            fontSize: "15px"
+                        }
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        style: {
+                            fontSize: "15px"
                         }
                     }
                 }
