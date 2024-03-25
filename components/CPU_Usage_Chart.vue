@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
-    <div id="chart" class="w-[250px] h-[200px] left-0 top-0 md:w-[400px] md:h-[280px] lg:w-[500px] lg:h-[300px] xl:h-[260px] xl:w-[400px] 2xl:w-[550px] 2xl:h-[350px]">
+    <div id="chart"
+      class="w-[250px] h-[200px] left-0 top-0 md:w-[400px] md:h-[280px] lg:w-[500px] lg:h-[300px] xl:h-[260px] xl:w-[400px] 2xl:w-[550px] 2xl:h-[350px]">
       <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
     </div>
   </ClientOnly>
@@ -174,6 +175,33 @@ const initialChartOptions = {
           labels: {
             style: {
               fontSize: "15px"
+            }
+          }
+        }
+      }
+    },
+    {
+      breakpoint: 1535,
+      options: {
+        title: {
+          style: {
+            fontSize: "20px"
+          }
+        },
+        stroke: {
+          width: 5
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: "10px"
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: "10px"
             }
           }
         }

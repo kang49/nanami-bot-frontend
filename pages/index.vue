@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full flex justify-start items-start xl:justify-end xl:w-max">
+                    <div class="w-full flex justify-start items-start xl:justify-end xl:w-max xl:pt-[50px]">
                         <div class="xl:flex">
                             <div class="transition-all duration-[800ms]" :class="{ 'translate-x-[-200px] opacity-0': !scrollStates.State417, 'translate-x-0 opacity-1': scrollStates.State417 }">
                                 <CPU_Usage_Chart :botstatusData="botstatusData" />
@@ -199,9 +199,9 @@ onUnmounted(() => {
     clearInterval(statusInterval);
 });
 
-onMounted(() => {
-    setInterval(() => {
-        console.log(window.innerWidth, window.innerHeight)
-    }, 100);
-})
+// onMounted(() => {
+//     setInterval(() => {
+//         console.log(window.innerWidth, window.innerHeight)
+//     }, 100);
+// })
 </script>
