@@ -1,5 +1,5 @@
 <template>
-    <Navbar @update:istoggle="handleToggleMenu" />
+    <Navbar @update:istoggle="handleToggleMenu" @update:scroll_value="handleScrollValue" />
 
     <div
         class="w-full h-[calc(100dvh)] pt-[60px] bg-[#02071A] overflow-hidden relative transition-all duration-[1000ms]">
@@ -9,7 +9,7 @@
                     class="scale-[200%] translate-y-[170px] bg-fixed xl:scale-[300%] xl:translate-y-[170px] xl:translate-x-[30vw] 2xl:scale-[230%] 2xl:translate-y-[130px]"
                     src="/img/Nanami-Text.webp"></NuxtImg>
                 <div
-                    class="px-[10px] relative z-20 translate-y-[-80px] lg:translate-y-[-300px] xl:translate-y-[-200px] xl:px-[30px] 2xl:px-[50px] 2xl:translate-y-[-400px]">
+                    class="px-[10px] relative z-20 translate-y-[-80px] lg:translate-y-[-150px] xl:translate-y-[-200px] xl:px-[30px] 2xl:px-[50px] 2xl:translate-y-[-400px]">
                     <h1 class="text-white text-[43px] font-bold lg:text-[50px] 2xl:text-[70px]">{{ nanami_ta_ref }}
                         <h1 class="typing-cursor">|</h1>
                     </h1>
@@ -45,15 +45,21 @@
                 src="/img/Nanami_LandingPage.webp"></NuxtImg>
         </div>
     </div>
-    <div class="w-screen h-[calc(100dvh)] pt-[60px] bg-[#DDEEEF]">
+    <div
+        class="w-screen h-[calc(100dvh)] pt-[60px] bg-[#DDEEEF] overflow-hidden transition-all duration-[1000ms] lg:pt-[100px] xl:pt-[100px]">
         <div :class="{ 'opacity-30': istoggleMenu, 'opacity-100': !istoggleMenu }">
-            <div class="px-[20px]">
-                <h2 class="font-bold text-[24px]">Bot Status</h2>
-                <div class="h-max w-full">
-                    <div class="grid grid-rows-2 gap-2 pt-[40px]">
-                        <div class="flex justify-start items-center w-[80%] space-x-[10px]">
-                            <NuxtImg class="w-[80px]" src="/img/server.webp"></NuxtImg>
-                            <h4 class="text-[14px] font-bold" v-if="!isLoadingBotStatus">{{ botstatusData.server_name }}
+            <div class="px-[20px] 2xl:px-[70px] relative">
+                <h2 class="font-bold text-[24px] transition-all duration-[800ms] md:text-[29px] lg:text-[33px] 2xl:text-[40px]"
+                    :class="{ 'translate-y-[200px] opacity-0': !scrollStates.State114, 'translate-y-0 opacity-1': scrollStates.State114 }">
+                    Bot Status</h2>
+                <div class="h-max w-full xl:flex justify-between">
+                    <div class="grid grid-rows-2 gap-2 pt-[20px] lg:gap-7 lg:pt-[40px] xl:gap-0 xl:w-[40%]">
+                        <div class="flex justify-start items-center w-[80%] space-x-[10px] transition-all duration-[800ms] md:space-x-[20px] lg:space-x-[30px] xl:w-full"
+                            :class="{ 'translate-y-[200px] opacity-0': !scrollStates.State246, 'translate-y-0 opacity-1': scrollStates.State246 }">
+                            <NuxtImg class="w-[80px] md:w-[120px] lg:w-[160px] xl:w-[130px] 2xl:w-[170px]"
+                                src="/img/server.webp"></NuxtImg>
+                            <h4 class="text-[14px] font-bold md:text-[20px] lg:text-[25px] xl:text-[20px] 2xl:text-[27px]"
+                                v-if="!isLoadingBotStatus">{{ botstatusData.server_name }}
                             </h4>
                             <div v-else
                                 class="w-full h-[20px] rounded-full overflow-hidden relative bg-gray-200 animate-pulse">
@@ -64,9 +70,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex justify-start items-center w-[80%] space-x-[10px]">
-                            <NuxtImg class="w-[80px]" src="/img/cpu.webp"></NuxtImg>
-                            <h4 class="text-[14px] font-bold" v-if="!isLoadingBotStatus">{{ botstatusData.cpu_name }}
+                        <div class="flex justify-start items-center w-[80%] space-x-[10px] transition-all duration-[800ms] md:space-x-[20px] lg:space-x-[30px] xl:w-full"
+                            :class="{ 'translate-y-[200px] opacity-0': !scrollStates.State314, 'translate-y-0 opacity-1': scrollStates.State314 }">
+                            <NuxtImg class="w-[80px] md:w-[120px] lg:w-[160px] xl:w-[130px] 2xl:w-[170px]"
+                                src="/img/cpu.webp"></NuxtImg>
+                            <h4 class="text-[14px] font-bold md:text-[20px] lg:text-[25px] xl:text-[20px] 2xl:text-[27px]"
+                                v-if="!isLoadingBotStatus">{{ botstatusData.cpu_name }}
                             </h4>
                             <div v-else
                                 class="w-full h-[20px] rounded-full overflow-hidden relative bg-gray-200 animate-pulse">
@@ -78,13 +87,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full flex justify-start items-start">
-                        <div>
-                            <CPU_Usage_Chart :botstatusData="botstatusData" />
-                            <Memory_Usage_Chart :botstatusData="botstatusData" />
+                    <div class="w-full flex justify-start items-start xl:justify-end xl:w-max xl:pt-[50px]">
+                        <div class="xl:flex">
+                            <div class="transition-all duration-[800ms]" :class="{ 'translate-x-[-200px] opacity-0': !scrollStates.State417, 'translate-x-0 opacity-1': scrollStates.State417 }">
+                                <CPU_Usage_Chart :botstatusData="botstatusData" />
+                            </div>
+                            <div class="transition-all duration-[800ms]" :class="{ 'translate-x-[200px] opacity-0': !scrollStates.State550, 'translate-x-0 opacity-1': scrollStates.State550 }">
+                                <Memory_Usage_Chart :botstatusData="botstatusData" />
+                            </div>
                         </div>
                     </div>
                 </div>
+                <NuxtImg
+                    class="hidden w-[500px] absolute right-[-180px] bottom-[-80px] transition-all duration-[800ms] md:block lg:w-[750px] lg:right-[-250px] lg:bottom-[-250px] xl:w-[500px] xl:right-0 xl:left-[-180px] xl:bottom-[-300px] 2xl:w-[700px] 2xl:bottom-[-400px] 2xl:left-[-250px]" :class="{ 'translate-x-[-200px] opacity-0': !scrollStates.State417, 'translate-x-0 opacity-1': scrollStates.State417 }"
+                    src="/img/nanami_point.webp"></NuxtImg>
             </div>
         </div>
     </div>
@@ -99,7 +115,16 @@ import CPU_Usage_Chart from '~/components/CPU_Usage_Chart.vue';
 const nanami_ta = ['Nanami Bot', 'บอทนานามิ', 'なな美ボット'];
 const nanami_ta_ref = ref('');
 let isOnMounted = ref(false);
-const istoggleMenu = ref(false);
+let istoggleMenu = ref(false);
+let scroll_value = ref(0);
+let scrollStates = ref({
+    State114: false,
+    State246: false,
+    State314: false,
+    State417: false,
+    State550: false
+});
+
 
 onMounted(() => {
     //Animation Scripts
@@ -135,6 +160,17 @@ onMounted(() => {
 function handleToggleMenu(value: boolean) {
     istoggleMenu.value = value;
 }
+function handleScrollValue(value: number) {
+    scroll_value.value = value;
+    console.log(scroll_value.value)
+
+    // Update the properties of scrollStates based on the scroll position
+    if (value >= 114) scrollStates.value.State114 = true;
+    if (value >= 246) scrollStates.value.State246 = true;
+    if (value >= 314) scrollStates.value.State314 = true;
+    if (value >= 417) scrollStates.value.State417 = true;
+    if (value >= 550) scrollStates.value.State550 = true;
+}
 
 //BotStatus
 let botstatusData = ref();
@@ -150,10 +186,7 @@ async function GetBotStatus() {
         botstatusData.value = botStatusResData;
         isLoadingBotStatus.value = false; // Set loading to false after fetching
     } catch {
-        clearInterval(statusInterval);
-        statusInterval = setTimeout(() => {
-            GetBotStatus();
-        }, 1000);
+
     }
 }
 onMounted(() => {
@@ -165,4 +198,10 @@ onMounted(() => {
 onUnmounted(() => {
     clearInterval(statusInterval);
 });
+
+// onMounted(() => {
+//     setInterval(() => {
+//         console.log(window.innerWidth, window.innerHeight)
+//     }, 100);
+// })
 </script>

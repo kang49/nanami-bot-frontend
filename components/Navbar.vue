@@ -109,8 +109,9 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const istoggle = ref(false);
 let pagesTheme = ref(true);
+let scroll_value = ref(0);
 let startX: number | null = null; // Store the starting position
-const emit = defineEmits(['update:istoggle']);
+const emit = defineEmits(['update:istoggle', 'update:scroll_value']);
 
 let menuOpening = false;
 function hamberBTN(from: string) {
@@ -173,7 +174,9 @@ function handleScroll(): void {
     } else {
         document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#DDEEEF');
     }
-
+    
+    scroll_value.value = window.scrollY;
+    emit('update:scroll_value', scroll_value.value);
 }
 
 onMounted(() => {

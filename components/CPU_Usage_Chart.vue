@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
-    <div id="chart" class="w-[250px] h-[200px] left-0 top-0">
+    <div id="chart"
+      class="w-[250px] h-[200px] left-0 top-0 md:w-[400px] md:h-[280px] lg:w-[500px] lg:h-[300px] xl:h-[260px] xl:w-[400px] 2xl:w-[550px] 2xl:h-[350px]">
       <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
     </div>
   </ClientOnly>
@@ -72,7 +73,7 @@ const initialChartOptions = {
     }
   },
   title: {
-    text: 'CPU Usage %',
+    text: 'CPU Usage (%)',
     align: 'left',
     style: {
       fontSize: "16px",
@@ -99,7 +100,7 @@ const initialChartOptions = {
   },
   responsive: [
     {
-      breakpoint: 640,
+      breakpoint: 767,
       options: {
         title: {
           style: {
@@ -120,6 +121,114 @@ const initialChartOptions = {
           labels: {
             style: {
               fontSize: "7px"
+            }
+          }
+        }
+      }
+    },
+    {
+      breakpoint: 1023,
+      options: {
+        title: {
+          style: {
+            fontSize: "20px"
+          }
+        },
+        stroke: {
+          width: 5
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: "14px"
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: "14px"
+            }
+          }
+        }
+      }
+    },
+    {
+      breakpoint: 1279,
+      options: {
+        title: {
+          style: {
+            fontSize: "25px"
+          }
+        },
+        stroke: {
+          width: 5
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: "15px"
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: "15px"
+            }
+          }
+        }
+      }
+    },
+    {
+      breakpoint: 1535,
+      options: {
+        title: {
+          style: {
+            fontSize: "20px"
+          }
+        },
+        stroke: {
+          width: 5
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: "10px"
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: "10px"
+            }
+          }
+        }
+      }
+    },
+    {
+      breakpoint: 1000000,
+      options: {
+        title: {
+          style: {
+            fontSize: "25px"
+          }
+        },
+        stroke: {
+          width: 5
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: "15px"
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: "15px"
             }
           }
         }
