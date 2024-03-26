@@ -1,34 +1,31 @@
 <template>
     <Navbar @update:istoggle="handleToggleMenu" />
 
-    <div class="w-full h-[calc(100dvh)] pt-[60px] bg-[url('img/animegirl-bg.webp')] bg-cover bg-center">
-        <div class="px-[20px]">
-            <h1 class="text-white text-[35px] font-bold mt-[50px] transition-all duration-[700ms]"
+    <div class="w-full h-[calc(100dvh)] pt-[60px] bg-[url('img/animegirl-bg.webp')] bg-cover bg-center overflow-hidden">
+        <div class="px-[20px] w-full h-full 2xl:px-[50px] 2xl:pt-[40px]">
+            <h1 class="text-white text-[35px] font-bold mt-[50px] transition-all duration-[700ms] 2xl:text-[45px]"
                 :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">
                 Commands</h1>
 
-            <div class="w-full h-[500px] bg-black/30 mt-[30px] px-[10px] pb-[10px] rounded-[10px] overflow-y-scroll transition-all duration-[1000ms]"
+            <div class="w-full h-[70%] bg-black/30 mt-[30px] px-[10px] pb-[10px] rounded-[10px] overflow-y-scroll transition-all duration-[1000ms] lg:flex lg:gap-[20px] lg:overflow-y-hidden"
                 :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">
-                <div class="flex items-center w-full h-[53px] pt-[15px] space-x-[5px] overflow-x-scroll">
+                <div class="flex items-center w-full h-[53px] pt-[15px] space-x-[5px] overflow-x-scroll lg:block lg:h-full lg:w-[40%] lg:overflow-y-scroll lg:overflow-x-hidden lg:space-y-[10px] lg:space-x-0">
                     <button v-for="i in commandsDataList" @click="CurtCmdUpdate(i.message)"
-                        class="w-max h-full px-[15px] rounded-[20px] flex items-center justify-center space-x-2"
+                        class="w-max h-full px-[15px] rounded-[20px] flex items-center justify-center space-x-2 lg:h-[43px] lg:w-full lg:px-[20px] lg:justify-start"
                         :class="{ 'bg-[#0099FF] text-white': curtCmd === i.message, 'bg-white text-[#0099FF]': curtCmd !== i.message }">
                         <i :class="i.icon + ' text-[22px]'"></i>
                         <h4 class="text-[16px] font-bold">{{ i.message }}</h4>
                     </button>
                 </div>
-                <div class="h-[1px] w-full bg-white/50 mt-[10px]"></div>
-                <div class="pt-[10px] space-y-[10px]">
+                <div class="h-[1px] w-full bg-white/50 mt-[10px] lg:h-full lg:w-[1px]"></div>
+                <div class="pt-[10px] space-y-[10px] lg:w-full lg:overflow-y-scroll">
                     <div v-for="command in commandsDataList.find(item => item.message === curtCmd)?.cmd"
                         :key="command?.name" class="mb-2">
                         <button @click="updateIsMenuToggle(command.name, curtCmd)"
                             class="w-full h-max min-h-[50px] bg-white rounded-[10px] flex items-center justify-start p-[10px] space-x-[10px] overflow-x-hidden">
-                            <!-- Command Name -->
                             <h4 class="text-[#0099FF] text-[16px] font-bold flex-1 truncate text-left">{{ command.name
                                 }}</h4>
-                            <!-- Icon -->
                             <i class="fad fa-circle text-[#0099FF] flex-none mx-auto"></i>
-                            <!-- Description -->
                             <h4 class="text-black text-[16px] font-bold flex-1 text-left">{{ command.description }}</h4>
                         </button>
                         <div class="bg-white/70 w-full rounded-b-[10px] translate-y-[-10px] transition-all duration-[500ms] overflow-x-hidden overflow-y-scroll"

@@ -24,7 +24,7 @@
             <div class="hidden h-full items-center lg:flex lg:justify-end lg:space-x-[20px] 2xl:space-x-[30px]">
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/">
                         <h4>Home</h4>
                     </NuxtLink>
                 </div>
