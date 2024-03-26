@@ -108,10 +108,16 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
 const istoggle = ref(false);
-let pagesTheme = ref(true);
+let pagesTheme = ref();
 let scroll_value = ref(0);
 let startX: number | null = null; // Store the starting position
-const emit = defineEmits(['update:istoggle', 'update:scroll_value']);
+const emit = defineEmits(['update:istoggle']);
+const props = defineProps(['theme', 'scroll_value']);
+
+//PageTheme Update
+setInterval(() => {
+    pagesTheme.value = props.theme;
+}, 200);
 
 let menuOpening = false;
 function hamberBTN(from: string) {
@@ -165,25 +171,4 @@ function handleTouchEnd(event: TouchEvent) {
     }
     startX = null; // Reset for the next action
 }
-
-function handleScroll(): void {
-    const targetHeight = 625; // Set to desired scroll height
-    pagesTheme.value = window.scrollY <= targetHeight;
-    if (pagesTheme.value) {
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
-    } else {
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#DDEEEF');
-    }
-    
-    scroll_value.value = window.scrollY;
-    emit('update:scroll_value', scroll_value.value);
-}
-
-onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
-});
-
-onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-});
 </script>

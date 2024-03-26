@@ -1,5 +1,5 @@
 <template>
-    <Navbar @update:istoggle="handleToggleMenu" @update:scroll_value="handleScrollValue" />
+    <Navbar @update:istoggle="handleToggleMenu" :scroll_value="scroll_value" :theme="pagesTheme" />
 
     <div
         class="w-full h-[calc(100dvh)] pt-[60px] bg-[#02071A] overflow-hidden relative transition-all duration-[1000ms]">
@@ -111,12 +111,16 @@
 import { ref, onMounted } from 'vue';
 import CPU_Usage_Chart from '~/components/CPU_Usage_Chart.vue';
 
+//Change pagetheme
+document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
+
 //Animation Variables
 const nanami_ta = ['Nanami Bot', 'บอทนานามิ', 'なな美ボット'];
 const nanami_ta_ref = ref('');
 let isOnMounted = ref(false);
 let istoggleMenu = ref(false);
 let scroll_value = ref(0);
+let pagesTheme = ref(true);
 let scrollStates = ref({
     State114: false,
     State246: false,
@@ -160,16 +164,6 @@ onMounted(() => {
 function handleToggleMenu(value: boolean) {
     istoggleMenu.value = value;
 }
-function handleScrollValue(value: number) {
-    scroll_value.value = value;
-
-    // Update the properties of scrollStates based on the scroll position
-    if (value >= 114) scrollStates.value.State114 = true;
-    if (value >= 246) scrollStates.value.State246 = true;
-    if (value >= 314) scrollStates.value.State314 = true;
-    if (value >= 417) scrollStates.value.State417 = true;
-    if (value >= 550) scrollStates.value.State550 = true;
-}
 
 //BotStatus
 let botstatusData = ref();
@@ -196,6 +190,33 @@ onMounted(() => {
 // Clear the interval when the component is unmounted to avoid memory leaks
 onUnmounted(() => {
     clearInterval(statusInterval);
+});
+
+function handleScroll(): void {
+    const targetHeight = 625; // Set to desired scroll height
+    pagesTheme.value = window.scrollY <= targetHeight;
+    if (pagesTheme.value) {
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
+    } else {
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#DDEEEF');
+    }
+
+    scroll_value.value = window.scrollY;
+
+    // Update the properties of scrollStates based on the scroll position
+    if (scroll_value.value >= 114) scrollStates.value.State114 = true;
+    if (scroll_value.value >= 246) scrollStates.value.State246 = true;
+    if (scroll_value.value >= 314) scrollStates.value.State314 = true;
+    if (scroll_value.value >= 417) scrollStates.value.State417 = true;
+    if (scroll_value.value >= 550) scrollStates.value.State550 = true;
+}
+
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
 });
 
 // onMounted(() => {
