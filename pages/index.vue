@@ -162,7 +162,6 @@ function handleToggleMenu(value: boolean) {
 }
 function handleScrollValue(value: number) {
     scroll_value.value = value;
-    console.log(scroll_value.value)
 
     // Update the properties of scrollStates based on the scroll position
     if (value >= 114) scrollStates.value.State114 = true;

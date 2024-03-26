@@ -48,7 +48,7 @@
                 </div>
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/commands">
                         <h4>Commands</h4>
                     </NuxtLink>
                 </div>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[1300ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/">
+                    <NuxtLink @click="hamberBTN('menu')" to="/commands">
                         <h6><i class="far fa-terminal mr-2"></i>Commands</h6>
                     </NuxtLink>
                 </div>
