@@ -2,7 +2,7 @@
     <div class="bg-black w-screen h-screen">
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
-        <div class="w-full h-[calc(100dvh)] pt-[60px] bg-[url('img/animegirl-bg.webp')] bg-cover bg-center overflow-hidden"
+        <div class="w-full h-[calc(100dvh)] pt-[60px] bg-[url('public/img/animegirl-bg.webp')] bg-cover bg-center overflow-hidden"
             :class="{ 'opacity-30': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="px-[20px] w-full h-full 2xl:px-[50px] 2xl:pt-[40px]">
                 <h1 class="text-white text-[35px] font-bold mt-[50px] transition-all duration-[700ms] 2xl:text-[45px]"
@@ -52,6 +52,8 @@ import { ref, onMounted } from 'vue';
 
 //Change pageTheme
 document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#012262');
+//Change Title
+document.title = '(Commands) Nanami Bot ที่น่ารักสำหรับทุกคน';
 
 //Variable setup
 let curtCmd = ref('All'); //Set current command menu to "All" as default
