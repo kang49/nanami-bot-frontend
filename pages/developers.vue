@@ -1,12 +1,12 @@
 <template>
-    <div class="bg-black w-full h-[calc(100dvh)] xl:bg-white">
+    <div class="bg-black w-full h-[calc(100dvh)] lg:bg-white">
         <!-- Mobile Nav -->
-        <Navbar class="xl:hidden" @update:istoggle="handleToggleMenu" :theme="true" />
+        <Navbar class="lg:hidden" @update:istoggle="handleToggleMenu" :theme="true" />
         <!-- Desktop Nav -->
-        <Navbar class="hidden xl:block" @update:istoggle="handleToggleMenu" :theme="false" />
+        <Navbar class="hidden lg:block" @update:istoggle="handleToggleMenu" :theme="false" />
 
         <!-- Mobile Keen Page -->
-        <div class="w-full h-[calc(100dvh)] bg-[url('public/img/keen.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000 xl:hidden"
+        <div class="w-full h-[calc(100dvh)] bg-[url('public/img/keen.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000 lg:hidden"
             :class="{ 'opacity-50': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="flex justify-between w-full h-full">
                 <div class="bg-[#042E3D]/40 h-full flex items-center w-[40%] md:w-[30%]">
@@ -58,7 +58,7 @@
 
         <!-- Desktop Keen Page -->
         <div
-            class="w-full h-[calc(100dvh)] bg-[url('public/img/keen_xl_bg.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000">
+            class="w-full h-[calc(100dvh)] bg-[url('public/img/keen_lg_bg.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000">
             <div class="flex items-center h-full w-full">
                 <div class="w-full h-[80%] flex items-center justify-between">
                     <div class="w-[55%] h-full flex items-center">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="h-full w-max">
-                        <NuxtImg class="h-full" src="/img/Keen_xl_DevPage.webp"></NuxtImg>
+                        <NuxtImg class="h-full" src="/img/Keen_lg_DevPage.webp"></NuxtImg>
                     </div>
                 </div>
             </div>
