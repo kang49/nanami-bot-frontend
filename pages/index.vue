@@ -42,7 +42,7 @@
             <NuxtImg
                 :class="{ 'translate-x-[500px] md:translate-x-[900px] lg:translate-x-[1400px] xl:translate-x-[1600px] 2xl:translate-x-[3000px] opacity-0': !isOnMounted, 'translate-x-[0] opacity-1': isOnMounted }"
                 class="absolute z-10 transition-all duration-[1000ms] right-[-70px] bottom-[0px] scale-[80%] md:scale-[70%] md:right-[-140px] md:bottom-[0px] lg:scale-[80%] lg:right-[-200px] lg:bottom-[-60px] xl:scale-[55%] xl:bottom-[-200px] xl:right-[-400px] 2xl:scale-[50%] 2xl:right-[-600px] 2xl:bottom-[-500px]"
-                src="/img/Nanami_LandingPage.webp"></NuxtImg>
+                src="/img/Nanami_LandingPage.webp" preload></NuxtImg>
         </div>
     </div>
     <div
