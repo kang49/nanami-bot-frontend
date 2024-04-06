@@ -38,6 +38,11 @@
 
 <script setup lang="ts">
 
+//Change pageTheme
+document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#112160');
+//Change Title
+document.title = '(Commands) Nanami Bot ที่น่ารักสำหรับทุกคน';
+
 //Variable set
 let istoggleMenu = ref(false);
 let isOnMounted = ref(false);

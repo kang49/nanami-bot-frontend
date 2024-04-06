@@ -114,6 +114,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
+//Change pageTheme
+if (window.innerWidth >= 1024) {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#FFFFFF');
+} else {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000816');
+}
+
 //Variable set
 const keenName = ref([
     {
