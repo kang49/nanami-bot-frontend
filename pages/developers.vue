@@ -120,6 +120,8 @@ if (window.innerWidth >= 1024) {
 } else {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000816');
 }
+//Change Title
+document.title = '(Developers) Nanami Bot ที่น่ารักสำหรับทุกคน';
 
 //Variable set
 const keenName = ref([
