@@ -58,7 +58,7 @@
 
         <!-- Desktop Keen Page -->
         <div
-            class="w-full h-[calc(100dvh)] bg-[url('public/img/keen_lg_bg.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000">
+            class="hidden lg:block w-full h-[calc(100dvh)] bg-[url('public/img/keen_lg_bg.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000">
             <div class="flex items-center h-full w-full">
                 <div class="w-full h-[80%] flex items-center justify-between">
                     <div class="w-[55%] h-full flex items-center">
