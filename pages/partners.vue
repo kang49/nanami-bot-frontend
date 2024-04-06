@@ -62,7 +62,7 @@ const partnersData = ref([
         pic: '/img/kinako.webp',
         description: `
         Kinako บอทเปิดเพลงที่ดีที่สุด, ไม่มีโฆษณาแถมยังสามารถเปิดเพลงได้จากหลาย 
-        Platfrom ไม่ว่าจะเป็น Youtube, Spotify และอื่นๆ สามารถ
+        Platform ไม่ว่าจะเป็น Youtube, Spotify และอื่นๆ สามารถ
         สร้างห้อง order เพลงได้และไม่จำเป็นต้องพิมพ์ Command เพราะเรามี Canvas ที่สวย
         งามและควบคุมด้วยปุ่มได้
         `,
