@@ -24,31 +24,31 @@
             <div class="hidden h-full items-center lg:flex lg:justify-end lg:space-x-[20px] 2xl:space-x-[30px]">
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/">
                         <h4>Home</h4>
                     </NuxtLink>
                 </div>
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/support">
                         <h4>Support</h4>
                     </NuxtLink>
                 </div>
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/partners">
                         <h4>Partners</h4>
                     </NuxtLink>
                 </div>
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/developers">
                         <h4>Developers</h4>
                     </NuxtLink>
                 </div>
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/commands">
                         <h4>Commands</h4>
                     </NuxtLink>
                 </div>
@@ -78,25 +78,25 @@
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[700ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/">
+                    <NuxtLink @click="hamberBTN('menu')" to="/support">
                         <h6><i class="far fa-dot-circle mr-2"></i>Support</h6>
                     </NuxtLink>
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[900ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/">
+                    <NuxtLink @click="hamberBTN('menu')" to="/partners">
                         <h6><i class="fad fa-hands-helping mr-2"></i>Partners</h6>
                     </NuxtLink>
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[1100ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/">
+                    <NuxtLink @click="hamberBTN('menu')" to="/developers">
                         <h6><i class="far fa-code mr-2"></i>Developers</h6>
                     </NuxtLink>
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[1300ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/">
+                    <NuxtLink @click="hamberBTN('menu')" to="/commands">
                         <h6><i class="far fa-terminal mr-2"></i>Commands</h6>
                     </NuxtLink>
                 </div>
@@ -105,13 +105,18 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 
 const istoggle = ref(false);
-let pagesTheme = ref(true);
-let scroll_value = ref(0);
+let pagesTheme = ref();
 let startX: number | null = null; // Store the starting position
-const emit = defineEmits(['update:istoggle', 'update:scroll_value']);
+const emit = defineEmits(['update:istoggle']);
+const props = defineProps(['theme', 'scroll_value']);
+
+//PageTheme Update
+setInterval(() => {
+    pagesTheme.value = props.theme;
+}, 200);
 
 let menuOpening = false;
 function hamberBTN(from: string) {
@@ -165,25 +170,4 @@ function handleTouchEnd(event: TouchEvent) {
     }
     startX = null; // Reset for the next action
 }
-
-function handleScroll(): void {
-    const targetHeight = 625; // Set to desired scroll height
-    pagesTheme.value = window.scrollY <= targetHeight;
-    if (pagesTheme.value) {
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
-    } else {
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#DDEEEF');
-    }
-    
-    scroll_value.value = window.scrollY;
-    emit('update:scroll_value', scroll_value.value);
-}
-
-onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
-});
-
-onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-});
 </script>
