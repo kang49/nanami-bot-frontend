@@ -12,6 +12,15 @@
                             <h4 class="text-[20px] text-white 2xl:text-[26px]">หนูทำอะไรผิดไปหรือเปล่าคะ 😢</h4>
                         </div>
                         <div class="w-full space-y-[10px]">
+                            <div
+                                    class="flex items-center w-full h-max space-x-[5px] overflow-x-scroll">
+                                    <button v-for="i in labellist" @click="CurtLabelUpdate(i.message)"
+                                        class="min-w-max h-max py-[5px] px-[10px] rounded-[20px] flex items-center justify-center space-x-2"
+                                        :class="{ 'bg-[#0099FF] text-white': curtLabel === i.message, 'bg-white text-[#0099FF]': curtLabel !== i.message }">
+                                        <i :class="i.icon + ' text-[18px]'"></i>
+                                        <h4 class="text-[16px] 2xl:text-[20px]">{{ i.message }}</h4>
+                                    </button>
+                                </div>
                             <input v-model="title"
                                 class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-white text-[18px] placeholder:text-white/50 focus:outline-[2px] focus:outline-white 2xl:text-[23px]"
                                 placeholder="หัวข้อ">
@@ -40,7 +49,10 @@
                                         />
                                     </div>
                                 </div>
-                            <VueDatePicker class="touch-manipulation vdp_custom" dark v-model="date" time-picker-inline
+                            <input v-model="contact"
+                                class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-white text-[18px] placeholder:text-white/50 focus:outline-[2px] focus:outline-white 2xl:text-[23px]"
+                                placeholder="ช่องทางติดต่อกลับ สาธารณะ! (ไม่จำเป็น)">
+                                <VueDatePicker class="touch-manipulation vdp_custom pb-[15px]" dark v-model="date" time-picker-inline
                                 @open="onPickerOpen" @closed="onPickerClosed">
                                 <template #trigger>
                                     <div class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-[18px] text-white 2xl:text-[23px]"
@@ -58,18 +70,6 @@
                                     </div>
                                 </template>
                             </VueDatePicker>
-                            <input v-model="contact"
-                                class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-white text-[18px] placeholder:text-white/50 focus:outline-[2px] focus:outline-white 2xl:text-[23px]"
-                                placeholder="ช่องทางติดต่อกลับ สาธารณะ! (ไม่จำเป็น)">
-                                <div
-                                    class="flex items-center w-full h-max pt-[15px] space-x-[5px] overflow-x-scroll">
-                                    <button v-for="i in labellist" @click="CurtLabelUpdate(i.message)"
-                                        class="min-w-max h-max py-[5px] px-[10px] rounded-[20px] flex items-center justify-center space-x-2"
-                                        :class="{ 'bg-[#0099FF] text-white': curtLabel === i.message, 'bg-white text-[#0099FF]': curtLabel !== i.message }">
-                                        <i :class="i.icon + ' text-[18px]'"></i>
-                                        <h4 class="text-[16px] 2xl:text-[20px]">{{ i.message }}</h4>
-                                    </button>
-                                </div>
                         </div>
                         <div class="w-full h-max flex justify-center mt-[20px]">
                             <button @click="SendGHIssue(title, description, images_base64, date, contact, curtLabel)"
@@ -224,7 +224,7 @@ function ClearFormData() {
     /*Specific height for the next/previous buttons*/
     --dp-button-icon-height: 20px;
     /*Icon sizing in buttons*/
-    --dp-cell-size: 35px;
+    --dp-cell-size: 30px;
     /*Width and height of calendar cell*/
     --dp-cell-padding: 5px;
     /*Padding in the cell*/
