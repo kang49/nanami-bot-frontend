@@ -121,6 +121,12 @@ const commandsDataList = ref([
                 isMenuToggle: false
             },
             {
+                name: '/delmsg del-regex',
+                description: 'ลบข้อความเฉพาะประโยคหรือคำที่กำหนด',
+                ex: '/delmsg del-regex [sentence] [value]',
+                isMenuToggle: false
+            },
+            {
                 name: '/clone setup',
                 description: 'เมื่อกดแล้วจะสร้างช่องเสียงส่วนตัวใหม่เพื่อ user ที่กด',
                 ex: '/clone setup [voice-channel]',
@@ -262,6 +268,12 @@ const commandsDataList = ref([
                 name: '/delmsg del-only',
                 description: 'ลบข้อความในช่องแชทเฉพาะ User ที่กำหนด',
                 ex: '/delmsg del-only [user] [value]',
+                isMenuToggle: false
+            },
+            {
+                name: '/delmsg del-regex',
+                description: 'ลบข้อความเฉพาะประโยคหรือคำที่กำหนด',
+                ex: '/delmsg del-regex [sentence] [value]',
                 isMenuToggle: false
             },
             {
