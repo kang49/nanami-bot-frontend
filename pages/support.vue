@@ -3,11 +3,11 @@
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
         <div
-            class="w-full h-[calc(100dvh)] bg-[url('public/img/support_bg_tr80.webp')] bg-cover bg-center overflow-hidden">
+            class="w-full h-[calc(100dvh)] bg-[url('public/img/support_bg_tr80.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000">
             <div class="w-full h-full flex items-center">
-                <div class="px-[20px] w-full h-[80%]">
+                <div class="px-[20px] w-full h-[90%]">
                     <h1 class="text-white text-[35px] font-bold mt-[40px] transition-all duration-[700ms] 2xl:text-[45px]" :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">Support</h1>
-                    <div class="w-full h-max mt-[30px] p-[20px] rounded-[20px] bg-black/40 overflow-y-visible transition-all duration-[1000ms] lg:w-[35%]" :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">
+                    <div class="w-full h-[80%] mt-[30px] p-[20px] rounded-[20px] bg-black/40 overflow-y-scroll transition-all duration-[1000ms] lg:w-[35%]" :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">
                         <div class="w-full flex justify-center items-center mb-[30px]">
                             <h4 class="text-[20px] text-white 2xl:text-[26px]">หนูทำอะไรผิดไปหรือเปล่าคะ 😢</h4>
                         </div>

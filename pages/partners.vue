@@ -2,7 +2,7 @@
     <div class="bg-black w-full h-[calc(100dvh)]">
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
-        <div class="w-full h-[calc(100dvh)] bg-[url('public/img/partners_bg_tr80.webp')] bg-cover bg-center overflow-hidden"
+        <div class="w-full h-[calc(100dvh)] bg-[url('public/img/partners_bg_tr80.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000"
             :class="{ 'opacity-50': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="w-full h-full flex items-center">
                 <div class="px-[20px] w-full h-[80%] 2xl:px-[50px]">
