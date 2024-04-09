@@ -30,7 +30,7 @@
                 </div>
                 <div class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink>
+                    <NuxtLink to="/support">
                         <h4>Support</h4>
                     </NuxtLink>
                 </div>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[700ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/">
+                    <NuxtLink @click="hamberBTN('menu')" to="/support">
                         <h6><i class="far fa-dot-circle mr-2"></i>Support</h6>
                     </NuxtLink>
                 </div>
@@ -105,11 +105,10 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 
 const istoggle = ref(false);
 let pagesTheme = ref();
-let scroll_value = ref(0);
 let startX: number | null = null; // Store the starting position
 const emit = defineEmits(['update:istoggle']);
 const props = defineProps(['theme', 'scroll_value']);

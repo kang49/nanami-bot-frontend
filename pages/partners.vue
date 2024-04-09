@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
 
 //Change pageTheme
 document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#112160');

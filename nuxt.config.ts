@@ -30,5 +30,12 @@ export default defineNuxtConfig({
       title: 'Nanami Bot ที่น่ารักสำหรับทุกคน',
       script: [],
     },
+  },
+  runtimeConfig: {
+    GITHUBKEY: '',
+    IMGUR_CLIEND_ID: '',
+    public: {
+      port: process.env.PORT
+    }
   }
 });

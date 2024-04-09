@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "start": "PORT=3000 node .output/server/index.mjs",
@@ -20,6 +21,9 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@octokit/core": "^6.1.1",
+    "@vue/cli-service": "^5.0.8",
+    "@vuepic/vue-datepicker": "^8.4.0",
     "apexcharts": "^3.47.0",
     "vue3-apexcharts": "^1.5.2"
   }

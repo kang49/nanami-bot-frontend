@@ -96,7 +96,7 @@
                                         class="fab fa-linkedin-in text-[35px] 2xl:text-[45px]"></NuxtLink>
                                     <NuxtLink to="https://vrchat.com/home/user/usr_3f60f1e7-56c3-4328-99c1-383db10bc6ff"
                                         target="_blank">
-                                        <NuxtImg class="w-[35px] 2xl:w-[45px]" src="/img/vrc_icon.webp"></NuxtImg>
+                                        <NuxtImg class="select-none w-[35px] 2xl:w-[45px]" src="/img/vrc_icon.webp"></NuxtImg>
                                     </NuxtLink>
                                 </div>
                             </div>
