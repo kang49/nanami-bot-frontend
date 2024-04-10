@@ -162,7 +162,6 @@ function handleFiles() {
 
     Promise.all(base64Promises)
         .then(base64Files => {
-            console.log(base64Files); // Log the base64 strings
             // You might want to store these base64 strings as before
             images_base64.value = base64Files;
         })
@@ -196,7 +195,7 @@ async function SendGHIssue(title: string, description: string, img: any, date: D
 function ClearFormData() {
     title.value = '';
     description.value = '';
-    images_base64.value = [''];
+    images_base64 = ref();
     files = ref<File[]>([]);
     date.value = new Date();
     contact.value = '';

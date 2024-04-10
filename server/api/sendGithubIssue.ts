@@ -102,5 +102,7 @@ export default defineEventHandler(async (event) => {
             status: 200, message: 'Success'
         }
 
-    } catch { }
+    } catch (e) {
+        console.log(e, 'sendGithubIssue')
+    }
 })
