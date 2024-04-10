@@ -2,7 +2,7 @@
     <div class="bg-black w-full h-[calc(100dvh)]">
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
-        <div class="w-full h-[calc(100dvh)] bg-[url('public/img/partners_bg_tr80.webp')] bg-cover bg-center overflow-hidden"
+        <div class="w-full h-[calc(100dvh)] bg-[url('public/img/partners_bg_tr80.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000"
             :class="{ 'opacity-50': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="w-full h-full flex items-center">
                 <div class="px-[20px] w-full h-[80%] 2xl:px-[50px]">
@@ -72,7 +72,7 @@ const partnersData = ref([
         สร้างห้อง order เพลงได้และไม่จำเป็นต้องพิมพ์ Command เพราะเรามี Canvas ที่สวย
         งามและควบคุมด้วยปุ่มได้
         `,
-        invite_url: 'https://discord.com/api/oauth2/authorize?client_id=1038717075071447062&permissions=8&scope=bot%20applications.commands'
+        invite_url: 'https://discord.com/oauth2/authorize?client_id=639721579835555840'
     },
     {
         name: 'Manybath (หลายบาท)',

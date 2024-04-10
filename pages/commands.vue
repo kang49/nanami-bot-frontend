@@ -2,7 +2,7 @@
     <div class="bg-black w-screen h-screen">
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
-        <div class="w-full h-[calc(100dvh)] pt-[60px] bg-[url('public/img/animegirl-bg.webp')] bg-cover bg-center overflow-hidden"
+        <div class="w-full h-[calc(100dvh)] pt-[60px] bg-[url('public/img/animegirl-bg.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000"
             :class="{ 'opacity-30': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="px-[20px] w-full h-full 2xl:px-[50px] 2xl:pt-[40px]">
                 <h1 class="text-white text-[35px] font-bold mt-[50px] transition-all duration-[700ms] 2xl:text-[45px]"
@@ -118,6 +118,12 @@ const commandsDataList = ref([
                 name: '/delmsg del-only',
                 description: 'ลบข้อความในช่องแชทเฉพาะ User ที่กำหนด',
                 ex: '/delmsg del-only [user] [value]',
+                isMenuToggle: false
+            },
+            {
+                name: '/delmsg del-regex',
+                description: 'ลบข้อความเฉพาะประโยคหรือคำที่กำหนด',
+                ex: '/delmsg del-regex [sentence] [value]',
                 isMenuToggle: false
             },
             {
@@ -262,6 +268,12 @@ const commandsDataList = ref([
                 name: '/delmsg del-only',
                 description: 'ลบข้อความในช่องแชทเฉพาะ User ที่กำหนด',
                 ex: '/delmsg del-only [user] [value]',
+                isMenuToggle: false
+            },
+            {
+                name: '/delmsg del-regex',
+                description: 'ลบข้อความเฉพาะประโยคหรือคำที่กำหนด',
+                ex: '/delmsg del-regex [sentence] [value]',
                 isMenuToggle: false
             },
             {

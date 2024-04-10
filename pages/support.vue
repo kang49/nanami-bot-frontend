@@ -3,15 +3,24 @@
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
         <div
-            class="w-full h-[calc(100dvh)] bg-[url('public/img/support_bg_tr80.webp')] bg-cover bg-center overflow-hidden">
+            class="w-full h-[calc(100dvh)] bg-[url('public/img/support_bg_tr80.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000">
             <div class="w-full h-full flex items-center">
-                <div class="px-[20px] w-full h-[80%]">
+                <div class="px-[20px] w-full h-[90%]">
                     <h1 class="text-white text-[35px] font-bold mt-[40px] transition-all duration-[700ms] 2xl:text-[45px]" :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">Support</h1>
-                    <div class="w-full h-max mt-[30px] p-[20px] rounded-[20px] bg-black/40 overflow-y-visible transition-all duration-[1000ms] lg:w-[35%]" :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">
+                    <div class="w-full h-[80%] mt-[30px] p-[20px] rounded-[20px] bg-black/40 overflow-y-scroll transition-all duration-[1000ms] lg:w-[35%]" :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">
                         <div class="w-full flex justify-center items-center mb-[30px]">
                             <h4 class="text-[20px] text-white 2xl:text-[26px]">หนูทำอะไรผิดไปหรือเปล่าคะ 😢</h4>
                         </div>
                         <div class="w-full space-y-[10px]">
+                            <div
+                                    class="flex items-center w-full h-max space-x-[5px] overflow-x-scroll">
+                                    <button v-for="i in labellist" @click="CurtLabelUpdate(i.message)"
+                                        class="min-w-max h-max py-[5px] px-[10px] rounded-[20px] flex items-center justify-center space-x-2"
+                                        :class="{ 'bg-[#0099FF] text-white': curtLabel === i.message, 'bg-white text-[#0099FF]': curtLabel !== i.message }">
+                                        <i :class="i.icon + ' text-[18px]'"></i>
+                                        <h4 class="text-[16px] 2xl:text-[20px]">{{ i.message }}</h4>
+                                    </button>
+                                </div>
                             <input v-model="title"
                                 class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-white text-[18px] placeholder:text-white/50 focus:outline-[2px] focus:outline-white 2xl:text-[23px]"
                                 placeholder="หัวข้อ">
@@ -40,7 +49,10 @@
                                         />
                                     </div>
                                 </div>
-                            <VueDatePicker class="touch-manipulation vdp_custom" dark v-model="date" time-picker-inline
+                            <input v-model="contact"
+                                class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-white text-[18px] placeholder:text-white/50 focus:outline-[2px] focus:outline-white 2xl:text-[23px]"
+                                placeholder="ช่องทางติดต่อกลับ สาธารณะ! (ไม่จำเป็น)">
+                                <VueDatePicker class="touch-manipulation vdp_custom pb-[15px]" dark v-model="date" time-picker-inline
                                 @open="onPickerOpen" @closed="onPickerClosed">
                                 <template #trigger>
                                     <div class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-[18px] text-white 2xl:text-[23px]"
@@ -58,18 +70,6 @@
                                     </div>
                                 </template>
                             </VueDatePicker>
-                            <input v-model="contact"
-                                class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-white text-[18px] placeholder:text-white/50 focus:outline-[2px] focus:outline-white 2xl:text-[23px]"
-                                placeholder="ช่องทางติดต่อกลับ สาธารณะ! (ไม่จำเป็น)">
-                                <div
-                                    class="flex items-center w-full h-max pt-[15px] space-x-[5px] overflow-x-scroll">
-                                    <button v-for="i in labellist" @click="CurtLabelUpdate(i.message)"
-                                        class="min-w-max h-max py-[5px] px-[10px] rounded-[20px] flex items-center justify-center space-x-2"
-                                        :class="{ 'bg-[#0099FF] text-white': curtLabel === i.message, 'bg-white text-[#0099FF]': curtLabel !== i.message }">
-                                        <i :class="i.icon + ' text-[18px]'"></i>
-                                        <h4 class="text-[16px] 2xl:text-[20px]">{{ i.message }}</h4>
-                                    </button>
-                                </div>
                         </div>
                         <div class="w-full h-max flex justify-center mt-[20px]">
                             <button @click="SendGHIssue(title, description, images_base64, date, contact, curtLabel)"
@@ -162,7 +162,6 @@ function handleFiles() {
 
     Promise.all(base64Promises)
         .then(base64Files => {
-            console.log(base64Files); // Log the base64 strings
             // You might want to store these base64 strings as before
             images_base64.value = base64Files;
         })
@@ -196,7 +195,7 @@ async function SendGHIssue(title: string, description: string, img: any, date: D
 function ClearFormData() {
     title.value = '';
     description.value = '';
-    images_base64.value = [''];
+    images_base64 = ref();
     files = ref<File[]>([]);
     date.value = new Date();
     contact.value = '';
@@ -224,7 +223,7 @@ function ClearFormData() {
     /*Specific height for the next/previous buttons*/
     --dp-button-icon-height: 20px;
     /*Icon sizing in buttons*/
-    --dp-cell-size: 35px;
+    --dp-cell-size: 30px;
     /*Width and height of calendar cell*/
     --dp-cell-padding: 5px;
     /*Padding in the cell*/
