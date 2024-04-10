@@ -64,8 +64,8 @@
                     <div class="w-[3px] h-[30px] " :class="{ 'bg-[#02071A]': !pagesTheme, 'bg-white': pagesTheme }">
                     </div>
                 </div>
-                <button class="fad fa-user text-[21px] 2xl:text-[30px]"
-                    :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></button>
+                <NuxtLink to="/signin" class="fad fa-user text-[21px] 2xl:text-[30px]"
+                    :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></NuxtLink>
             </div>
         </div>
 
