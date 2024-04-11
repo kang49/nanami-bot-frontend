@@ -1,16 +1,15 @@
 {
-  "name": "nuxt-app",
+  "name": "nanami-bot-frontend",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "nuxt build",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "PORT=3000 node .output/server/index.mjs",
-    "product": "yarn install && nuxt build"
+    "start": "PORT=3000 bun .output/server/index.mjs",
+    "product": "bun install && nuxt build"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -22,7 +21,6 @@
   },
   "dependencies": {
     "@octokit/core": "^6.1.1",
-    "@vue/cli-service": "^5.0.8",
     "@vuepic/vue-datepicker": "^8.4.0",
     "apexcharts": "^3.47.0",
     "vue3-apexcharts": "^1.5.2"
