@@ -10,9 +10,9 @@
     Bot & Website Official Readme
     <br/>
     <br/>
-    <a href="https://github.com/kang49/nanami-discord-bot/issues">Report Bug</a>
+    <a href="https://nanami.tensormik.com/support">Report Bug</a>
     .
-    <a href="https://github.com/kang49/nanami-discord-bot/issues">Request Feature</a>
+    <a href="https://nanami.tensormik.com/support">Request Feature</a>
   </p>
 </p>
 
