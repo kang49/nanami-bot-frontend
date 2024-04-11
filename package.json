@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "nuxt build",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "start": "PORT=3000 node .output/server/index.mjs",
