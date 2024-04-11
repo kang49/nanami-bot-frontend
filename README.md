@@ -17,25 +17,25 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/kang49/nanami-bot-frontend">
-    <img src="https://img.shields.io/github/repo-size/kang49/nanami-bot-frontend.svg?style=for-the-badge&logo=appveyor" alt="Size">
+  <a href="https://github.com/kang49/nanami-discord-bot">
+    <img src="https://img.shields.io/github/repo-size/kang49/nanami-discord-bot.svg?style=for-the-badge&logo=appveyor" alt="Size">
   </a>
-  <a href="https://github.com/kang49/nanami-bot-frontend/issues">
-    <img src="https://img.shields.io/github/issues/kang49/nanami-bot-frontend.svg?color=orange&style=for-the-badge&logo=appveyor" alt="Issues">
+  <a href="https://github.com/kang49/nanami-discord-bot/issues">
+    <img src="https://img.shields.io/github/issues/kang49/nanami-discord-bot.svg?color=orange&style=for-the-badge&logo=appveyor" alt="Issues">
   </a>
-  <a href="https://github.com/kang49/nanami-bot-frontend/pulls">
-    <img src="https://img.shields.io/github/issues-pr-closed/kang49/nanami-bot-frontend.svg?style=for-the-badge&logo=appveyor" alt="PullRequestsClosed">
-  <a href="https://github.com/kang49/nanami-bot-frontend/forks">
-    <img src="https://img.shields.io/github/forks/kang49/nanami-bot-frontend?style=for-the-badge" alt="Forks">
+  <a href="https://github.com/kang49/nanami-discord-bot/pulls">
+    <img src="https://img.shields.io/github/issues-pr-closed/kang49/nanami-discord-bot.svg?style=for-the-badge&logo=appveyor" alt="PullRequestsClosed">
+  <a href="https://github.com/kang49/nanami-discord-bot/forks">
+    <img src="https://img.shields.io/github/forks/kang49/nanami-discord-bot?style=for-the-badge" alt="Forks">
   </a>
-  <a href="https://github.com/kang49/nanami-bot-frontend/stargazers">
-    <img src="https://img.shields.io/github/stars/kang49/nanami-bot-frontend?color=gold&style=for-the-badge" alt="Stars">
+  <a href="https://github.com/kang49/nanami-discord-bot/stargazers">
+    <img src="https://img.shields.io/github/stars/kang49/nanami-discord-bot?color=gold&style=for-the-badge" alt="Stars">
   </a>
-  <a href="https://github.com/kang49/nanami-bot-frontend/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/kang49/nanami-bot-frontend?style=for-the-badge" alt="License">
+  <a href="https://github.com/kang49/nanami-discord-bot/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/kang49/nanami-discord-bot?style=for-the-badge" alt="License">
   </a>
-   <a href="https://github.com/kang49/nanami-bot-frontend/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/kang49/nanami-bot-frontend?color=black&style=for-the-badge" alt="Contributers">
+   <a href="https://github.com/kang49/nanami-discord-bot/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/kang49/nanami-discord-bot?color=black&style=for-the-badge" alt="Contributers">
   </a>
 </p>
 
