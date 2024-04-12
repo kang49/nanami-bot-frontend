@@ -3,7 +3,7 @@
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
         <div
-            class="w-full h-[calc(100dvh)] bg-[url('public/img/support_bg_tr80.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000">
+            class="w-full h-[calc(100dvh)] bg-[url('public/img/support_bg_tr80.webp')] bg-cover bg-center overflow-hidden transition-all duration-1000" :class="{ 'opacity-50': istoggleMenu, 'opacity-100': !istoggleMenu }">
             <div class="w-full h-full flex items-center">
                 <div class="px-[20px] w-full h-[90%]">
                     <h1 class="text-white text-[35px] font-bold mt-[40px] transition-all duration-[700ms] 2xl:text-[45px]" :class="{ 'translate-y-[100vw] opacity-0': !isOnMounted, 'translate-y-[0] opacity-100': isOnMounted }">Support</h1>
@@ -49,7 +49,7 @@
                                         />
                                     </div>
                                 </div>
-                            <input v-model="contact"
+                            <input v-model="contact" @click="AddDefContact()"
                                 class="bg-black/35 w-full h-max rounded-[10px] px-[10px] py-[5px] text-white text-[18px] placeholder:text-white/50 focus:outline-[2px] focus:outline-white 2xl:text-[23px]"
                                 placeholder="ช่องทางติดต่อกลับ สาธารณะ! (ไม่จำเป็น)">
                                 <VueDatePicker class="touch-manipulation vdp_custom pb-[15px]" dark v-model="date" time-picker-inline
@@ -89,8 +89,7 @@
 import { ref, onMounted } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-
-const config = useRuntimeConfig();
+import Cookies from 'js-cookie';
 
 //Change pageTheme
 document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#31577B');
@@ -101,6 +100,7 @@ document.title = '(Support) Nanami Bot ที่น่ารักสำหร�
 let istoggleMenu = ref(false);
 let isOnMounted = ref(false);
 let isOnTimePickerOpen = ref(false);
+
 const fileInput = ref<HTMLInputElement | null>(null);
 let files = ref<File[]>([]);
     const labellist = ref([
@@ -172,6 +172,14 @@ const onPickerOpen = () => {
 }
 const onPickerClosed = () => {
     isOnTimePickerOpen.value = false;
+}
+
+function AddDefContact() {
+    if (Cookies.get('usr_name')) {
+        let usr_tag: string = `#${Cookies.get('usr_tag')}`;
+        if (usr_tag === '#0') usr_tag = '';
+        contact.value = `Discord ${Cookies.get('usr_name')}${usr_tag}`
+    }
 }
 
 async function SendGHIssue(title: string, description: string, img: any, date: Date, contact: string, labels: string) {

@@ -124,9 +124,19 @@
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[1300ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme && path != '/signin', 'text-white': pagesTheme && path != '/signin', 'text-[#0099FF]': path == '/signin' }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/signin">
+                    <!-- SignIn -->
+                    <NuxtLink v-if="!usr_name" @click="hamberBTN('menu')" to="/signin">
                         <h6><i class="fas fa-sign-in mr-2"></i>Sign In</h6>
                     </NuxtLink>
+                    <!-- User Profile -->
+                    <div v-if="usr_name" class="flex w-full h-max justify-end items-center space-x-[10px]">
+                        <NuxtImg v-if="usr_avatar" class="w-[27px] rounded-full" :src="usr_avatar"></NuxtImg>
+                        <h6 class="text-white">{{ `${usr_name}${usr_tag}` }}</h6>
+                    </div>
+                    <!-- SignOut -->
+                    <button v-if="usr_name" @click="hamberBTN('menu'), SignOut()">
+                        <h6 class="text-white"><i class="fas fa-sign-out mr-2"></i>Sign Out</h6>
+                    </button>
                 </div>
             </div>
         </div>
@@ -134,6 +144,8 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+import Cookies from 'js-cookie';
+import { useRouter } from 'vue-router';
 
 const istoggle = ref(false);
 let pagesTheme = ref();
@@ -141,6 +153,10 @@ let startX: number | null = null; // Store the starting position
 const emit = defineEmits(['update:istoggle']);
 const props = defineProps(['theme', 'scroll_value']);
 const path = ref(useRoute().path);
+let usr_name = ref(Cookies.get('usr_name'));
+let usr_tag = ref(Cookies.get('usr_tag'));
+let usr_avatar = ref(Cookies.get('usr_avatar'));
+const router = useRouter();
 
 //PageTheme Update
 setInterval(() => {
@@ -149,17 +165,21 @@ setInterval(() => {
 
 let menuOpening = false;
 function hamberBTN(from: string) {
-    //ถ้าเมนูกำลังเปิด แต่มีคำสั่งปิดให้เปิดต่อไป
-    if (menuOpening) {
-        emit('update:istoggle', true);
-        return istoggle.value = true;
+    // Check if the menu is currently being toggled
+    if (menuOpening) return; // Exit the function to prevent any further action while toggling is active
+
+    // If menu is not currently toggling, proceed with toggling logic
+    menuOpening = true; // Set flag to true to indicate toggling is starting
+    if (istoggle.value === false && from === 'screen') {
+        menuOpening = false; // Reset flag if no toggle action should happen
+        return;
     }
-    if (istoggle.value === false && from === 'screen') return;
-    istoggle.value = !istoggle.value;
+
+    istoggle.value = !istoggle.value; // Toggle the istoggle value
     emit('update:istoggle', istoggle.value);
-    menuOpening = true;
+
     setTimeout(() => {
-        menuOpening = false;
+        menuOpening = false; // Reset the flag after 1 second
     }, 1000);
 }
 
@@ -198,5 +218,21 @@ function handleTouchEnd(event: TouchEvent) {
         emit('update:istoggle', false);
     }
     startX = null; // Reset for the next action
+}
+usr_tag.value = `#${usr_tag.value}`
+if (usr_tag.value === '#0') usr_tag.value = '';
+
+function SignOut() {
+    Cookies.remove('usr_id');
+    Cookies.remove('usr_name');
+    Cookies.remove('usr_tag');
+    Cookies.remove('usr_global_name');
+    Cookies.remove('usr_avatar');
+
+    usr_name = ref();
+    usr_tag = ref();
+    usr_avatar = ref();
+
+    router.push('/');
 }
 </script>

@@ -8,6 +8,9 @@ export default defineNuxtConfig({
   components: {
     dirs: ["~/components"],
   },
+  plugins: [
+    { src: '~/src/check_session_exp.ts', mode: 'client' }
+  ],
   modules: ["@nuxtjs/tailwindcss", '@nuxt/image'],
   css: ['~/assets/styles.css'],
   app: {
