@@ -16,11 +16,13 @@
     "@nuxt/image": "^1.4.0",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "nuxt": "^3.8.0",
+    "prisma": "^5.12.1",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
     "@octokit/core": "^6.1.1",
+    "@prisma/client": "^5.12.1",
     "@vuepic/vue-datepicker": "^8.4.0",
     "apexcharts": "^3.47.0",
     "vue3-apexcharts": "^1.5.2"

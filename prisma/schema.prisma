@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("NUXT_DATABASE_URL")
+}
+
+model guild {
+  id                    Int      @id @default(autoincrement())
+  log_id                String?
+  guild_id              String?  @unique
+  create_time           DateTime @default(now())
+  inout                 Boolean  @default(false)
+  welcomeMsg            Boolean  @default(false)
+  welcome_log_id        String?
+  animeGirlDaily        Boolean  @default(false)
+  animeGirlDaily_log_id String?
+}
+
+model user {
+  id            Int     @id @default(autoincrement())
+  userId        String?
+  userName      String?
+  userTag       String?
+  guildId       String?
+  guildName     String?
+  guildMsgCount Int?
+}
+
+model voiceChatClone {
+  id                   Int      @id @default(autoincrement())
+  create_Vstate_id     String?
+  new_create_Vstate_id String?  @unique
+  create_time          DateTime @default(now())
+}
+
+model translateChannel {
+  id             Int      @id @default(autoincrement())
+  guild          String?
+  mainChannel    String?
+  targetChannel  String?  @unique
+  mainLanguage   String?
+  targetLanguage String?
+  create_time    DateTime @default(now())
+}
+
+model userPayments {
+  id          Int      @id @default(autoincrement())
+  guild       String?
+  userId      String?  @unique
+  userName    String?
+  userTag     String?
+  promptpay   String?
+  create_time DateTime @default(now())
+}
+
+model debtorCheck {
+  id               Int      @id @default(autoincrement())
+  guild            String?
+  creditorUserId   String?
+  creditorUserName String?
+  creditorUserTag  String?
+  debtorUserId     String?
+  debtorUserName   String?
+  debtorUserTag    String?
+  debtorAmount     Float?
+  create_time      DateTime @default(now())
+}
+
+model deleteMessage {
+  id                Int      @id @default(autoincrement())
+  guildId           String?
+  channelId         String?
+  messageId         String?  @unique
+  create_time       DateTime @default(now())
+  messageAuthorId   String?
+  messageContent    String?  @db.LongText
+  messageAuthorName String?
+}
+
+model attachment {
+  id                    Int       @id @default(autoincrement())
+  animeGirlImage        String?   @unique @db.VarChar(512)
+  create_time           DateTime  @default(now())
+  animeGirlImage_Check  Boolean?  @default(false)
+  send_time             DateTime?
+  animeGirlImage_Verify Boolean?  @default(false)
+  sendVerify_id         String?
+}
+
+model autoDeleteMsg {
+  id          Int      @id @default(autoincrement())
+  guildId     String?
+  guildName   String?
+  channelId   String?  @unique
+  deleteLimit Int?
+  create_time DateTime @default(now())
+}
+
+model webUser {
+  id                   Int       @id @default(autoincrement()) @db.UnsignedInt
+  usr_id               String       @unique @db.VarChar(255)
+  usr_name             String    @db.VarChar(255)
+  usr_tag              String?   @db.VarChar(255)
+  usr_global_name      String    @db.VarChar(255)
+  usr_avatar           String    @db.VarChar(255)
+  usr_access_token     String    @db.VarChar(255)
+  usr_latest_login     DateTime? @db.DateTime(0)
+  usr_access_token_exp DateTime? @db.DateTime(0)
+}

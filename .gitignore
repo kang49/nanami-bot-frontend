@@ -16,12 +16,14 @@ yarn.lock
 package-lock.json
 bun.lockb
 
-
+#Prisma
+prisma/dev.db
 
 # Misc
 .DS_Store
 .fleet
 .idea
+__MACOSX
 
 # Local env files
 .env

@@ -26,7 +26,7 @@
 
                                 <div class="w-full h-max flex justify-center mt-[50px]">
                                     <NuxtLink
-                                        to="https://discord.com/oauth2/authorize?client_id=1109721426279280660&response_type=token&redirect_uri=https%3A%2F%2Ffx37504q-3000.asse.devtunnels.ms%2Fsignin&scope=identify"
+                                        to="https://discord.com/oauth2/authorize?client_id=1109721426279280660&response_type=token&redirect_uri=https%3A%2F%2Ffx37504q-3000.asse.devtunnels.ms%2Fsignin&scope=identify+guilds+guilds.members.read"
                                         class="w-max h-max bg-[#0099FF] rounded-[10px] px-[10px] py-[5px] flex justify-center items-center">
                                         <i class="fab fa-discord mr-2 text-white text-[30px] 2xl:text-[34px]"></i>
                                         <h4 class="text-white text-[18px] font-bold 2xl:text-[22px]">Sign-In with
