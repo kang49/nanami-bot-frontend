@@ -1,17 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-async function UpdateAccessTime(usr_id: string, now: Date) {
-    await prisma.webUser.update({
-        where: {
-            usr_id: usr_id
-        },
-        data: {
-            usr_latest_access: now
-        }
-    })
-}
-
 export default defineEventHandler(async (event) => {
     //Variable set
     const body = await readBody(event);

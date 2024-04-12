@@ -69,9 +69,10 @@ document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02
 document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
 
 //Variable set
+const discordOAuthUrl: string = 'https://discord.com/oauth2/authorize?client_id=1109721426279280660&response_type=token&redirect_uri=https%3A%2F%2Fnanami.tensormik.com%2Fsignin&scope=identify+guilds+guilds.members.read';
 let istoggleMenu = ref(false);
 let isOnMounted = ref(false);
-let discordOAuthUrl: Ref<string | undefined> = ref('https://discord.com/oauth2/authorize?client_id=1109721426279280660&response_type=token&redirect_uri=http%3A%2F%2Flocalhost:3000%2Fsignin&scope=identify+guilds+guilds.members.read');
+let signInBTN: Ref<string | undefined> = ref(discordOAuthUrl);
 const discordTokenType = ref('')
 const discordAccecssToken = ref('');
 let isLoading = ref(false);
@@ -96,7 +97,7 @@ onMounted(() => {
 //Discord Auth Handler
 if (window.location.hash) {
     isLoading.value = true;
-    discordOAuthUrl.value = undefined;
+    signInBTN.value = undefined;
     isError.value = false;
     const hash = window.location.hash.substring(1); // Remove '#' prefix
     const params = new URLSearchParams(hash);
@@ -128,6 +129,7 @@ if (window.location.hash) {
 
                     //Route to target page after auth success
                     isLoading.value = false;
+                    signInBTN.value = discordOAuthUrl;
                     router.push('/');
                 } else {
                     isError.value = true;
@@ -136,6 +138,7 @@ if (window.location.hash) {
                     setTimeout(() => {
                         isLoading.value = false;
                         isError.value = false;
+                        signInBTN.value = discordOAuthUrl;
                     }, 3000);
                 }
             } else {
@@ -146,6 +149,7 @@ if (window.location.hash) {
                 setTimeout(() => {
                     isLoading.value = false;
                     isError.value = false;
+                    signInBTN.value = discordOAuthUrl;
                 }, 3000);
             }
         } catch {
@@ -156,6 +160,7 @@ if (window.location.hash) {
             setTimeout(() => {
                 isLoading.value = false;
                 isError.value = false;
+                signInBTN.value = discordOAuthUrl;
             }, 3000);
         }
     }, 3000);
