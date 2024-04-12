@@ -159,7 +159,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Cookies from 'js-cookie';
-import { useRouter } from 'vue-router';
 
 const istoggle = ref(false);
 let pagesTheme = ref();
@@ -170,7 +169,6 @@ const path = ref(useRoute().path);
 let usr_name = ref(Cookies.get('usr_name'));
 let usr_tag = ref(Cookies.get('usr_tag'));
 let usr_avatar = ref(Cookies.get('usr_avatar'));
-const router = useRouter();
 const dropdownOpen = ref(false);
 
 //PageTheme Update
@@ -248,7 +246,6 @@ function SignOut() {
     usr_tag = ref();
     usr_avatar = ref();
 
-    router.push('/');
     window.location.reload(); //reload if user stil on target page
 }
 
