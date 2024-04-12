@@ -56,16 +56,30 @@
                     <div class="w-[3px] h-[30px]" :class="{ 'bg-[#02071A]': !pagesTheme, 'bg-white': pagesTheme }">
                     </div>
 
-                    <NuxtLink class="fab fa-github text-[27px]"
+                    <NuxtLink class="fab fa-github text-[27px] 2xl:text-[33px]"
                         :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></NuxtLink>
-                    <NuxtLink class="fab fa-discord text-[27px]"
+                    <NuxtLink class="fab fa-discord text-[27px] 2xl:text-[33px]"
                         :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></NuxtLink>
 
                     <div class="w-[3px] h-[30px] " :class="{ 'bg-[#02071A]': !pagesTheme, 'bg-white': pagesTheme }">
                     </div>
                 </div>
-                <NuxtLink to="/signin" class="fad fa-user text-[21px] 2xl:text-[30px]"
-                    :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></NuxtLink>
+                <div>
+                    <NuxtLink v-if="!usr_name" to="/signin" class="fad fa-user text-[21px] 2xl:text-[30px]"
+                        :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
+                    </NuxtLink>
+                    <div v-if="usr_name" class="flex w-full h-max justify-end items-center space-x-[10px] relative">
+                        <div @click="toggleDropdown" class="cursor-pointer flex items-center space-x-[10px]">
+                            <NuxtImg v-if="usr_avatar" class="w-[30px] rounded-full 2xl:w-[40px]" :src="usr_avatar"></NuxtImg>
+                            <h6 class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }">{{ `${usr_name}${usr_tag}` }}</h6>
+                            <i class="fas fa-chevron-down transition-all duration-500" :class="{'rotate-180': dropdownOpen, 'text-black': !pagesTheme, 'text-white': pagesTheme}"></i>
+                        </div>
+                        <div v-show="dropdownOpen" class="absolute right-0 mt-[100px] py-2 w-48 rounded-md shadow-xl z-50 transition-all duration-200"
+                            :class="{'opacity-100': dropdownOpen, 'opacity-0': !dropdownOpen, 'bg-black/20': !pagesTheme, 'bg-white/20': pagesTheme}">
+                            <button @click="SignOut" class="block font-bold px-4 py-2 text-[16px] w-full" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }">Sign Out</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -131,11 +145,11 @@
                     <!-- User Profile -->
                     <div v-if="usr_name" class="flex w-full h-max justify-end items-center space-x-[10px]">
                         <NuxtImg v-if="usr_avatar" class="w-[27px] rounded-full" :src="usr_avatar"></NuxtImg>
-                        <h6 class="text-white">{{ `${usr_name}${usr_tag}` }}</h6>
+                        <h6 class="transition-all duration-[1300ms]" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }">{{ `${usr_name}${usr_tag}` }}</h6>
                     </div>
                     <!-- SignOut -->
                     <button v-if="usr_name" @click="hamberBTN('menu'), SignOut()">
-                        <h6 class="text-white"><i class="fas fa-sign-out mr-2"></i>Sign Out</h6>
+                        <h6 class="transition-all duration-[1300ms]" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }"><i class="fas fa-sign-out mr-2"></i>Sign Out</h6>
                     </button>
                 </div>
             </div>
@@ -157,6 +171,7 @@ let usr_name = ref(Cookies.get('usr_name'));
 let usr_tag = ref(Cookies.get('usr_tag'));
 let usr_avatar = ref(Cookies.get('usr_avatar'));
 const router = useRouter();
+const dropdownOpen = ref(false);
 
 //PageTheme Update
 setInterval(() => {
@@ -235,4 +250,9 @@ function SignOut() {
 
     router.push('/');
 }
+
+const toggleDropdown = () => {
+    dropdownOpen.value = !dropdownOpen.value;
+};
+
 </script>
