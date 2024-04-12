@@ -248,6 +248,7 @@ function SignOut() {
     usr_tag = ref();
     usr_avatar = ref();
 
+    window.location.reload();
     router.push('/');
 }
 
