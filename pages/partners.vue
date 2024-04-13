@@ -39,11 +39,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
-//Change pageTheme
-document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#112160');
-//Change Title
-document.title = '(Partners) Nanami Bot ที่น่ารักสำหรับทุกคน';
-
 //Variable set
 let istoggleMenu = ref(false);
 let isOnMounted = ref(false);
@@ -92,6 +87,10 @@ function handleToggleMenu(value: boolean) {
 onMounted(() => {
     //Animation Scripts
     setTimeout(() => {
+        //Change pageTheme
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#112160');
+        //Change Title
+        document.title = '(Partners) Nanami Bot ที่น่ารักสำหรับทุกคน';
         isOnMounted.value = true;
     }, 200);
 });

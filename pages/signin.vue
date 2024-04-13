@@ -63,11 +63,6 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Cookies from 'js-cookie';
 
-//Change pageTheme
-document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
-//Change Title
-document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
-
 //Variable set
 const discordOAuthUrl: string = 'https://discord.com/oauth2/authorize?client_id=1109721426279280660&response_type=token&redirect_uri=https%3A%2F%2Fnanami.tensormik.com%2Fsignin&scope=identify+guilds+guilds.members.read';
 let istoggleMenu = ref(false);
@@ -89,6 +84,10 @@ function handleToggleMenu(value: boolean) {
 onMounted(() => {
     //Animation Scripts
     setTimeout(() => {
+        //Change pageTheme
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
+        //Change Title
+        document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
         isOnMounted.value = true;
     }, 200);
 });
@@ -96,6 +95,10 @@ onMounted(() => {
 
 //Discord Auth Handler
 if (window.location.hash) {
+    setTimeout(() => {
+        //Change Title
+        document.title = 'signing-in...';
+    }, 400);
     isLoading.value = true;
     signInBTN.value = undefined;
     isError.value = false;
@@ -130,10 +133,12 @@ if (window.location.hash) {
                     //Route to target page after auth success
                     isLoading.value = false;
                     signInBTN.value = discordOAuthUrl;
+                    document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
                     router.push('/');
                 } else {
                     isError.value = true;
                     errorMsg.value = authData.error ?? 'Important data missing'
+                    document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
 
                     setTimeout(() => {
                         isLoading.value = false;
@@ -145,6 +150,7 @@ if (window.location.hash) {
                 //SomeThings Down
                 isError.value = true;
                 errorMsg.value = authData.error
+                document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
 
                 setTimeout(() => {
                     isLoading.value = false;
@@ -156,6 +162,7 @@ if (window.location.hash) {
             //ServerSide Down
             isError.value = true;
             errorMsg.value = 'ServerSide Down'
+            document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
 
             setTimeout(() => {
                 isLoading.value = false;

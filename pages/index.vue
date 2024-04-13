@@ -111,11 +111,6 @@
 import { ref, onMounted } from 'vue';
 import CPU_Usage_Chart from '~/components/CPU_Usage_Chart.vue';
 
-//Change pagetheme
-document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
-//Change Title
-document.title = 'Nanami Bot ที่น่ารักสำหรับทุกคน';
-
 //Animation Variables
 const nanami_ta = ['Nanami Bot', 'บอทนานามิ', 'なな美ボット'];
 const nanami_ta_ref = ref('');
@@ -135,6 +130,10 @@ let scrollStates = ref({
 onMounted(() => {
     //Animation Scripts
     setTimeout(() => {
+        //Change pagetheme
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
+        //Change Title
+        document.title = 'Nanami Bot ที่น่ารักสำหรับทุกคน';
         isOnMounted.value = true;
     }, 200);
 

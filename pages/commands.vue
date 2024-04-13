@@ -50,11 +50,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
-//Change pageTheme
-document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#012262');
-//Change Title
-document.title = '(Commands) Nanami Bot ที่น่ารักสำหรับทุกคน';
-
 //Variable setup
 let curtCmd = ref('All'); //Set current command menu to "All" as default
 
@@ -64,6 +59,10 @@ let isOnMounted = ref(false);
 onMounted(() => {
     //Animation Scripts
     setTimeout(() => {
+        //Change pageTheme
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#012262');
+        //Change Title
+        document.title = '(Commands) Nanami Bot ที่น่ารักสำหรับทุกคน';
         isOnMounted.value = true;
     }, 200);
 });

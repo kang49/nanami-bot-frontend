@@ -91,11 +91,6 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import Cookies from 'js-cookie';
 
-//Change pageTheme
-document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#31577B');
-//Change Title
-document.title = '(Support) Nanami Bot ที่น่ารักสำหรับทุกคน';
-
 //Variable set
 let istoggleMenu = ref(false);
 let isOnMounted = ref(false);
@@ -132,6 +127,10 @@ function handleToggleMenu(value: boolean) {
 onMounted(() => {
     //Animation Scripts
     setTimeout(async () => {
+        //Change pageTheme
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#31577B');
+        //Change Title
+        document.title = '(Support) Nanami Bot ที่น่ารักสำหรับทุกคน';
         isOnMounted.value = true;
     }, 200);
 });
