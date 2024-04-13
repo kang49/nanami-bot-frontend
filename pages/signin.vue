@@ -124,7 +124,7 @@ if (window.location.hash) {
                     Cookies.set('usr_id', authData.data.usr_id, {expires: 7});
                     Cookies.set('usr_name', authData.data.usr_name, {expires: 7});
                     Cookies.set('usr_tag', authData.data.usr_tag, {expires: 7});
-                    Cookies.set('usr_global_name', authData.data.global_name, {expires: 7});
+                    Cookies.set('usr_global_name', authData.data.usr_global_name, {expires: 7});
                     Cookies.set('usr_avatar', authData.data.usr_avatar, {expires: 7});
 
                     //Route to target page after auth success
