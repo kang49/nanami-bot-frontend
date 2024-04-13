@@ -48,28 +48,32 @@ export default defineEventHandler(async (event) => {
                     usr_latest_access: now
                 }
             })
+
+            console.log(`SignIn for ${userData.username}#${userData.discriminator} success, Discord SignIn`)
+            return {
+                status: 200,
+                message: 'Success',
+                data: {
+                    usr_id: userData.id,
+                    usr_name: userData.username,
+                    usr_tag: userData.discriminator,
+                    usr_global_name: userData.global_name,
+                    usr_avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.webp?size=1024`
+                }
+            }
         } catch {
+            console.log(`Database not found, Discord SignIn`)
             return {
                 status: 404,
-                message: 'Database not found'
-            }
-        }
-        return {
-            status: 200,
-            message: 'Success',
-            data: {
-                usr_id: userData.id,
-                usr_name: userData.username,
-                usr_tag: userData.discriminator,
-                usr_global_name: userData.global_name,
-                usr_avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.webp?size=1024`
+                error: 'Database not found'
             }
         }
     } catch {
         //Discord API Down Case
+        console.log(`Can't connecting to DiscordAPI, Discord SignIn`)
         return {
             status: 404,
-            message: 'Discord API not found'
+            error: 'Discord API not found'
         }
     }
 });

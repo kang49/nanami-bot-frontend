@@ -133,7 +133,7 @@ if (window.location.hash) {
                     router.push('/');
                 } else {
                     isError.value = true;
-                    errorMsg.value = authData.message ?? 'Data not found'
+                    errorMsg.value = authData.error ?? 'Important data missing'
 
                     setTimeout(() => {
                         isLoading.value = false;
@@ -144,7 +144,7 @@ if (window.location.hash) {
             } else {
                 //SomeThings Down
                 isError.value = true;
-                errorMsg.value = authData.message
+                errorMsg.value = authData.error
 
                 setTimeout(() => {
                     isLoading.value = false;

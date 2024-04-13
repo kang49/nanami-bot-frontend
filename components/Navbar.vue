@@ -235,18 +235,36 @@ function handleTouchEnd(event: TouchEvent) {
 usr_tag.value = `#${usr_tag.value}`
 if (usr_tag.value === '#0') usr_tag.value = '';
 
-function SignOut() {
-    Cookies.remove('usr_id');
-    Cookies.remove('usr_name');
-    Cookies.remove('usr_tag');
-    Cookies.remove('usr_global_name');
-    Cookies.remove('usr_avatar');
+async function SignOut() {
+    let CookieRemover = () => {
+        Cookies.remove('usr_id');
+        Cookies.remove('usr_name');
+        Cookies.remove('usr_tag');
+        Cookies.remove('usr_global_name');
+        Cookies.remove('usr_avatar');
 
-    usr_name = ref();
-    usr_tag = ref();
-    usr_avatar = ref();
+        usr_name = ref();
+        usr_tag = ref();
+        usr_avatar = ref();
 
-    window.location.reload(); //reload if user stil on target page
+        window.location.reload(); //reload if user stil on target page
+    }
+
+    try {
+        await fetch('/api/auth/signout', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usr_id: Cookies.get('usr_id')
+            })
+        });
+        CookieRemover();
+    } catch (e) {
+        console.log(e)
+        CookieRemover();
+    }
 }
 
 const toggleDropdown = () => {

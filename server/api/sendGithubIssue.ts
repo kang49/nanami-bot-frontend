@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
                     if (!response.ok) throw new Error('Failed to upload image to Imgur');
                     return response.json() as Promise<ImgurResponse>;
                 } catch (error) {
-                    console.error('Error uploading image:', error);
+                    console.error('Error uploading image:', error, 'sendGithubIssue');
                     return null;
                 }
             };
@@ -51,10 +51,10 @@ export default defineEventHandler(async (event) => {
                 const results = await Promise.all(uploadPromises);
                 results.forEach((result, index) => {
                     if (result && result.success) {
-                        console.log(`Image ${index + 1} uploaded successfully: ${result.data.link}`);
+                        console.log(`Image ${index + 1} uploaded successfully: ${result.data.link}, sendGithubIssue`);
                         images_list.push(result.data.link);
                     } else {
-                        console.log(`Image ${index + 1} failed to upload.`);
+                        console.log(`Image ${index + 1} failed to upload., sendGithubIssue`);
                     }
                 });
             };
@@ -97,7 +97,7 @@ export default defineEventHandler(async (event) => {
             `## Description 📝\n${body.description}\n\n## Images 🏞️\n${images_list.map(url => `<img src="${url}" width="300" style="margin: 10px 0;" />`).join('\n')}\n\n## Details\n- **UTC Time 🕘**: ${date_format}\n- **Contact 🌐**: ${body.contact}\n\n*This issue was automatically created from user on a Nanami web submission.*`,
             [body.labels]
           );          
-        console.log('Issue Uploaded')
+        console.log(`${body.title} Issue is uploaded, sendGithubIssue`);
         return {
             status: 200, message: 'Success'
         }
