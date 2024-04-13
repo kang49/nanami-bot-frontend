@@ -4,6 +4,9 @@ const prisma = new PrismaClient()
 export default defineEventHandler(async (event) => {
     //Variable set
     const body = await readBody(event);
+    const headers = event.node.req.headers;
+    const forwardedIps = headers['x-forwarded-for'];
+    const ip = Array.isArray(forwardedIps) ? forwardedIps[0] : forwardedIps ?? null;
     const now = new Date();
 
 
@@ -30,24 +33,45 @@ export default defineEventHandler(async (event) => {
                     usr_name: userData.username,
                     usr_tag: userData.discriminator,
                     usr_global_name: userData.global_name,
-                    usr_avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.webp?size=1024`,
-                    usr_access_token: `${accessToken}`,
-                    usr_access_token_exp: accessTokenExpDate,
-                    usr_latest_login: now,
-                    usr_latest_access: now
+                    usr_avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.webp?size=1024`
                 },
                 create: {
                     usr_id: userData.id,
                     usr_name: userData.username,
                     usr_tag: userData.discriminator,
                     usr_global_name: userData.global_name,
-                    usr_avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.webp?size=1024`,
-                    usr_access_token: `${accessToken}`,
-                    usr_access_token_exp: accessTokenExpDate,
-                    usr_latest_login: now,
-                    usr_latest_access: now
+                    usr_avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.webp?size=1024`
                 }
-            })
+            });
+            const updateResult = await prisma.webUser_Session.updateMany({
+                where: {
+                    usr_id_ses: userData.id,
+                    ses_agent: headers['user-agent'],
+                    ses_ip_address: ip
+                },
+                data: {
+                    ses_access_token: accessToken,
+                    ses_access_token_exp: accessTokenExpDate,
+                    ses_latest_login: now,
+                    ses_latest_access: now
+                }
+            });
+        
+            // Check if any records were updated
+            if (updateResult.count === 0) {
+                // No records updated, so create a new session
+                await prisma.webUser_Session.create({
+                    data: {
+                        usr_id_ses: userData.id,
+                        ses_agent: headers['user-agent'],
+                        ses_ip_address: ip,
+                        ses_access_token: accessToken,
+                        ses_access_token_exp: accessTokenExpDate,
+                        ses_latest_login: now,
+                        ses_latest_access: now
+                    }
+                });
+            }
 
             console.log(`SignIn for ${userData.username}#${userData.discriminator} success, Discord SignIn`)
             return {

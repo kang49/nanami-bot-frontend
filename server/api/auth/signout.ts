@@ -4,24 +4,25 @@ const prisma = new PrismaClient()
 export default defineEventHandler(async (event) => {
     //Variable set
     const body = await readBody(event);
+    const headers = event.node.req.headers;
+    const forwardedIps = headers['x-forwarded-for'];
+    const ip = Array.isArray(forwardedIps) ? forwardedIps[0] : forwardedIps ?? null;
 
     if (body.usr_id) {
         try {
-            const userDataDel = await prisma.webUser.update({
+            const userDataDel = await prisma.webUser_Session.updateMany({
                 where: {
-                    usr_id: body.usr_id
+                    usr_id_ses: body.usr_id,
+                    ses_agent: headers['user-agent'],
+                    ses_ip_address: ip
                 },
                 data: {
-                    usr_access_token: null,
-                    usr_access_token_exp: null
-                },
-                select: {
-                    usr_name: true,
-                    usr_tag: true
+                    ses_access_token: null,
+                    ses_access_token_exp: null
                 }
             });
         
-            console.log(`SignOut for ${userDataDel.usr_name}#${userDataDel.usr_tag} success, SignOut`);
+            console.log(`SignOut for ${body.usr_name}#${body.usr_tag} success, SignOut`);
             return {
                 status: 200
             }
