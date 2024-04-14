@@ -134,7 +134,12 @@ if (window.location.hash) {
                     isLoading.value = false;
                     signInBTN.value = discordOAuthUrl;
                     document.title = '(Sign-In) มาเริ่มต้นเข้าสู่โลกเวทย์มนต์กับ Nanami กัน';
-                    router.push('/');
+                    if (Cookies.get('is_go_dsh') === 'true') {
+                        Cookies.remove('is_go_dsh');
+                        router.push('/dashboard')
+                    } else {
+                        router.push('/');
+                    }
                 } else {
                     isError.value = true;
                     errorMsg.value = authData.error ?? 'Important data missing'

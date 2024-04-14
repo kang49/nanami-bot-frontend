@@ -31,7 +31,7 @@
                         </div>
                         <div
                             class="min-w-max w-[100px] h-max px-[10px] py-[3px] rounded-[20px] shadow-[inset_0_0_0_2px_#0099FF] flex justify-center items-center lg:px-[30px] lg:rounded-[30px]">
-                            <NuxtLink to="/" target="_blank">
+                            <NuxtLink to="/dashboard">
                                 <h4 class="text-white font-normal text-[18px] lg:text-[20px] 2xl:text-[25px]">แดชบอร์ด
                                 </h4>
                             </NuxtLink>

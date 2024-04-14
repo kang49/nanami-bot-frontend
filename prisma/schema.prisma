@@ -113,6 +113,7 @@ model webUser_Session {
   usr_id_ses           String    @db.VarChar(255)
   ses_agent            String?   @db.LongText
   ses_ip_address       String?   @db.VarChar(255)
+  ses_token_type       String?   @db.VarChar(255)
   ses_access_token     String?   @db.VarChar(255)
   ses_latest_login     DateTime? @db.DateTime(0)
   ses_access_token_exp DateTime? @db.DateTime(0)

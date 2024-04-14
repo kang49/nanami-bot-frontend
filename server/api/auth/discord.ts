@@ -50,6 +50,7 @@ export default defineEventHandler(async (event) => {
                     ses_ip_address: ip
                 },
                 data: {
+                    ses_token_type: tokenType,
                     ses_access_token: accessToken,
                     ses_access_token_exp: accessTokenExpDate,
                     ses_latest_login: now,
@@ -65,6 +66,7 @@ export default defineEventHandler(async (event) => {
                         usr_id_ses: userData.id,
                         ses_agent: headers['user-agent'],
                         ses_ip_address: ip,
+                        ses_token_type: tokenType,
                         ses_access_token: accessToken,
                         ses_access_token_exp: accessTokenExpDate,
                         ses_latest_login: now,
@@ -73,7 +75,7 @@ export default defineEventHandler(async (event) => {
                 });
             }
 
-            console.log(`SignIn for ${userData.username}#${userData.discriminator} success, Discord SignIn`)
+            console.log(`SignIn for ${userData.username}#${userData.discriminator} from IP: ${ip} success, Discord SignIn`)
             return {
                 status: 200,
                 message: 'Success',
@@ -85,7 +87,7 @@ export default defineEventHandler(async (event) => {
                     usr_avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.webp?size=1024`
                 }
             }
-        } catch {
+        } catch (e) {
             console.log(`Database not found, Discord SignIn`)
             return {
                 status: 404,

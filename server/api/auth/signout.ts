@@ -10,15 +10,11 @@ export default defineEventHandler(async (event) => {
 
     if (body.usr_id) {
         try {
-            const userDataDel = await prisma.webUser_Session.updateMany({
+            await prisma.webUser_Session.deleteMany({
                 where: {
                     usr_id_ses: body.usr_id,
                     ses_agent: headers['user-agent'],
                     ses_ip_address: ip
-                },
-                data: {
-                    ses_access_token: null,
-                    ses_access_token_exp: null
                 }
             });
         
