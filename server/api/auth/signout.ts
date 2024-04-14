@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
                 status: 200
             }
         } catch {
-            console.log(`SignOut failure Database not found, SignOut`);
+            console.error(`SignOut failure Database not found, SignOut`);
             return {
                 status: 404,
                 error: 'Database not found'
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
         }
     }
     else {
-        console.log(`Important data missing, 'SignOut`);
+        console.error(`Important data missing, 'SignOut`);
         return {
             status: {
                 status: 204,

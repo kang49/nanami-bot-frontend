@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
                         console.log(`Image ${index + 1} uploaded successfully: ${result.data.link}, sendGithubIssue`);
                         images_list.push(result.data.link);
                     } else {
-                        console.log(`Image ${index + 1} failed to upload., sendGithubIssue`);
+                        console.error(`Image ${index + 1} failed to upload., sendGithubIssue`);
                     }
                 });
             };
@@ -103,6 +103,6 @@ export default defineEventHandler(async (event) => {
         }
 
     } catch (e) {
-        console.log(e, 'sendGithubIssue')
+        console.error(e, 'sendGithubIssue')
     }
 })

@@ -88,7 +88,7 @@ export default defineEventHandler(async (event) => {
                 }
             }
         } catch (e) {
-            console.log(`Database not found, Discord SignIn`)
+            console.error(`Database not found, Discord SignIn`)
             return {
                 status: 404,
                 error: 'Database not found'
@@ -96,7 +96,7 @@ export default defineEventHandler(async (event) => {
         }
     } catch {
         //Discord API Down Case
-        console.log(`Can't connecting to DiscordAPI, Discord SignIn`)
+        console.error(`Can't connecting to DiscordAPI, Discord SignIn`)
         return {
             status: 404,
             error: 'Discord API not found'

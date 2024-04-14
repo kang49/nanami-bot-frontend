@@ -86,7 +86,6 @@ async function GetUserGuilds() {
 
         if (userGuildsData.status === 200) {
             if (userGuildsData.data.length) {
-                console.log(userGuildsData.data)
                 userGuildsLists.value = userGuildsData.data;
             } else {
                 //No data Handle
