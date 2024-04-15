@@ -8,12 +8,12 @@
             <div class="relative w-full h-full">
                 <transition name="slide-fade">
                 <div v-show="!currentmenu || currentmenu === 'menu'" key="menu" class="w-full h-full">
-                    <Dashboard_Menu @update:currentmenu="handleCurrentMenu" />
+                    <Dsh_Menu @update:currentmenu="handleCurrentMenu" />
                 </div>
                 </transition>
                 <transition name="slide-fade">
                 <div v-if="currentmenu === 'account'" key="account" class="w-full h-full">
-                    <Account @update:currentmenu="handleCurrentMenu" />
+                    <Dsh_Account @update:currentmenu="handleCurrentMenu" />
                 </div>
                 </transition>
             </div>
@@ -26,6 +26,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Cookies from 'js-cookie';
+import Dsh_Menu from '~/components/Dsh_Menu.vue';
 
 //Variable set
 let istoggleMenu = ref(false);

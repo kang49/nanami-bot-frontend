@@ -100,25 +100,50 @@ model autoDeleteMsg {
 }
 
 model webUser {
-  id              Int               @id @default(autoincrement()) @db.UnsignedInt
-  usr_id          String            @unique(map: "webuser_usr_id_unique") @db.VarChar(255)
-  usr_name        String            @db.VarChar(255)
-  usr_tag         String?           @db.VarChar(255)
-  usr_global_name String            @db.VarChar(255)
-  usr_avatar      String            @db.VarChar(255)
-  webUser_Session webUser_Session[]
+  id                 Int                  @id @default(autoincrement()) @db.UnsignedInt
+  usr_id             String               @unique(map: "webuser_usr_id_unique") @db.VarChar(255)
+  usr_name           String               @db.VarChar(255)
+  usr_tag            String?              @db.VarChar(255)
+  usr_global_name    String               @db.VarChar(255)
+  usr_avatar         String               @db.VarChar(255)
+  webUser_Session    webUser_Session[]
+  webUser_card_color webUser_card_color[]
 }
+
 model webUser_Session {
   id                   Int       @id @default(autoincrement()) @db.UnsignedInt
   usr_id_ses           String    @db.VarChar(255)
   ses_agent            String?   @db.LongText
   ses_ip_address       String?   @db.VarChar(255)
-  ses_token_type       String?   @db.VarChar(255)
   ses_access_token     String?   @db.VarChar(255)
   ses_latest_login     DateTime? @db.DateTime(0)
   ses_access_token_exp DateTime? @db.DateTime(0)
   ses_latest_access    DateTime  @db.DateTime(0)
+  ses_token_type       String?   @db.VarChar(255)
   webUser              webUser   @relation(fields: [usr_id_ses], references: [usr_id], onUpdate: Restrict, map: "webuser_session_usr_id_ses_foreign")
 
-  @@index([usr_id_ses], map: "webuser_session_usr_id_ses_foreign")
+  @@index([usr_id_ses], map: "webuser_session_usr_id_ses_index")
+}
+
+model cl_badges_color {
+  id                 Int                @id @default(autoincrement()) @db.UnsignedInt
+  usr_id_bc          String             @db.VarChar(255) @unique
+  bc_red             Int
+  bc_green           Int
+  bc_blue            Int
+  webUser_card_color webUser_card_color @relation(fields: [usr_id_bc], references: [usr_id_cl], onUpdate: Restrict, map: "cl_badges_color_usr_id_bc_foreign")
+
+  @@index([usr_id_bc], map: "cl_badges_color_usr_id_bc_foreign")
+}
+
+model webUser_card_color {
+  id                    Int               @id @default(autoincrement()) @db.UnsignedInt
+  usr_id_cl             String            @db.VarChar(255) @unique
+  cl_main_color         String?           @db.VarChar(255)
+  cl_sec_color          String?           @db.VarChar(255)
+  cl_profile_ring_color String?           @db.VarChar(255)
+  cl_badges_color       cl_badges_color[]
+  webUser               webUser           @relation(fields: [usr_id_cl], references: [usr_id], onUpdate: Restrict, map: "webuser_card_color_usr_id_cl_foreign")
+
+  @@index([usr_id_cl], map: "webuser_card_color_usr_id_cl_foreign")
 }

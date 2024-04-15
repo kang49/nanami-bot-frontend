@@ -59,7 +59,27 @@ export default defineEventHandler(async (event) => {
                     usr_name: true,
                     usr_global_name: true,
                     usr_avatar: true,
-                    usr_tag: true
+                    usr_tag: true,
+                    webUser_card_color: {
+                        where: {
+                            usr_id_cl: body.usr_id
+                        },
+                        select: {
+                            cl_main_color: true,
+                            cl_sec_color: true,
+                            cl_profile_ring_color: true,
+                            cl_badges_color: {
+                                where: {
+                                    usr_id_bc: body.usr_id
+                                },
+                                select: {
+                                    bc_red: true,
+                                    bc_green: true,
+                                    bc_blue: true
+                                }
+                            }
+                        }
+                    }
                 },
             });
             if (userDataDB && userDataDB.webUser_Session.length > 0) {

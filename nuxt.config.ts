@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   plugins: [
     { src: '~/src/check_session_exp.ts', mode: 'client' }
   ],
-  modules: ["@nuxtjs/tailwindcss", '@nuxt/image'],
+  modules: ["@nuxtjs/tailwindcss", '@nuxt/image', 'nuxt-primevue'],
   css: ['~/assets/styles.css'],
   app: {
     head: {

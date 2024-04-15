@@ -134,3 +134,9 @@ html {
 .slide-fade-enter-to, .slide-fade-leave-from {
     transform: translateX(0);
 }
+
+/* Color Picker */
+.p-colorpicker-preview {
+    width: 50px;  /* Example: Change width to 2rem */
+    height: 30px; /* Example: Change height to 2rem */
+}
