@@ -31,7 +31,7 @@
                         </div>
                         <div
                             class="min-w-max w-[100px] h-max px-[10px] py-[3px] rounded-[20px] shadow-[inset_0_0_0_2px_#0099FF] flex justify-center items-center lg:px-[30px] lg:rounded-[30px]">
-                            <NuxtLink to="/" target="_blank">
+                            <NuxtLink to="/dashboard">
                                 <h4 class="text-white font-normal text-[18px] lg:text-[20px] 2xl:text-[25px]">แดชบอร์ด
                                 </h4>
                             </NuxtLink>
@@ -111,11 +111,6 @@
 import { ref, onMounted } from 'vue';
 import CPU_Usage_Chart from '~/components/CPU_Usage_Chart.vue';
 
-//Change pagetheme
-document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
-//Change Title
-document.title = 'Nanami Bot ที่น่ารักสำหรับทุกคน';
-
 //Animation Variables
 const nanami_ta = ['Nanami Bot', 'บอทนานามิ', 'なな美ボット'];
 const nanami_ta_ref = ref('');
@@ -135,6 +130,10 @@ let scrollStates = ref({
 onMounted(() => {
     //Animation Scripts
     setTimeout(() => {
+        //Change pagetheme
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02071A');
+        //Change Title
+        document.title = 'Nanami Bot ที่น่ารักสำหรับทุกคน';
         isOnMounted.value = true;
     }, 200);
 

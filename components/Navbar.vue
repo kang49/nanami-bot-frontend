@@ -56,16 +56,30 @@
                     <div class="w-[3px] h-[30px]" :class="{ 'bg-[#02071A]': !pagesTheme, 'bg-white': pagesTheme }">
                     </div>
 
-                    <NuxtLink class="fab fa-github text-[27px]"
+                    <NuxtLink class="fab fa-github text-[27px] 2xl:text-[33px]"
                         :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></NuxtLink>
-                    <NuxtLink class="fab fa-discord text-[27px]"
+                    <NuxtLink class="fab fa-discord text-[27px] 2xl:text-[33px]"
                         :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></NuxtLink>
 
                     <div class="w-[3px] h-[30px] " :class="{ 'bg-[#02071A]': !pagesTheme, 'bg-white': pagesTheme }">
                     </div>
                 </div>
-                <NuxtLink to="/signin" class="fad fa-user text-[21px] 2xl:text-[30px]"
-                    :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }"></NuxtLink>
+                <div>
+                    <NuxtLink v-if="!usr_name" to="/signin" class="fad fa-user text-[21px] 2xl:text-[30px]"
+                        :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">
+                    </NuxtLink>
+                    <div v-if="usr_name" class="flex w-full h-max justify-end items-center space-x-[10px] relative">
+                        <div @click="toggleDropdown" class="cursor-pointer flex items-center space-x-[10px]">
+                            <NuxtImg v-if="usr_avatar" class="w-[30px] rounded-full 2xl:w-[40px]" :src="usr_avatar"></NuxtImg>
+                            <h6 class="font-bold text-[18px] transition-all duration-200 2xl:text-[25px]" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }">{{ `${usr_name}${usr_tag}` }}</h6>
+                            <i class="fas fa-chevron-down transition-all duration-500" :class="{'rotate-180': dropdownOpen, 'text-black': !pagesTheme, 'text-white': pagesTheme}"></i>
+                        </div>
+                        <div v-show="dropdownOpen" class="absolute right-0 mt-[100px] py-2 w-48 rounded-md shadow-xl z-50 transition-all duration-200"
+                            :class="{'opacity-100': dropdownOpen, 'opacity-0': !dropdownOpen, 'bg-black/20': !pagesTheme, 'bg-white/20': pagesTheme}">
+                            <button @click="SignOut" class="block font-bold px-4 py-2 text-[16px] w-full" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }">Sign Out</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -124,9 +138,19 @@
                 </div>
                 <div class="font-bold text-[16px] transition-all duration-[1300ms]"
                     :class="{ 'opacity-100': istoggle, 'opacity-0': !istoggle, 'text-[#02071A]': !pagesTheme && path != '/signin', 'text-white': pagesTheme && path != '/signin', 'text-[#0099FF]': path == '/signin' }">
-                    <NuxtLink @click="hamberBTN('menu')" to="/signin">
+                    <!-- SignIn -->
+                    <NuxtLink v-if="!usr_name" @click="hamberBTN('menu')" to="/signin">
                         <h6><i class="fas fa-sign-in mr-2"></i>Sign In</h6>
                     </NuxtLink>
+                    <!-- User Profile -->
+                    <div v-if="usr_name" class="flex w-full h-max justify-end items-center space-x-[10px]">
+                        <NuxtImg v-if="usr_avatar" class="w-[27px] rounded-full" :src="usr_avatar"></NuxtImg>
+                        <h6 class="transition-all duration-[1300ms]" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }">{{ `${usr_name}${usr_tag}` }}</h6>
+                    </div>
+                    <!-- SignOut -->
+                    <button v-if="usr_name" @click="hamberBTN('menu'), SignOut()">
+                        <h6 class="transition-all duration-[1300ms]" :class="{ 'text-black': !pagesTheme, 'text-white': pagesTheme }"><i class="fas fa-sign-out mr-2"></i>Sign Out</h6>
+                    </button>
                 </div>
             </div>
         </div>
@@ -134,6 +158,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+import Cookies from 'js-cookie';
 
 const istoggle = ref(false);
 let pagesTheme = ref();
@@ -141,6 +166,10 @@ let startX: number | null = null; // Store the starting position
 const emit = defineEmits(['update:istoggle']);
 const props = defineProps(['theme', 'scroll_value']);
 const path = ref(useRoute().path);
+let usr_name = ref(Cookies.get('usr_name'));
+let usr_tag = ref(Cookies.get('usr_tag'));
+let usr_avatar = ref(Cookies.get('usr_avatar'));
+const dropdownOpen = ref(false);
 
 //PageTheme Update
 setInterval(() => {
@@ -149,17 +178,21 @@ setInterval(() => {
 
 let menuOpening = false;
 function hamberBTN(from: string) {
-    //ถ้าเมนูกำลังเปิด แต่มีคำสั่งปิดให้เปิดต่อไป
-    if (menuOpening) {
-        emit('update:istoggle', true);
-        return istoggle.value = true;
+    // Check if the menu is currently being toggled
+    if (menuOpening) return; // Exit the function to prevent any further action while toggling is active
+
+    // If menu is not currently toggling, proceed with toggling logic
+    menuOpening = true; // Set flag to true to indicate toggling is starting
+    if (istoggle.value === false && from === 'screen') {
+        menuOpening = false; // Reset flag if no toggle action should happen
+        return;
     }
-    if (istoggle.value === false && from === 'screen') return;
-    istoggle.value = !istoggle.value;
+
+    istoggle.value = !istoggle.value; // Toggle the istoggle value
     emit('update:istoggle', istoggle.value);
-    menuOpening = true;
+
     setTimeout(() => {
-        menuOpening = false;
+        menuOpening = false; // Reset the flag after 1 second
     }, 1000);
 }
 
@@ -199,4 +232,45 @@ function handleTouchEnd(event: TouchEvent) {
     }
     startX = null; // Reset for the next action
 }
+usr_tag.value = `#${usr_tag.value}`
+if (usr_tag.value === '#0') usr_tag.value = '';
+
+async function SignOut() {
+    let CookieRemover = () => {
+        Cookies.remove('usr_id');
+        Cookies.remove('usr_name');
+        Cookies.remove('usr_tag');
+        Cookies.remove('usr_global_name');
+        Cookies.remove('usr_avatar');
+
+        usr_name = ref();
+        usr_tag = ref();
+        usr_avatar = ref();
+
+        window.location.reload(); //reload if user stil on target page
+    }
+
+    try {
+        await fetch('/api/auth/signout', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usr_id: Cookies.get('usr_id'),
+                usr_name: Cookies.get('usr_name'),
+                usr_tag: Cookies.get('usr_tag')
+            })
+        });
+        CookieRemover();
+    } catch (e) {
+        console.log(e)
+        CookieRemover();
+    }
+}
+
+const toggleDropdown = () => {
+    dropdownOpen.value = !dropdownOpen.value;
+};
+
 </script>

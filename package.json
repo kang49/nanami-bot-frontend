@@ -8,21 +8,27 @@
     "build": "nuxt build",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "PORT=3000 bun .output/server/index.mjs",
-    "product": "bun install && nuxt build"
+    "start": "PORT=3000 NUXT_DATABASE_URL= bun .output/server/index.mjs",
+    "product": "bun install && nuxt build && bun prisma db pull && bun prisma generate"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/image": "^1.4.0",
     "@nuxtjs/tailwindcss": "^6.11.4",
+    "@types/js-cookie": "^3.0.6",
     "nuxt": "^3.8.0",
+    "nuxt-primevue": "^0.3.1",
+    "prisma": "^5.12.1",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
     "@octokit/core": "^6.1.1",
+    "@prisma/client": "^5.12.1",
     "@vuepic/vue-datepicker": "^8.4.0",
     "apexcharts": "^3.47.0",
+    "js-cookie": "^3.0.5",
+    "primevue": "^3.51.0",
     "vue3-apexcharts": "^1.5.2"
   }
 }

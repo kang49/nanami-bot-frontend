@@ -121,3 +121,22 @@ html {
     scrollbar-width: none;
     /* Firefox */
 }
+
+/* Dashboard State */
+.slide-fade-enter-active, .slide-fade-leave-active {
+    transition: all 0.5s ease;
+    position: absolute;
+    width: 100%;
+}
+.slide-fade-enter-from, .slide-fade-leave-to {
+    transform: translateX(-100%);
+}
+.slide-fade-enter-to, .slide-fade-leave-from {
+    transform: translateX(0);
+}
+
+/* Color Picker */
+.p-colorpicker-preview {
+    width: 50px;  /* Example: Change width to 2rem */
+    height: 30px; /* Example: Change height to 2rem */
+}
