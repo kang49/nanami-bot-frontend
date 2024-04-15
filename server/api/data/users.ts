@@ -96,6 +96,10 @@ export default defineEventHandler(async (event) => {
                     if (userData) {
                         const flagsList = decodeFlags(userData.public_flags);
                         if (userData.banner) flagsList.push('Nitro');
+
+                        //Delete Token from data
+                        userDataDB.webUser_Session[0].ses_access_token = 'หนูไม่ให้ Token หรอกนะคะ แบร่ 🤪';
+
                         console.log(`Get ${body.usr_name}#${body.usr_tag}'s data success, UsersData API`);
                         return {
                             status: 200,

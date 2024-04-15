@@ -21,7 +21,9 @@ export default defineNuxtPlugin(async () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    usr_id: Cookies.get('usr_id')
+                    usr_id: Cookies.get('usr_id'),
+                    usr_name: Cookies.get('usr_name'),
+                    usr_tag: Cookies.get('usr_tag')
                 })
             });
             const checkTokenData = await checkTokenRes.json();

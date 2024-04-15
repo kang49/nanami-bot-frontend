@@ -70,18 +70,19 @@ export default defineEventHandler(async (event) => {
                     }
                 }
             } else {
-                // Handle case where expiration date is missing or invalid
-                DelSessionInDB(body.usr_id, headers['user-agent'] ?? null, ip);
+                // Handle case where expiration date is missing
+                console.error(`CheckExp failure because data or ip not found from ${body.usr_name}#${body.usr_tag} Agent: ${headers['user-agent']}, IP: ${ip}`)
                 return {
                     status: 200,
-                    token: 'exp'
+                    token: 'ok'
                 }
             }
 
-        } catch (e) { //Handle database disconnect case
+        } catch (e) { //Handle database disconnect case)
+            console.error(`CheckExp failure because Database disconnect from ${body.usr_name}#${body.usr_tag} Agent: ${headers['user-agent']}, IP: ${ip}`)
             return {
                 status: 200,
-                token: 'exp'
+                token: 'ok'
             }
         }
     }

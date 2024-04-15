@@ -30,7 +30,8 @@
                     <div v-if="usr_badges.length > 0"
                         class="w-max h-max px-[10px] py-[4px] rounded-[5px] flex justify-center items-center absolute bottom-[15px] right-[20px] space-x-[5px]"
                         :style="{ background: `rgba(${colorSettings.badges.r}, ${colorSettings.badges.g}, ${colorSettings.badges.b}, 0.5)` }">
-                        <NuxtImg v-for="badge in usr_badges" :key="badge" class="h-[15px]" :src="userBadgesDic[badge]"></NuxtImg>
+                        <NuxtImg v-for="badge in usr_badges" :key="badge" class="h-[15px]" :src="userBadgesDic[badge]">
+                        </NuxtImg>
                     </div>
                 </div>
             </div>
@@ -62,10 +63,13 @@
 
                 <!-- Buttons for Theme Change -->
                 <div v-if="isThemeChange" class="w-full h-max flex items-center space-x-[10px]">
-                    <button class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]" @click="UpdateProfileColor">
+                    <button
+                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]"
+                        @click="UpdateProfileColor">
                         <h4 class="text-white text-[16px]">บันทึก</h4>
                     </button>
-                    <button class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] mt-[20px]" @click="ResetTheme">
+                    <button class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] mt-[20px]"
+                        @click="ResetTheme">
                         <h4 class="text-white text-[16px]">รีเซ็ต</h4>
                     </button>
                 </div>
@@ -101,7 +105,7 @@ const colorSettings = ref({
     ring: 'FFFFFF',
     badges: { r: 255, g: 255, b: 255 }
 });
-let webUser_cc:any;  // Initialize webUser_cc as an empty object
+let webUser_cc: any;  // Initialize webUser_cc as an empty object
 
 onMounted(() => {
     setTimeout(() => {
@@ -118,31 +122,45 @@ async function GetUserData() {
         });
         const userData = await response.json();
 
-        if (response.ok && userData.data_db) {
-            const { webUser_card_color } = userData.data_db;
-            const colors = webUser_card_color[0];
-            usr_name.value = userData.data_db.usr_name;
-            usr_global_name.value = userData.data_db.usr_global_name;
-            usr_tag.value = userData.data_db.usr_tag;
-            usr_avatar.value = userData.data_db.usr_avatar;
-            colorSettings.value = {
-                main: colors.cl_main_color,
-                secondary: colors.cl_sec_color,
-                ring: colors.cl_profile_ring_color,
-                badges: {
-                    r: colors.cl_badges_color[0].bc_red,
-                    g: colors.cl_badges_color[0].bc_green,
-                    b: colors.cl_badges_color[0].bc_blue
+        if (userData.status === 200 && userData.data_db) {
+            let colors;
+            if (Array.isArray(userData.data_db.webUser_card_color)) {
+                // Handle as array
+                colors = userData.data_db.webUser_card_color[0];
+            } else {
+                // Handle as object
+                colors = userData.data_db.webUser_card_color;
+            }
+
+            if (colors) {
+                usr_name.value = userData.data_db.usr_name;
+                usr_global_name.value = userData.data_db.usr_global_name;
+                usr_tag.value = userData.data_db.usr_tag;
+                usr_avatar.value = userData.data_db.usr_avatar;
+                if (colors.cl_badges_color) {
+                    colorSettings.value = {
+                        main: colors.cl_main_color,
+                        secondary: colors.cl_sec_color,
+                        ring: colors.cl_profile_ring_color,
+                        badges: {
+                            r: colors.cl_badges_color.bc_red,
+                            g: colors.cl_badges_color.bc_green,
+                            b: colors.cl_badges_color.bc_blue
+                        }
+                    };
+                    webUser_cc = {
+                        cl_main_color: colors.cl_main_color,
+                        cl_sec_color: colors.cl_sec_color,
+                        cl_profile_ring_color: colors.cl_profile_ring_color,
+                        cl_badges_color: colors.cl_badges_color
+                    };
+                } else {
+                    console.error("Badges color data is missing or invalid");
                 }
-            };
+            } else {
+                console.error("Color data is undefined");
+            }
             usr_badges.value = userData.badges || [];
-            // Update webUser_cc with the fetched colors
-            webUser_cc = {
-                cl_main_color: colors.cl_main_color,
-                cl_sec_color: colors.cl_sec_color,
-                cl_profile_ring_color: colors.cl_profile_ring_color,
-                cl_badges_color: colors.cl_badges_color[0]
-            };
         } else {
             console.error('Failed to fetch user data:', userData);
         }

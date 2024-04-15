@@ -9,7 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "start": "PORT=3000 NUXT_DATABASE_URL= bun .output/server/index.mjs",
-    "product": "bun install && nuxt build && bun prisma db pull && bun prisma generate"
+    "product": "bun install && bun prisma db pull && bun prisma generate && nuxt build"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
