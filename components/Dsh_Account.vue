@@ -16,8 +16,7 @@
             <div class="w-full h-[200px] px-[20px] mt-[30px]">
                 <div class="w-full h-full rounded-[20px] relative overflow-hidden"
                     :style="{ background: `linear-gradient(90deg, #${colorSettings.main} 0%, #${colorSettings.secondary} 100%)` }">
-                    <div class="w-full h-[50%] rounded-t-[20px] bg-[url('/img/nanami_banner.webp')] bg-cover bg-center">
-                    </div>
+                    <div :style="{ backgroundImage: `url('${usr_banner}')` }" class="w-full h-[50%] rounded-t-[20px] bg-cover bg-center"></div>
                     <div class="w-full h-[50%] absolute bottom-[30px] left-[20px] flex">
                         <NuxtImg class="w-[100px] rounded-full ring-[5px]"
                             :style="{ boxShadow: `0 0 0 5px #${colorSettings.ring}` }" :src="usr_avatar">
@@ -74,6 +73,21 @@
                     </button>
                 </div>
             </div>
+
+            <div class="w-full h-max flex justify-center p-[20px]">
+                <div class="w-full h-[1px] bg-white/30"></div>
+            </div>
+
+            <!-- Banner Settings -->
+            <div class="w-full h-max px-[20px]">
+                <h4 class="text-white text-[16px] font-bold">แบนเนอร์</h4>
+                <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
+                    <button @click="triggerFileInput" class="w-max h-max py-[5px] px-[10px] bg-[#0099FF] rounded-[5px] flex justify-center items-center">
+                    <h4 class="text-white text-[16px] font-bold">เปลี่ยนแบนเนอร์</h4>
+                    </button>
+                    <input type="file" ref="banner_imagge_input" hidden @change="handleFileChange" accept="image/*" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -84,11 +98,12 @@ import Cookies from 'js-cookie';
 import 'primevue/resources/themes/aura-light-green/theme.css';
 
 const isOnMounted = ref(false);
-const user_id = ref(Cookies.get('usr_id'));
+const usr_id = ref(Cookies.get('usr_id'));
 const usr_name = ref(Cookies.get('usr_name'));
 const usr_global_name = ref(Cookies.get('usr_global_name'));
 const usr_tag = ref(Cookies.get('usr_tag'));
 const usr_avatar = ref(Cookies.get('usr_avatar'));
+const usr_banner = ref('/img/nanami_banner.webp');
 const usr_badges = ref([]);
 const userBadgesDic = ref({
     'HypeSquad Online House 1': '/img/bravery.webp',
@@ -106,6 +121,8 @@ const colorSettings = ref({
     badges: { r: 255, g: 255, b: 255 }
 });
 let webUser_cc: any;  // Initialize webUser_cc as an empty object
+const banner_imagge_input = ref();
+const bannerImageBase64 = ref();
 
 onMounted(() => {
     setTimeout(() => {
@@ -118,7 +135,7 @@ async function GetUserData() {
         const response = await fetch('api/data/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usr_id: user_id.value, usr_name: usr_name.value, usr_tag: usr_tag.value })
+            body: JSON.stringify({ usr_id: usr_id.value, usr_name: usr_name.value, usr_tag: usr_tag.value })
         });
         const userData = await response.json();
 
@@ -137,6 +154,7 @@ async function GetUserData() {
                 usr_global_name.value = userData.data_db.usr_global_name;
                 usr_tag.value = userData.data_db.usr_tag;
                 usr_avatar.value = userData.data_db.usr_avatar;
+                usr_banner.value = userData.data_db.usr_banner;
                 if (colors.cl_badges_color) {
                     colorSettings.value = {
                         main: colors.cl_main_color,
@@ -215,7 +233,7 @@ async function UpdateProfileColor() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                usr_id: user_id.value,
+                usr_id: usr_id.value,
                 usr_name: usr_name.value,
                 usr_tag: usr_tag.value,
                 main_color: colorSettings.value.main,
@@ -237,6 +255,46 @@ async function UpdateProfileColor() {
         alert('เกิดปัญหาขึ้นกับระบบหลังบ้าน ขอโทษด้วยนะคะ 😭')
     }
 }
+
+const triggerFileInput = () => {
+  banner_imagge_input.value.click();
+};
+
+const handleFileChange = () => {
+  const files = banner_imagge_input.value.files;
+  if (files.length > 0) {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+        if (e.target) {
+            usr_banner.value = '/img/butterfly_loading.gif';
+            bannerImageBase64.value = e.target.result;
+            try {
+                const uploadBanner = await fetch('api/profileBanner', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        usr_id: usr_id.value,
+                        usr_name: usr_name.value,
+                        usr_tag: usr_tag.value,
+                        banner_image: bannerImageBase64.value,
+                        return_url: true
+                    })
+                });
+                const uploadBannerData = await uploadBanner.json();
+
+                if (uploadBannerData.status === 200 && uploadBannerData.banner_url) {
+                    usr_banner.value = uploadBannerData.banner_url;
+                }
+            } catch (e) {
+                console.error(e, 'Dsh_Account')
+            }
+        }
+    };
+    reader.readAsDataURL(files[0]);
+  }
+};
 
 function BackPageBTNHandler() {
     emit('update:currentmenu', 'menu');

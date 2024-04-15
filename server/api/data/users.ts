@@ -59,6 +59,7 @@ export default defineEventHandler(async (event) => {
                     usr_name: true,
                     usr_global_name: true,
                     usr_avatar: true,
+                    usr_banner: true,
                     usr_tag: true,
                     webUser_card_color: {
                         where: {
