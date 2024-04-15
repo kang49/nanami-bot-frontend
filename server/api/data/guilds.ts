@@ -25,8 +25,6 @@ export default defineEventHandler(async (event) => {
     //Variable set
     const body = await readBody(event);
     const headers = event.node.req.headers;
-    const forwardedIps = headers['x-forwarded-for'];
-    const ip = Array.isArray(forwardedIps) ? forwardedIps[0] : forwardedIps ?? null;
 
     if (body.usr_id) {
         try {
@@ -34,7 +32,6 @@ export default defineEventHandler(async (event) => {
                 where: {
                     usr_id_ses: body.usr_id,
                     ses_agent: headers['user-agent'],
-                    ses_ip_address: ip,
                     ses_access_token: {
                         not: null
                     },

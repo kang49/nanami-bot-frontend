@@ -49,7 +49,9 @@ export default defineEventHandler(async (event) => {
                 },
                 select: {
                     ses_access_token: true,
-                    ses_access_token_exp: true
+                    ses_access_token_exp: true,
+                    ses_ip_address: true,
+                    ses_token_type: true
                 }
             });
             if (sessionRes && sessionRes.ses_access_token_exp) {
@@ -70,18 +72,70 @@ export default defineEventHandler(async (event) => {
                     }
                 }
             } else {
-                // Handle case where expiration date is missing or invalid
-                DelSessionInDB(body.usr_id, headers['user-agent'] ?? null, ip);
-                return {
-                    status: 200,
-                    token: 'exp'
+                // Handle case where expiration date is missing
+                console.error(`CheckExp failure because data not found from ${body.usr_name}#${body.usr_tag} Agent: ${headers['user-agent']}, IP: ${ip}`)
+                if (sessionRes?.ses_ip_address !== ip) { //if ip adress has change, save new session but still session
+                    try {
+                        const sessionRes = await prisma.webUser_Session.findFirst({
+                            where: {
+                                usr_id_ses: body.usr_id,
+                                ses_agent: headers['user-agent'],
+                                ses_access_token: {
+                                    not: null
+                                }
+                            },
+                            select: {
+                                ses_access_token: true,
+                                ses_access_token_exp: true,
+                                ses_ip_address: true,
+                                ses_token_type: true
+                            }
+                        });
+
+                        if (sessionRes) {
+
+                            await prisma.webUser_Session.create({
+                                data: {
+                                    usr_id_ses: body.usr_id,
+                                    ses_agent: headers['user-agent'],
+                                    ses_ip_address: ip,
+                                    ses_token_type: sessionRes?.ses_token_type,
+                                    ses_access_token: sessionRes?.ses_access_token,
+                                    ses_access_token_exp: sessionRes?.ses_access_token_exp,
+                                    ses_latest_login: now,
+                                    ses_latest_access: now
+                                }
+                            });
+                            console.log(`New IP Adress detected, add to a new session success for ${body.usr_name}#${body.usr_tag} IP: ${ip}`)
+                            return {
+                                status: 200,
+                                token: 'ok'
+                            }
+                        } else {
+                            return {
+                                status: 200,
+                                token: 'exp'
+                            }
+                        }
+                    } catch {
+                        return {
+                            status: 200,
+                            token: 'ok' //My bad
+                        }
+                    }
+                } else {
+                    return {
+                        status: 200,
+                        token: 'exp'
+                    }
                 }
             }
 
-        } catch (e) { //Handle database disconnect case
+        } catch (e) { //Handle database disconnect case)
+            console.error(`CheckExp failure because Database disconnect from ${body.usr_name}#${body.usr_tag} Agent: ${headers['user-agent']}, IP: ${ip}`)
             return {
                 status: 200,
-                token: 'exp'
+                token: 'ok' //My bad
             }
         }
     }
