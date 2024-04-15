@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
                 }
             });
         
-            console.log(`SignOut for ${body.usr_name}#${body.usr_tag} success, SignOut`);
+            console.log(`SignOut for ${body.usr_name}#${body.usr_tag} from IP: ${ip} success, SignOut`);
             return {
                 status: 200
             }
