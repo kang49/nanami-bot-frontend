@@ -76,6 +76,7 @@ I offer my deepest thanks 🙇 to these Open-Source contributions that are a par
 * [GithubAPI](https://docs.github.com/en/rest?apiVersion=2022-11-28)
 * [vue-datepicker](https://vue3datepicker.com)
 * [apexcharts](https://apexcharts.com)
+* [imgur image uploader API](https://imgur.com)
 * [tailwindcss](https://tailwindcss.com)
 * [prisma.js](https://www.prisma.io)
 * [axios](https://axios-http.com)
