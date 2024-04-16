@@ -107,6 +107,7 @@ model webUser {
   usr_global_name    String              @db.VarChar(255)
   usr_avatar         String              @db.VarChar(255)
   usr_banner         String?             @db.LongText
+  usr_birthday       DateTime?           @db.Date
   webUser_Session    webUser_Session[]
   webUser_card_color webUser_card_color?
 }
