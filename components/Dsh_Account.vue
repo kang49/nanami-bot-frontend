@@ -351,18 +351,7 @@ function getDeviceIconSize(userAgent: string) {
 }
 
 function ThemeChangeBTN() {
-    const currentColors = colorSettings.value;
-
-    if (currentColors.main !== webUser_cc.cl_main_color ||
-        currentColors.secondary !== webUser_cc.cl_sec_color ||
-        currentColors.ring !== webUser_cc.cl_profile_ring_color ||
-        currentColors.badges.r !== webUser_cc.cl_badges_color.r ||
-        currentColors.badges.g !== webUser_cc.cl_badges_color.g ||
-        currentColors.badges.b !== webUser_cc.cl_badges_color.b) {
-        isThemeChange.value = true;
-    } else {
-        isThemeChange.value = false;
-    }
+    isThemeChange.value = true;
 }
 
 function ResetTheme() {
