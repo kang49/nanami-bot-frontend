@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent">
+    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent pb-[100px]">
         <div class="w-full h-full pt-[70px]">
             <!-- Bar -->
             <div class="w-full h-max grid grid-cols-3 text-white px-[20px]">
@@ -145,6 +145,23 @@
                     </button>
                 </div>
             </div>
+
+            <div class="w-full h-max flex justify-center p-[20px]">
+                <div class="w-full h-[1px] bg-white/30"></div>
+            </div>
+
+            <div class="w-full h-max px-[20px]">
+                <h4 class="text-white text-[16px] font-bold">เซสชั่น</h4>
+
+                <div v-for="i in usr_session" class="w-full h-max flex justify-between items-center mt-[50px] space-x-[20px]">
+                    <i :class="[getDeviceIcon(i.user_agent), getDeviceIconSize(i.user_agent), 'text-white/50']"></i>
+                    <div>
+                        <h4 class="text-white text-[10px]">{{ i.user_agent }}</h4>
+                        <h4 class="text-white text-[10px] font-bold">IP: {{ i.ip }}</h4>
+                    </div>    
+                    <i @click="SessionDelete(i.user_agent, i.ip)" class="fas fa-times-hexagon text-red-500 text-[20px]"></i>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -187,6 +204,11 @@ const usr_birthday = ref({
     value: new Date(),
     db_value: null as Date | null
 });
+const usr_session = ref([{
+    device_type: '',
+    user_agent: '',
+    ip: ''
+}])
 
 onMounted(() => {
     setTimeout(() => {
@@ -213,12 +235,15 @@ async function GetUserData() {
                 colors = userData.data_db.webUser_card_color;
             }
 
+
             if (colors) {
                 usr_name.value = userData.data_db.usr_name;
                 usr_global_name.value = userData.data_db.usr_global_name;
                 usr_tag.value = userData.data_db.usr_tag;
                 usr_avatar.value = userData.data_db.usr_avatar;
                 usr_banner.value = userData.data_db.usr_banner;
+
+
                 if (userData.data_db.usr_birthday) usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
                 if (colors.cl_badges_color) {
                     colorSettings.value = {
@@ -243,12 +268,69 @@ async function GetUserData() {
             } else {
                 console.error("Color data is undefined");
             }
+
+
             usr_badges.value = userData.badges || [];
         } else {
             console.error('Failed to fetch user data:', userData);
         }
     } catch (error) {
         console.error('Error fetching user data:', error);
+    }
+}
+
+async function GetSessionData() {
+    try {
+        const response = await fetch('/api/data/session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usr_id: usr_id.value,
+                usr_name: usr_name.value,
+                usr_tag: usr_tag.value
+            })
+        });
+        const responseData = await response.json();
+
+        console.log(responseData.data);
+
+        // Clear existing data
+        usr_session.value = [];
+
+        // Add new data from responseData to usr_session array
+        responseData.data.forEach((sessionData: { ses_device_type: string; ses_agent: string; ses_ip_address: string; }) => {
+            usr_session.value.push({
+                device_type: sessionData.ses_device_type,
+                user_agent: sessionData.ses_agent,
+                ip: sessionData.ses_ip_address
+            });
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function getDeviceIcon(userAgent: string) {
+        // Analyze user_agent string to determine the device type
+        if (userAgent.includes('Mobile')) {
+            return 'far fa-mobile';
+        } else if (userAgent.includes('Tablet')) {
+            return 'fas fa-tablet-alt';
+        } else {
+            return 'far fa-laptop';
+        }
+}
+function getDeviceIconSize(userAgent: string) {
+    // Set the icon size based on the device type
+    if (userAgent.includes('Mobile')) {
+        return 'text-[20px]';
+    } else if (userAgent.includes('Tablet')) {
+        return 'text-[20px]';
+    } else {
+        return 'text-[20px]';
     }
 }
 
@@ -399,11 +481,48 @@ async function SaveBirthDay(isDelete: boolean) {
     }
 }
 
+async function SessionDelete(del_agent: string, del_ip: string) {
+    try {
+        // Find index of elements to delete
+        const indexesToDelete: number[] = [];
+        usr_session.value.forEach((session, index) => {
+            if (session.user_agent === del_agent && session.ip === del_ip) {
+                indexesToDelete.push(index);
+            }
+        });
+
+        // Remove elements from usr_session
+        indexesToDelete.reverse().forEach(index => {
+            usr_session.value.splice(index, 1);
+        });
+    } catch {
+        alert('Session delete failure')
+    }
+    try {
+        await fetch('/api/auth/signout', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usr_id: usr_id.value,
+                usr_name: usr_name.value,
+                usr_tag: usr_tag.value,
+                del_ses: true,
+                del_agent: del_agent,
+                del_ip: del_ip
+            })
+        });
+    } catch {
+    }
+}
+
 function BackPageBTNHandler() {
     emit('update:currentmenu', 'menu');
 }
 
 GetUserData();
+GetSessionData();
 </script>
 
 <style scoped>
