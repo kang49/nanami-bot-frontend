@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full bg-gradient-to-r from-[#0099FF]/10 to-transparent">
+    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent">
         <div class="w-full h-full pt-[70px]">
             <!-- Bar -->
             <div class="w-full h-max grid grid-cols-3 text-white px-[20px]">
