@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent">
+    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent pb-[100px]">
         <div class="w-full h-full pt-[70px]">
             <!-- Bar -->
             <div class="w-full h-max grid grid-cols-3 text-white px-[20px]">
@@ -103,7 +103,7 @@
                         <VueDatePicker @closed="selectedDate" class="touch-manipulation vdp_custom pb-[15px]" position="left" :enable-time-picker="false" dark v-model="usr_birthday.value"
                             time-picker-inline>
                             <template #trigger>
-                                <h4 v-if="usr_birthday.isSelected && !usr_birthday.db_value"
+                                <h4 v-if="usr_birthday.isSelected"
                                     class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
                                     {{
                                         usr_birthday.value.toLocaleString('en-US', {
@@ -145,6 +145,39 @@
                     </button>
                 </div>
             </div>
+
+            <div class="w-full h-max flex justify-center p-[20px]">
+                <div class="w-full h-[1px] bg-white/30"></div>
+            </div>
+
+            <!-- Session Management -->
+            <div class="w-full h-max px-[20px]">
+                <h4 class="text-white text-[16px] font-bold">เซสชั่น</h4>
+
+                <div v-for="i in usr_session" class="w-full h-max flex justify-between items-center mt-[50px] space-x-[20px]">
+                    <i :class="[getDeviceIcon(i.user_agent), getDeviceIconSize(i.user_agent), 'text-white/50']"></i>
+                    <div>
+                        <h4 class="text-white text-[10px]">{{ i.user_agent }}</h4>
+                        <h4 class="text-white text-[10px] font-bold">IP: {{ i.ip }}</h4>
+                    </div>    
+                    <i @click="SessionDelete(i.user_agent, i.ip)" class="fas fa-times-hexagon text-red-500 text-[20px]"></i>
+                </div>
+            </div>
+
+            <div class="w-full h-max flex justify-center p-[20px]">
+                <div class="w-full h-[1px] bg-white/30"></div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="w-full h-max px-[20px]">
+                <h4 class="text-red-500 text-[16px] font-bold">โซนอันตราย</h4>
+                <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
+                    <button @click="DeleteUser"
+                        class="w-max h-max py-[3px] px-[10px] bg-red-500 rounded-[5px] flex justify-center items-center">
+                        <h4 class="text-white text-[12px] font-bold">ลบบัญชี</h4>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -155,8 +188,10 @@ import Cookies from 'js-cookie';
 import 'primevue/resources/themes/aura-light-green/theme.css';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import { useRouter } from 'vue-router';
 
 const isOnMounted = ref(false);
+const router = useRouter();
 const usr_id = ref(Cookies.get('usr_id'));
 const usr_name = ref(Cookies.get('usr_name'));
 const usr_global_name = ref(Cookies.get('usr_global_name'));
@@ -187,6 +222,11 @@ const usr_birthday = ref({
     value: new Date(),
     db_value: null as Date | null
 });
+const usr_session = ref([{
+    device_type: '',
+    user_agent: '',
+    ip: ''
+}])
 
 onMounted(() => {
     setTimeout(() => {
@@ -213,13 +253,16 @@ async function GetUserData() {
                 colors = userData.data_db.webUser_card_color;
             }
 
+
             if (colors) {
                 usr_name.value = userData.data_db.usr_name;
                 usr_global_name.value = userData.data_db.usr_global_name;
                 usr_tag.value = userData.data_db.usr_tag;
                 usr_avatar.value = userData.data_db.usr_avatar;
                 usr_banner.value = userData.data_db.usr_banner;
-                if (usr_birthday.value.db_value) usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
+
+
+                if (userData.data_db.usr_birthday) usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
                 if (colors.cl_badges_color) {
                     colorSettings.value = {
                         main: colors.cl_main_color,
@@ -243,12 +286,67 @@ async function GetUserData() {
             } else {
                 console.error("Color data is undefined");
             }
+
+
             usr_badges.value = userData.badges || [];
         } else {
             console.error('Failed to fetch user data:', userData);
         }
     } catch (error) {
         console.error('Error fetching user data:', error);
+    }
+}
+
+async function GetSessionData() {
+    try {
+        const response = await fetch('/api/data/session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usr_id: usr_id.value,
+                usr_name: usr_name.value,
+                usr_tag: usr_tag.value
+            })
+        });
+        const responseData = await response.json();
+
+        // Clear existing data
+        usr_session.value = [];
+
+        // Add new data from responseData to usr_session array
+        responseData.data.forEach((sessionData: { ses_device_type: string; ses_agent: string; ses_ip_address: string; }) => {
+            usr_session.value.push({
+                device_type: sessionData.ses_device_type,
+                user_agent: sessionData.ses_agent,
+                ip: sessionData.ses_ip_address
+            });
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function getDeviceIcon(userAgent: string) {
+        // Analyze user_agent string to determine the device type
+        if (userAgent.includes('Mobile')) {
+            return 'far fa-mobile';
+        } else if (userAgent.includes('Tablet')) {
+            return 'fas fa-tablet-alt';
+        } else {
+            return 'far fa-laptop';
+        }
+}
+function getDeviceIconSize(userAgent: string) {
+    // Set the icon size based on the device type
+    if (userAgent.includes('Mobile')) {
+        return 'text-[20px]';
+    } else if (userAgent.includes('Tablet')) {
+        return 'text-[20px]';
+    } else {
+        return 'text-[20px]';
     }
 }
 
@@ -399,11 +497,76 @@ async function SaveBirthDay(isDelete: boolean) {
     }
 }
 
+async function SessionDelete(del_agent: string, del_ip: string) {
+    try {
+        // Find index of elements to delete
+        const indexesToDelete: number[] = [];
+        usr_session.value.forEach((session, index) => {
+            if (session.user_agent === del_agent && session.ip === del_ip) {
+                indexesToDelete.push(index);
+            }
+        });
+
+        // Remove elements from usr_session
+        indexesToDelete.reverse().forEach(index => {
+            usr_session.value.splice(index, 1);
+        });
+    } catch {
+        alert('Session delete failure')
+    }
+    try {
+        await fetch('/api/auth/signout', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usr_id: usr_id.value,
+                usr_name: usr_name.value,
+                usr_tag: usr_tag.value,
+                del_ses: true,
+                del_agent: del_agent,
+                del_ip: del_ip
+            })
+        });
+    } catch {
+    }
+}
+
+async function DeleteUser() {
+    if (window.confirm("คุณแน่ใจหรือไม่ที่ต้องการลบบัญชีนี้?")) {
+        try {
+            const response = await fetch('api/auth/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    usr_id: usr_id.value,
+                    usr_name: usr_name.value,
+                    usr_tag: usr_tag.value,
+                })
+            });
+            const responseData = await response.json();
+
+            if (responseData.status === 200) {
+                router.push('/')
+            }
+        } catch {
+            alert('Delete user failure, Server-Side down')
+        }
+    } else {
+        // Do nothing if user cancels
+    }
+}
+
 function BackPageBTNHandler() {
     emit('update:currentmenu', 'menu');
 }
 
+//OnMouted func
 GetUserData();
+GetSessionData();
 </script>
 
 <style scoped>

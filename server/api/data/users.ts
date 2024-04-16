@@ -53,7 +53,9 @@ export default defineEventHandler(async (event) => {
                         },
                         select: {
                             ses_token_type: true,
-                            ses_access_token: true
+                            ses_access_token: true,
+                            ses_agent: true,
+                            ses_ip_address: true
                         }
                     },
                     usr_name: true,

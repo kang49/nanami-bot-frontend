@@ -5,15 +5,20 @@ export default defineEventHandler(async (event) => {
     //Variable set
     const body = await readBody(event);
     const headers = event.node.req.headers;
+    let user_agent = headers['user-agent'];
     const forwardedIps = headers['x-forwarded-for'];
-    const ip = Array.isArray(forwardedIps) ? forwardedIps[0] : forwardedIps ?? null;
-
+    let ip = Array.isArray(forwardedIps) ? forwardedIps[0] : forwardedIps ?? null;
+    
     if (body.usr_id) {
+        if (body.del_ses) {
+            user_agent = body.del_agent;
+            ip = body.del_ip;
+        }
         try {
             await prisma.webUser_Session.deleteMany({
                 where: {
                     usr_id_ses: body.usr_id,
-                    ses_agent: headers['user-agent'],
+                    ses_agent: user_agent,
                     ses_ip_address: ip
                 }
             });

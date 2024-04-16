@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[70%] h-full bg-gradient-to-r from-[#0099FF]/10 to-transparent pl-[10px] overflow-y-scroll">
+    <div class="w-[70%] min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent pl-[10px] overflow-y-scroll">
         <div class="w-full h-full pt-[70px]">
             <div class="w-full h-max">
                 <button @click="MenuClickHandler('account')"
