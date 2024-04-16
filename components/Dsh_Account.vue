@@ -64,7 +64,7 @@
                 <!-- Buttons for Theme Change -->
                 <div v-if="isThemeChange" class="w-full h-max flex items-center space-x-[10px]">
                     <button
-                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]"
+                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[5px] bg-[#0099FF] mt-[20px]"
                         @click="UpdateProfileColor">
                         <h4 class="text-white text-[16px]">บันทึก</h4>
                     </button>
@@ -98,40 +98,45 @@
             <!-- Birthday Settings -->
             <div class="w-full h-max px-[20px]">
                 <h4 class="text-white text-[16px] font-bold">วันเกิด</h4>
-                <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
-                    <VueDatePicker @closed="selectedDate" class="touch-manipulation vdp_custom pb-[15px]" position="left" :enable-time-picker="false" dark v-model="usr_birthday.value"
-                        time-picker-inline>
-                        <template #trigger>
-                            <h4 v-if="usr_birthday.isSelected"
-                                class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
-                                {{
-                                    usr_birthday.value.toLocaleString('en-US', {
-                                        day: '2-digit', // แสดงวันที่เป็น 2 หลัก
-                                        month: '2-digit', // แสดงเดือนเป็น 2 หลัก
-                                        year: 'numeric', // แสดงปีเต็ม
-                                    })
-                                }}
-                            </h4>
-                            <h4 v-if="!usr_birthday.isSelected && usr_birthday.db_value"
-                                class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
-                                {{
-                                    usr_birthday.db_value.toLocaleString('en-US', {
-                                        day: '2-digit', // แสดงวันที่เป็น 2 หลัก
-                                        month: '2-digit', // แสดงเดือนเป็น 2 หลัก
-                                        year: 'numeric', // แสดงปีเต็ม
-                                    })
-                                }}
-                            </h4>
-                            <h4 v-if="!usr_birthday.isSelected && !usr_birthday.db_value"
-                                class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
-                                เลือกวันเกิด
-                            </h4>
-                        </template>
-                    </VueDatePicker>
+                <div class="w-full h-max flex justify-start items-start mt-[20px] space-x-[10px]">
+                    <div class="w-max">
+                        <VueDatePicker @closed="selectedDate" class="touch-manipulation vdp_custom pb-[15px]" position="left" :enable-time-picker="false" dark v-model="usr_birthday.value"
+                            time-picker-inline>
+                            <template #trigger>
+                                <h4 v-if="usr_birthday.isSelected && !usr_birthday.db_value"
+                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
+                                    {{
+                                        usr_birthday.value.toLocaleString('en-US', {
+                                            day: '2-digit', // แสดงวันที่เป็น 2 หลัก
+                                            month: '2-digit', // แสดงเดือนเป็น 2 หลัก
+                                            year: 'numeric', // แสดงปีเต็ม
+                                        })
+                                    }}
+                                </h4>
+                                <h4 v-if="!usr_birthday.isSelected && usr_birthday.db_value"
+                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
+                                    {{
+                                        usr_birthday.db_value.toLocaleString('en-US', {
+                                            day: '2-digit', // แสดงวันที่เป็น 2 หลัก
+                                            month: '2-digit', // แสดงเดือนเป็น 2 หลัก
+                                            year: 'numeric', // แสดงปีเต็ม
+                                        })
+                                    }}
+                                </h4>
+                                <h4 v-if="!usr_birthday.isSelected && !usr_birthday.db_value"
+                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
+                                    เลือกวันเกิด
+                                </h4>
+                            </template>
+                        </VueDatePicker>
+                    </div>
+                    <button v-if="!usr_birthday.isSelected && usr_birthday.db_value" class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px]" @click="SaveBirthDay(true)">
+                        <h4 class="text-white text-[16px]">ลบ</h4>
+                    </button>
                 </div>
                 <!-- Buttons for Birthday Change -->
                 <div v-if="usr_birthday.isSelected" class="w-full h-max flex items-center space-x-[10px]">
-                    <button @click="SaveBirthDay"
+                    <button @click="SaveBirthDay(false)"
                         class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]">
                         <h4 class="text-white text-[16px]">บันทึก</h4>
                     </button>
@@ -180,7 +185,7 @@ const bannerImageBase64 = ref();
 const usr_birthday = ref({
     isSelected: false,
     value: new Date(),
-    db_value: undefined as Date | undefined
+    db_value: null as Date | null
 });
 
 onMounted(() => {
@@ -214,7 +219,7 @@ async function GetUserData() {
                 usr_tag.value = userData.data_db.usr_tag;
                 usr_avatar.value = userData.data_db.usr_avatar;
                 usr_banner.value = userData.data_db.usr_banner;
-                usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
+                if (usr_birthday.value.db_value) usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
                 if (colors.cl_badges_color) {
                     colorSettings.value = {
                         main: colors.cl_main_color,
@@ -232,7 +237,6 @@ async function GetUserData() {
                         cl_profile_ring_color: colors.cl_profile_ring_color,
                         cl_badges_color: colors.cl_badges_color
                     };
-
                 } else {
                     console.error("Badges color data is missing or invalid");
                 }
@@ -363,8 +367,15 @@ function selectedDate() {
 function ResetBirthDay() {
     usr_birthday.value.isSelected = false;
 }
-async function SaveBirthDay() {
+async function SaveBirthDay(isDelete: boolean) {
     usr_birthday.value.isSelected = false;
+
+    let data: Date | null;
+    if (isDelete === true) {
+        data = null;
+    } else {
+        data = usr_birthday.value.value;
+    }
 
     try {
         const response = await fetch('api/userBirthday', {
@@ -374,13 +385,13 @@ async function SaveBirthDay() {
                 usr_id: usr_id.value,
                 usr_name: usr_name.value,
                 usr_tag: usr_tag.value,
-                usr_birthday: usr_birthday.value.value
+                usr_birthday: data
             })
         });
         const responseData = await response.json();
 
         if (responseData.status === 200) {
-            usr_birthday.value.db_value = usr_birthday.value.value;
+            usr_birthday.value.db_value = data;
         }
     } catch (e) {
         console.error(e)
