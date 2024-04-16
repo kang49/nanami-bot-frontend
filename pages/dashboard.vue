@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-black w-full h-[calc(100dvh)]">
+    <div class="bg-black w-full min-h-[calc(100dvh)] h-max">
         <Navbar @update:istoggle="handleToggleMenu" :theme="true" />
 
-        <div class="w-full h-[calc(100dvh)] bg-[#02071A] bg-cover bg-center overflow transition-all duration-1000"
+        <div class="w-full min-h-[calc(100dvh)] h-max bg-[#02071A] bg-cover bg-center overflow transition-all duration-1000"
             :class="{ 'opacity-50': istoggleMenu, 'opacity-100': !istoggleMenu }">
 
             <div class="relative w-full h-full">

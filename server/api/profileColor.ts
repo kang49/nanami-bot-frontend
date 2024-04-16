@@ -39,14 +39,13 @@ export default defineEventHandler(async (event) => {
                     bc_blue: body.badges_color.b
                 }
             })
-            console.log(`${body.usr_name}#${body.usr_tag}'s profile color updated`);
+            console.log(`${body.usr_name}#${body.usr_tag}'s profile color updated, ProfileColor API`);
             return {
                 status: 200,
                 message: 'Profile color updated'
             }
-        } catch (e) {
+        } catch {
             console.error('Database not found, ProfileColor API')
-            console.log(e)
             return {
                 status: 404,
                 error: 'Database not found'

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full bg-gradient-to-r from-[#0099FF]/10 to-transparent">
+    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent">
         <div class="w-full h-full pt-[70px]">
             <!-- Bar -->
             <div class="w-full h-max grid grid-cols-3 text-white px-[20px]">
@@ -16,7 +16,8 @@
             <div class="w-full h-[200px] px-[20px] mt-[30px]">
                 <div class="w-full h-full rounded-[20px] relative overflow-hidden"
                     :style="{ background: `linear-gradient(90deg, #${colorSettings.main} 0%, #${colorSettings.secondary} 100%)` }">
-                    <div :style="{ backgroundImage: `url('${usr_banner}')` }" class="w-full h-[50%] rounded-t-[20px] bg-cover bg-center"></div>
+                    <div :style="{ backgroundImage: `url('${usr_banner}')` }"
+                        class="w-full h-[50%] rounded-t-[20px] bg-cover bg-center"></div>
                     <div class="w-full h-[50%] absolute bottom-[30px] left-[20px] flex">
                         <NuxtImg class="w-[100px] rounded-full ring-[5px]"
                             :style="{ boxShadow: `0 0 0 5px #${colorSettings.ring}` }" :src="usr_avatar">
@@ -63,7 +64,7 @@
                 <!-- Buttons for Theme Change -->
                 <div v-if="isThemeChange" class="w-full h-max flex items-center space-x-[10px]">
                     <button
-                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]"
+                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[5px] bg-[#0099FF] mt-[20px]"
                         @click="UpdateProfileColor">
                         <h4 class="text-white text-[16px]">บันทึก</h4>
                     </button>
@@ -82,10 +83,66 @@
             <div class="w-full h-max px-[20px]">
                 <h4 class="text-white text-[16px] font-bold">แบนเนอร์</h4>
                 <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
-                    <button @click="triggerFileInput" class="w-max h-max py-[5px] px-[10px] bg-[#0099FF] rounded-[5px] flex justify-center items-center">
-                    <h4 class="text-white text-[16px] font-bold">เปลี่ยนแบนเนอร์</h4>
+                    <button @click="triggerFileInput"
+                        class="w-max h-max py-[5px] px-[10px] bg-[#0099FF] rounded-[5px] flex justify-center items-center">
+                        <h4 class="text-white text-[16px] font-bold">เปลี่ยนแบนเนอร์</h4>
                     </button>
                     <input type="file" ref="banner_imagge_input" hidden @change="handleFileChange" accept="image/*" />
+                </div>
+            </div>
+
+            <div class="w-full h-max flex justify-center p-[20px]">
+                <div class="w-full h-[1px] bg-white/30"></div>
+            </div>
+
+            <!-- Birthday Settings -->
+            <div class="w-full h-max px-[20px]">
+                <h4 class="text-white text-[16px] font-bold">วันเกิด</h4>
+                <div class="w-full h-max flex justify-start items-start mt-[20px] space-x-[10px]">
+                    <div class="w-max">
+                        <VueDatePicker @closed="selectedDate" class="touch-manipulation vdp_custom pb-[15px]" position="left" :enable-time-picker="false" dark v-model="usr_birthday.value"
+                            time-picker-inline>
+                            <template #trigger>
+                                <h4 v-if="usr_birthday.isSelected && !usr_birthday.db_value"
+                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
+                                    {{
+                                        usr_birthday.value.toLocaleString('en-US', {
+                                            day: '2-digit', // แสดงวันที่เป็น 2 หลัก
+                                            month: '2-digit', // แสดงเดือนเป็น 2 หลัก
+                                            year: 'numeric', // แสดงปีเต็ม
+                                        })
+                                    }}
+                                </h4>
+                                <h4 v-if="!usr_birthday.isSelected && usr_birthday.db_value"
+                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
+                                    {{
+                                        usr_birthday.db_value.toLocaleString('en-US', {
+                                            day: '2-digit', // แสดงวันที่เป็น 2 หลัก
+                                            month: '2-digit', // แสดงเดือนเป็น 2 หลัก
+                                            year: 'numeric', // แสดงปีเต็ม
+                                        })
+                                    }}
+                                </h4>
+                                <h4 v-if="!usr_birthday.isSelected && !usr_birthday.db_value"
+                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
+                                    เลือกวันเกิด
+                                </h4>
+                            </template>
+                        </VueDatePicker>
+                    </div>
+                    <button v-if="!usr_birthday.isSelected && usr_birthday.db_value" class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px]" @click="SaveBirthDay(true)">
+                        <h4 class="text-white text-[16px]">ลบ</h4>
+                    </button>
+                </div>
+                <!-- Buttons for Birthday Change -->
+                <div v-if="usr_birthday.isSelected" class="w-full h-max flex items-center space-x-[10px]">
+                    <button @click="SaveBirthDay(false)"
+                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]">
+                        <h4 class="text-white text-[16px]">บันทึก</h4>
+                    </button>
+                    <button @click="ResetBirthDay" class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] mt-[20px]">
+                        <h4 class="text-white text-[16px]">รีเซ็ต</h4>
+                    </button>
                 </div>
             </div>
         </div>
@@ -96,6 +153,8 @@
 import { ref, onMounted, defineEmits } from 'vue';
 import Cookies from 'js-cookie';
 import 'primevue/resources/themes/aura-light-green/theme.css';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const isOnMounted = ref(false);
 const usr_id = ref(Cookies.get('usr_id'));
@@ -123,6 +182,11 @@ const colorSettings = ref({
 let webUser_cc: any;  // Initialize webUser_cc as an empty object
 const banner_imagge_input = ref();
 const bannerImageBase64 = ref();
+const usr_birthday = ref({
+    isSelected: false,
+    value: new Date(),
+    db_value: null as Date | null
+});
 
 onMounted(() => {
     setTimeout(() => {
@@ -155,6 +219,7 @@ async function GetUserData() {
                 usr_tag.value = userData.data_db.usr_tag;
                 usr_avatar.value = userData.data_db.usr_avatar;
                 usr_banner.value = userData.data_db.usr_banner;
+                if (usr_birthday.value.db_value) usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
                 if (colors.cl_badges_color) {
                     colorSettings.value = {
                         main: colors.cl_main_color,
@@ -257,44 +322,82 @@ async function UpdateProfileColor() {
 }
 
 const triggerFileInput = () => {
-  banner_imagge_input.value.click();
+    banner_imagge_input.value.click();
 };
 
 const handleFileChange = () => {
-  const files = banner_imagge_input.value.files;
-  if (files.length > 0) {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-        if (e.target) {
-            usr_banner.value = '/img/butterfly_loading.gif';
-            bannerImageBase64.value = e.target.result;
-            try {
-                const uploadBanner = await fetch('api/profileBanner', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        usr_id: usr_id.value,
-                        usr_name: usr_name.value,
-                        usr_tag: usr_tag.value,
-                        banner_image: bannerImageBase64.value,
-                        return_url: true
-                    })
-                });
-                const uploadBannerData = await uploadBanner.json();
+    const files = banner_imagge_input.value.files;
+    if (files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            if (e.target) {
+                usr_banner.value = '/img/butterfly_loading.gif';
+                bannerImageBase64.value = e.target.result;
+                try {
+                    const uploadBanner = await fetch('api/profileBanner', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            usr_id: usr_id.value,
+                            usr_name: usr_name.value,
+                            usr_tag: usr_tag.value,
+                            banner_image: bannerImageBase64.value,
+                            return_url: true
+                        })
+                    });
+                    const uploadBannerData = await uploadBanner.json();
 
-                if (uploadBannerData.status === 200 && uploadBannerData.banner_url) {
-                    usr_banner.value = uploadBannerData.banner_url;
+                    if (uploadBannerData.status === 200 && uploadBannerData.banner_url) {
+                        usr_banner.value = uploadBannerData.banner_url;
+                    }
+                } catch (e) {
+                    console.error(e, 'Dsh_Account')
                 }
-            } catch (e) {
-                console.error(e, 'Dsh_Account')
             }
-        }
-    };
-    reader.readAsDataURL(files[0]);
-  }
+        };
+        reader.readAsDataURL(files[0]);
+    }
 };
+
+function selectedDate() {
+    usr_birthday.value.isSelected = true;
+}
+function ResetBirthDay() {
+    usr_birthday.value.isSelected = false;
+}
+async function SaveBirthDay(isDelete: boolean) {
+    usr_birthday.value.isSelected = false;
+
+    let data: Date | null;
+    if (isDelete === true) {
+        data = null;
+    } else {
+        data = usr_birthday.value.value;
+    }
+
+    try {
+        const response = await fetch('api/userBirthday', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                usr_id: usr_id.value,
+                usr_name: usr_name.value,
+                usr_tag: usr_tag.value,
+                usr_birthday: data
+            })
+        });
+        const responseData = await response.json();
+
+        if (responseData.status === 200) {
+            usr_birthday.value.db_value = data;
+        }
+    } catch (e) {
+        console.error(e)
+        usr_birthday.value.isSelected = false;
+    }
+}
 
 function BackPageBTNHandler() {
     emit('update:currentmenu', 'menu');
@@ -302,3 +405,68 @@ function BackPageBTNHandler() {
 
 GetUserData();
 </script>
+
+<style scoped>
+.vdp_custom {
+    /*General*/
+    --dp-font-family: "Lineseed", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu, cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    --dp-border-radius: 20px;
+    /*Configurable border-radius*/
+    --dp-cell-border-radius: 9999px;
+    /*Specific border radius for the calendar cell*/
+    --dp-common-transition: all 0.1s ease-in;
+    /*Generic transition applied on buttons and calendar cells*/
+
+    /*Sizing*/
+    --dp-button-height: 35px;
+    /*Size for buttons in overlays*/
+    --dp-month-year-row-height: 35px;
+    /*Height of the month-year select row*/
+    --dp-month-year-row-button-size: 35px;
+    /*Specific height for the next/previous buttons*/
+    --dp-button-icon-height: 20px;
+    /*Icon sizing in buttons*/
+    --dp-cell-size: 30px;
+    /*Width and height of calendar cell*/
+    --dp-cell-padding: 5px;
+    /*Padding in the cell*/
+    --dp-common-padding: 10px;
+    /*Common padding used*/
+    --dp-input-icon-padding: 35px;
+    /*Padding on the left side of the input if icon is present*/
+    --dp-input-padding: 6px 30px 6px 12px;
+    /*Padding in the input*/
+    --dp-menu-min-width: 260px;
+    /*Adjust the min width of the menu*/
+    --dp-action-buttons-padding: 2px 5px;
+    /*Adjust padding for the action buttons in action row*/
+    --dp-row-margin: 10px 0;
+    /*Adjust the spacing between rows in the calendar*/
+    --dp-calendar-header-cell-padding: 0.5rem;
+    /*Adjust padding in calendar header cells*/
+    --dp-two-calendars-spacing: 10px;
+    /*Space between multiple calendars*/
+    --dp-overlay-col-padding: 3px;
+    /*Padding in the overlay column*/
+    --dp-time-inc-dec-button-size: 32px;
+    /*Sizing for arrow buttons in the time picker*/
+    --dp-menu-padding: 6px 8px;
+    /*Menu padding*/
+
+    /*Font sizes*/
+    --dp-font-size: 1rem;
+    /*Default font-size*/
+    --dp-preview-font-size: 0.8rem;
+    /*Font size of the date preview in the action row*/
+    --dp-time-font-size: 0.8rem;
+    /*Font size in the time picker*/
+
+    /*Transitions*/
+    --dp-animation-duration: 0.1s;
+    /*Transition duration*/
+    --dp-menu-appear-transition-timing: cubic-bezier(.4, 0, 1, 1);
+    /*Timing on menu appear animation*/
+    --dp-transition-timing: ease-out;
+    /*Timing on slide animations*/
+}
+</style>
