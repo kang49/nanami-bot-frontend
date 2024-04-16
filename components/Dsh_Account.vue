@@ -219,7 +219,7 @@ async function GetUserData() {
                 usr_tag.value = userData.data_db.usr_tag;
                 usr_avatar.value = userData.data_db.usr_avatar;
                 usr_banner.value = userData.data_db.usr_banner;
-                if (usr_birthday.value.db_value) usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
+                if (userData.data_db.usr_birthday) usr_birthday.value.db_value = new Date(userData.data_db.usr_birthday) as Date;
                 if (colors.cl_badges_color) {
                     colorSettings.value = {
                         main: colors.cl_main_color,
