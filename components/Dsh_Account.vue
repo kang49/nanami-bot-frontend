@@ -150,6 +150,7 @@
                 <div class="w-full h-[1px] bg-white/30"></div>
             </div>
 
+            <!-- Session Management -->
             <div class="w-full h-max px-[20px]">
                 <h4 class="text-white text-[16px] font-bold">เซสชั่น</h4>
 
@@ -162,6 +163,21 @@
                     <i @click="SessionDelete(i.user_agent, i.ip)" class="fas fa-times-hexagon text-red-500 text-[20px]"></i>
                 </div>
             </div>
+
+            <div class="w-full h-max flex justify-center p-[20px]">
+                <div class="w-full h-[1px] bg-white/30"></div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="w-full h-max px-[20px]">
+                <h4 class="text-red-500 text-[16px] font-bold">โซนอันตราย</h4>
+                <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
+                    <button @click="DeleteUser"
+                        class="w-max h-max py-[3px] px-[10px] bg-red-500 rounded-[5px] flex justify-center items-center">
+                        <h4 class="text-white text-[12px] font-bold">ลบบัญชี</h4>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -172,8 +188,10 @@ import Cookies from 'js-cookie';
 import 'primevue/resources/themes/aura-light-green/theme.css';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import { useRouter } from 'vue-router';
 
 const isOnMounted = ref(false);
+const router = useRouter();
 const usr_id = ref(Cookies.get('usr_id'));
 const usr_name = ref(Cookies.get('usr_name'));
 const usr_global_name = ref(Cookies.get('usr_global_name'));
@@ -293,8 +311,6 @@ async function GetSessionData() {
             })
         });
         const responseData = await response.json();
-
-        console.log(responseData.data);
 
         // Clear existing data
         usr_session.value = [];
@@ -517,10 +533,38 @@ async function SessionDelete(del_agent: string, del_ip: string) {
     }
 }
 
+async function DeleteUser() {
+    if (window.confirm("คุณแน่ใจหรือไม่ที่ต้องการลบบัญชีนี้?")) {
+        try {
+            const response = await fetch('api/auth/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    usr_id: usr_id.value,
+                    usr_name: usr_name.value,
+                    usr_tag: usr_tag.value,
+                })
+            });
+            const responseData = await response.json();
+
+            if (responseData.status === 200) {
+                router.push('/')
+            }
+        } catch {
+            alert('Delete user failure, Server-Side down')
+        }
+    } else {
+        // Do nothing if user cancels
+    }
+}
+
 function BackPageBTNHandler() {
     emit('update:currentmenu', 'menu');
 }
 
+//OnMouted func
 GetUserData();
 GetSessionData();
 </script>
