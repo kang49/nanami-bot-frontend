@@ -103,7 +103,7 @@
                         <VueDatePicker @closed="selectedDate" class="touch-manipulation vdp_custom pb-[15px]" position="left" :enable-time-picker="false" dark v-model="usr_birthday.value"
                             time-picker-inline>
                             <template #trigger>
-                                <h4 v-if="usr_birthday.isSelected && !usr_birthday.db_value"
+                                <h4 v-if="usr_birthday.isSelected"
                                     class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
                                     {{
                                         usr_birthday.value.toLocaleString('en-US', {
