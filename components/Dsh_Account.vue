@@ -13,169 +13,173 @@
             </div>
 
             <!-- ProfileCard -->
-            <div class="w-full h-[200px] px-[20px] mt-[30px]">
-                <div class="w-full h-full rounded-[20px] relative overflow-hidden"
-                    :style="{ background: `linear-gradient(90deg, #${colorSettings.main} 0%, #${colorSettings.secondary} 100%)` }">
-                    <div :style="{ backgroundImage: `url('${usr_banner}')` }"
-                        class="w-full h-[50%] rounded-t-[20px] bg-cover bg-center"></div>
-                    <div class="w-full h-[50%] absolute bottom-[30px] left-[20px] flex">
-                        <NuxtImg class="w-[100px] rounded-full ring-[5px]"
-                            :style="{ boxShadow: `0 0 0 5px #${colorSettings.ring}` }" :src="usr_avatar">
-                        </NuxtImg>
-                        <div class="absolute bottom-[20px] left-[110px] z-0 leading-[1.3]">
-                            <h4 class="text-white text-[20px] font-bold">{{ usr_global_name }}</h4>
-                            <h6 class="text-white text-[16px] font-bold">{{ usr_name }}</h6>
+            <div class="2xl:flex 2xl:justify-center 2xl:w-full">
+                <div class="2xl:w-[50%] 2xl:pb-[100px]">
+                    <div class="w-full h-[200px] px-[20px] mt-[30px]">
+                        <div class="w-full h-full rounded-[20px] relative overflow-hidden"
+                            :style="{ background: `linear-gradient(90deg, #${colorSettings.main} 0%, #${colorSettings.secondary} 100%)` }">
+                            <div :style="{ backgroundImage: `url('${usr_banner}')` }"
+                                class="w-full h-[50%] rounded-t-[20px] bg-cover bg-center"></div>
+                            <div class="w-full h-[50%] absolute bottom-[30px] left-[20px] flex">
+                                <NuxtImg class="w-[100px] rounded-full ring-[5px] 2xl:w-[110px] 2xl:h-[110px]"
+                                    :style="{ boxShadow: `0 0 0 5px #${colorSettings.ring}` }" :src="usr_avatar">
+                                </NuxtImg>
+                                <div class="absolute bottom-[20px] left-[110px] z-0 leading-[1.3] 2xl:bottom-[10px] 2xl:left-[130px]">
+                                    <h4 class="text-white text-[20px] font-bold 2xl:text-[25px]">{{ usr_global_name }}</h4>
+                                    <h6 class="text-white text-[16px] font-bold 2xl:text-[20px]">{{ usr_name }}</h6>
+                                </div>
+                            </div>
+                            <div v-if="usr_badges.length > 0"
+                                class="w-max h-max px-[10px] py-[4px] rounded-[5px] flex justify-center items-center absolute bottom-[15px] right-[20px] space-x-[5px]"
+                                :style="{ background: `rgba(${colorSettings.badges.r}, ${colorSettings.badges.g}, ${colorSettings.badges.b}, 0.5)` }">
+                                <NuxtImg v-for="badge in usr_badges" :key="badge" class="h-[15px] 2xl:h-[20px]" :src="userBadgesDic[badge]">
+                                </NuxtImg>
+                            </div>
                         </div>
                     </div>
-                    <div v-if="usr_badges.length > 0"
-                        class="w-max h-max px-[10px] py-[4px] rounded-[5px] flex justify-center items-center absolute bottom-[15px] right-[20px] space-x-[5px]"
-                        :style="{ background: `rgba(${colorSettings.badges.r}, ${colorSettings.badges.g}, ${colorSettings.badges.b}, 0.5)` }">
-                        <NuxtImg v-for="badge in usr_badges" :key="badge" class="h-[15px]" :src="userBadgesDic[badge]">
-                        </NuxtImg>
+                    <div class="w-full h-max flex justify-center p-[20px]">
+                        <div class="w-full h-[1px] bg-white/30"></div>
                     </div>
-                </div>
-            </div>
-            <div class="w-full h-max flex justify-center p-[20px]">
-                <div class="w-full h-[1px] bg-white/30"></div>
-            </div>
 
-            <!-- Theme Settings -->
-            <div class="w-full h-max px-[20px]">
-                <h4 class="text-white text-[16px] font-bold">ธีมโปรไฟล์</h4>
-                <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
-                    <div class="space-y-[5px] w-[50px]">
-                        <ColorPicker format="hex" @hide="ThemeChangeBTN" v-model="colorSettings.main" />
-                        <h4 class="flex justify-center text-white text-[14px]">หลัก</h4>
+                    <!-- Theme Settings -->
+                    <div class="w-full h-max px-[20px]">
+                        <h4 class="text-white text-[16px] font-bold 2xl:text-[18px]">ธีมโปรไฟล์</h4>
+                        <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
+                            <div class="space-y-[5px] w-[50px]">
+                                <ColorPicker format="hex" @hide="ThemeChangeBTN" v-model="colorSettings.main" />
+                                <h4 class="flex justify-center text-white text-[14px] 2xl:text-[16px]">หลัก</h4>
+                            </div>
+                            <div class="space-y-[5px] w-[50px]">
+                                <ColorPicker format="hex" @hide="ThemeChangeBTN" v-model="colorSettings.secondary" />
+                                <h4 class="flex justify-center text-white text-[14px] 2xl:text-[16px]">รอง</h4>
+                            </div>
+                            <div class="space-y-[5px] w-[50px]">
+                                <ColorPicker format="hex" @hide="ThemeChangeBTN" v-model="colorSettings.ring" />
+                                <h4 class="flex justify-center text-white text-[14px] 2xl:text-[16px]">ขอบ</h4>
+                            </div>
+                            <div class="space-y-[5px] w-[50px]">
+                                <ColorPicker format="rgb" @hide="ThemeChangeBTN" v-model="colorSettings.badges" />
+                                <h4 class="flex justify-center text-white text-[14px] 2xl:text-[16px]">ป้าย</h4>
+                            </div>
+                        </div>
+
+                        <!-- Buttons for Theme Change -->
+                        <div v-if="isThemeChange" class="w-full h-max flex items-center space-x-[10px]">
+                            <button
+                                class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[5px] bg-[#0099FF] mt-[20px]"
+                                @click="UpdateProfileColor">
+                                <h4 class="text-white text-[16px] 2xl:text-[18px]">บันทึก</h4>
+                            </button>
+                            <button class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] mt-[20px]"
+                                @click="ResetTheme">
+                                <h4 class="text-white text-[16px] 2xl:text-[18px]">รีเซ็ต</h4>
+                            </button>
+                        </div>
                     </div>
-                    <div class="space-y-[5px]">
-                        <ColorPicker format="hex" @hide="ThemeChangeBTN" v-model="colorSettings.secondary" />
-                        <h4 class="w-[50px] flex justify-center text-white text-[14px]">รอง</h4>
+
+                    <div class="w-full h-max flex justify-center p-[20px]">
+                        <div class="w-full h-[1px] bg-white/30"></div>
                     </div>
-                    <div class="space-y-[5px]">
-                        <ColorPicker format="hex" @hide="ThemeChangeBTN" v-model="colorSettings.ring" />
-                        <h4 class="w-[50px] flex justify-center text-white text-[14px]">ขอบ</h4>
+
+                    <!-- Banner Settings -->
+                    <div class="w-full h-max px-[20px]">
+                        <h4 class="text-white text-[16px] font-bold 2xl:text-[18px]">แบนเนอร์</h4>
+                        <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
+                            <button @click="triggerFileInput"
+                                class="w-max h-max py-[5px] px-[10px] bg-[#0099FF] rounded-[5px] flex justify-center items-center">
+                                <h4 class="text-white text-[16px] font-bold 2xl:text-[18px]">เปลี่ยนแบนเนอร์</h4>
+                            </button>
+                            <input type="file" ref="banner_imagge_input" hidden @change="handleFileChange" accept="image/*" />
+                        </div>
                     </div>
-                    <div class="space-y-[5px]">
-                        <ColorPicker format="rgb" @hide="ThemeChangeBTN" v-model="colorSettings.badges" />
-                        <h4 class="w-[50px] flex justify-center text-white text-[14px]">ป้าย</h4>
+
+                    <div class="w-full h-max flex justify-center p-[20px]">
+                        <div class="w-full h-[1px] bg-white/30"></div>
                     </div>
-                </div>
 
-                <!-- Buttons for Theme Change -->
-                <div v-if="isThemeChange" class="w-full h-max flex items-center space-x-[10px]">
-                    <button
-                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[5px] bg-[#0099FF] mt-[20px]"
-                        @click="UpdateProfileColor">
-                        <h4 class="text-white text-[16px]">บันทึก</h4>
-                    </button>
-                    <button class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] mt-[20px]"
-                        @click="ResetTheme">
-                        <h4 class="text-white text-[16px]">รีเซ็ต</h4>
-                    </button>
-                </div>
-            </div>
-
-            <div class="w-full h-max flex justify-center p-[20px]">
-                <div class="w-full h-[1px] bg-white/30"></div>
-            </div>
-
-            <!-- Banner Settings -->
-            <div class="w-full h-max px-[20px]">
-                <h4 class="text-white text-[16px] font-bold">แบนเนอร์</h4>
-                <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
-                    <button @click="triggerFileInput"
-                        class="w-max h-max py-[5px] px-[10px] bg-[#0099FF] rounded-[5px] flex justify-center items-center">
-                        <h4 class="text-white text-[16px] font-bold">เปลี่ยนแบนเนอร์</h4>
-                    </button>
-                    <input type="file" ref="banner_imagge_input" hidden @change="handleFileChange" accept="image/*" />
-                </div>
-            </div>
-
-            <div class="w-full h-max flex justify-center p-[20px]">
-                <div class="w-full h-[1px] bg-white/30"></div>
-            </div>
-
-            <!-- Birthday Settings -->
-            <div class="w-full h-max px-[20px]">
-                <h4 class="text-white text-[16px] font-bold">วันเกิด</h4>
-                <div class="w-full h-max flex justify-start items-start mt-[20px] space-x-[10px]">
-                    <div class="w-max">
-                        <VueDatePicker @closed="selectedDate" class="touch-manipulation vdp_custom pb-[15px]" position="left" :enable-time-picker="false" dark v-model="usr_birthday.value"
-                            time-picker-inline>
-                            <template #trigger>
-                                <h4 v-if="usr_birthday.isSelected"
-                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
-                                    {{
-                                        usr_birthday.value.toLocaleString('en-US', {
-                                            day: '2-digit', // แสดงวันที่เป็น 2 หลัก
-                                            month: '2-digit', // แสดงเดือนเป็น 2 หลัก
-                                            year: 'numeric', // แสดงปีเต็ม
-                                        })
-                                    }}
-                                </h4>
-                                <h4 v-if="!usr_birthday.isSelected && usr_birthday.db_value"
-                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
-                                    {{
-                                        usr_birthday.db_value.toLocaleString('en-US', {
-                                            day: '2-digit', // แสดงวันที่เป็น 2 หลัก
-                                            month: '2-digit', // แสดงเดือนเป็น 2 หลัก
-                                            year: 'numeric', // แสดงปีเต็ม
-                                        })
-                                    }}
-                                </h4>
-                                <h4 v-if="!usr_birthday.isSelected && !usr_birthday.db_value"
-                                    class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center">
-                                    เลือกวันเกิด
-                                </h4>
-                            </template>
-                        </VueDatePicker>
+                    <!-- Birthday Settings -->
+                    <div class="w-full h-max px-[20px]">
+                        <h4 class="text-white text-[16px] font-bold 2xl:text-[18px]">วันเกิด</h4>
+                        <div class="w-full h-max flex justify-start items-start mt-[20px] space-x-[10px]">
+                            <div class="w-max">
+                                <VueDatePicker @closed="selectedDate" class="touch-manipulation vdp_custom pb-[15px]" position="left" :enable-time-picker="false" dark v-model="usr_birthday.value"
+                                    time-picker-inline>
+                                    <template #trigger>
+                                        <h4 v-if="usr_birthday.isSelected"
+                                            class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center 2xl:text-[18px]">
+                                            {{
+                                                usr_birthday.value.toLocaleString('en-US', {
+                                                    day: '2-digit', // แสดงวันที่เป็น 2 หลัก
+                                                    month: '2-digit', // แสดงเดือนเป็น 2 หลัก
+                                                    year: 'numeric', // แสดงปีเต็ม
+                                                })
+                                            }}
+                                        </h4>
+                                        <h4 v-if="!usr_birthday.isSelected && usr_birthday.db_value"
+                                            class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center 2xl:text-[18px]">
+                                            {{
+                                                usr_birthday.db_value.toLocaleString('en-US', {
+                                                    day: '2-digit', // แสดงวันที่เป็น 2 หลัก
+                                                    month: '2-digit', // แสดงเดือนเป็น 2 หลัก
+                                                    year: 'numeric', // แสดงปีเต็ม
+                                                })
+                                            }}
+                                        </h4>
+                                        <h4 v-if="!usr_birthday.isSelected && !usr_birthday.db_value"
+                                            class="w-max h-max py-[5px] px-[10px] ring-[1px] ring-[#0099FF] rounded-[5px] text-white text-[16px] font-bold flex justify-center items-center 2xl:text-[18px]">
+                                            เลือกวันเกิด
+                                        </h4>
+                                    </template>
+                                </VueDatePicker>
+                            </div>
+                            <button v-if="!usr_birthday.isSelected && usr_birthday.db_value" class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px]" @click="SaveBirthDay(true)">
+                                <h4 class="text-white text-[16px] 2xl:text-[18px]">ลบ</h4>
+                            </button>
+                        </div>
+                        <!-- Buttons for Birthday Change -->
+                        <div v-if="usr_birthday.isSelected" class="w-full h-max flex items-center space-x-[10px]">
+                            <button @click="SaveBirthDay(false)"
+                                class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]">
+                                <h4 class="text-white text-[16px] 2xl:text-[18px]">บันทึก</h4>
+                            </button>
+                            <button @click="ResetBirthDay" class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] mt-[20px]">
+                                <h4 class="text-white text-[16px] 2xl:text-[18px]">รีเซ็ต</h4>
+                            </button>
+                        </div>
                     </div>
-                    <button v-if="!usr_birthday.isSelected && usr_birthday.db_value" class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px]" @click="SaveBirthDay(true)">
-                        <h4 class="text-white text-[16px]">ลบ</h4>
-                    </button>
-                </div>
-                <!-- Buttons for Birthday Change -->
-                <div v-if="usr_birthday.isSelected" class="w-full h-max flex items-center space-x-[10px]">
-                    <button @click="SaveBirthDay(false)"
-                        class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] bg-[#0099FF] mt-[20px]">
-                        <h4 class="text-white text-[16px]">บันทึก</h4>
-                    </button>
-                    <button @click="ResetBirthDay" class="h-max w-max py-[5px] flex items-center px-[20px] rounded-[20px] mt-[20px]">
-                        <h4 class="text-white text-[16px]">รีเซ็ต</h4>
-                    </button>
-                </div>
-            </div>
 
-            <div class="w-full h-max flex justify-center p-[20px]">
-                <div class="w-full h-[1px] bg-white/30"></div>
-            </div>
+                    <div class="w-full h-max flex justify-center p-[20px]">
+                        <div class="w-full h-[1px] bg-white/30"></div>
+                    </div>
 
-            <!-- Session Management -->
-            <div class="w-full h-max px-[20px]">
-                <h4 class="text-white text-[16px] font-bold">เซสชั่น</h4>
+                    <!-- Session Management -->
+                    <div class="w-full h-max px-[20px]">
+                        <h4 class="text-white text-[16px] font-bold 2xl:text-[18px]">เซสชั่น</h4>
 
-                <div v-for="i in usr_session" class="w-full h-max flex justify-between items-center mt-[50px] space-x-[20px]">
-                    <i :class="[getDeviceIcon(i.user_agent), getDeviceIconSize(i.user_agent), 'text-white/50 w-[50px] ']"></i>
-                    <div class="w-full">
-                        <h4 class="text-white text-[10px] text-left">{{ i.user_agent }}</h4>
-                        <h4 class="text-white text-[10px] font-bold text-left">IP: {{ i.ip }}</h4>
-                    </div>    
-                    <i @click="SessionDelete(i.user_agent, i.ip)" class="fas fa-times-hexagon text-red-500 text-[20px]"></i>
-                </div>
-            </div>
+                        <div v-for="i in usr_session" class="w-full h-max flex justify-between items-center mt-[50px] space-x-[20px]">
+                            <i :class="[getDeviceIcon(i.user_agent), getDeviceIconSize(i.user_agent), 'text-white/50 w-[50px] 2xl:text-[25px] 2xl:w-[70px]']"></i>
+                            <div class="w-full">
+                                <h4 class="text-white text-[10px] text-left 2xl:text-[14px]">{{ i.user_agent }}</h4>
+                                <h4 class="text-white text-[10px] font-bold text-left 2xl:text-[14px]">IP: {{ i.ip }}</h4>
+                            </div>    
+                            <i @click="SessionDelete(i.user_agent, i.ip)" class="fas fa-times-hexagon text-red-500 text-[20px] 2xl:text-[25px]"></i>
+                        </div>
+                    </div>
 
-            <div class="w-full h-max flex justify-center p-[20px]">
-                <div class="w-full h-[1px] bg-white/30"></div>
-            </div>
+                    <div class="w-full h-max flex justify-center p-[20px]">
+                        <div class="w-full h-[1px] bg-white/30"></div>
+                    </div>
 
-            <!-- Danger Zone -->
-            <div class="w-full h-max px-[20px]">
-                <h4 class="text-red-500 text-[16px] font-bold">โซนอันตราย</h4>
-                <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
-                    <button @click="DeleteUser"
-                        class="w-max h-max py-[3px] px-[10px] bg-red-500 rounded-[5px] flex justify-center items-center">
-                        <h4 class="text-white text-[12px] font-bold">ลบบัญชี</h4>
-                    </button>
+                    <!-- Danger Zone -->
+                    <div class="w-full h-max px-[20px]">
+                        <h4 class="text-red-500 text-[16px] font-bold 2xl:text-[18px]">โซนอันตราย</h4>
+                        <div class="w-full h-max flex justify-start items-center mt-[20px] space-x-[10px]">
+                            <button @click="DeleteUser"
+                                class="w-max h-max py-[3px] px-[10px] bg-red-500 rounded-[5px] flex justify-center items-center">
+                                <h4 class="text-white text-[12px] font-bold 2xl:text-[14px]">ลบบัญชี</h4>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
