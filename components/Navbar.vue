@@ -1,7 +1,7 @@
 <template>
     <div class="w-screen fixed z-40" @click="hamberBTN('screen')" @mousedown.prevent="handleMouseDown"
         @mouseup="handleMouseUp" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
-        <div class="flex justify-between items-center h-[6.5vh] px-[15px] lg:px-[25px] xl:my-[20px]">
+        <div class="flex justify-between items-center h-[6.5vh] px-[15px] lg:px-[25px] lg:my-[20px]">
             <NuxtLink to="/">
                 <h4 class="text-[18px] font-bold transition-colors duration-200 lg:text-[25px] 2xl:text-[35px]"
                     :class="{ 'text-[#02071A]': !pagesTheme, 'text-white': pagesTheme }">Nanami Bot</h4>

@@ -5,16 +5,16 @@
         <div class="w-full min-h-[calc(100dvh)] h-max bg-[#02071A] bg-cover bg-center overflow transition-all duration-1000"
             :class="{ 'opacity-50': istoggleMenu, 'opacity-100': !istoggleMenu }">
 
-            <div class="relative w-full h-full">
+            <div class="w-full h-full">
                 <transition name="slide-fade">
-                <div v-show="!currentmenu || currentmenu === 'menu'" key="menu" class="w-full h-full">
-                    <Dsh_Menu @update:currentmenu="handleCurrentMenu" />
-                </div>
+                    <div v-show="!currentmenu || currentmenu === 'menu' || SPAResponsive.menu" key="menu" class="w-full h-full">
+                        <Dsh_Menu @update:currentmenu="handleCurrentMenu" />
+                    </div>
                 </transition>
                 <transition name="slide-fade">
-                <div v-if="currentmenu === 'account'" key="account" class="w-full h-full">
-                    <Dsh_Account @update:currentmenu="handleCurrentMenu" />
-                </div>
+                    <div v-show="currentmenu === 'account' && SPAResponsive.account" key="account" class="w-full h-full">
+                        <Dsh_Account @update:currentmenu="handleCurrentMenu" />
+                    </div>
                 </transition>
             </div>
         </div>
@@ -34,6 +34,12 @@ let isOnMounted = ref(false);
 const router = useRouter();
 let currentmenu = ref('');
 const user_id = ref(Cookies.get('usr_id'));
+
+//Single Page responsive variable\
+const SPAResponsive: Ref<{ menu: boolean; account: boolean; }> = ref({
+    menu: false,
+    account: false
+});
 
 if (!user_id.value) {
     Cookies.set('is_go_dsh', 'true', { expires: 1 });
@@ -55,7 +61,21 @@ onMounted(() => {
     }, 200);
 });
 
+//Responsive logic
+function SPARes(value: string) {
+    const isLG = window.innerWidth >= 1024;
+    for (const key in SPAResponsive.value) {
+        if (Object.prototype.hasOwnProperty.call(SPAResponsive.value, key)) {
+            (SPAResponsive.value as any)[key] = isLG;
+        }
+    }
+    if (!isLG && currentmenu.value === value) {
+        SPAResponsive.value[value as keyof typeof SPAResponsive.value] = true;
+    }
+}
+
 function handleCurrentMenu(value: string) {
     currentmenu.value = value;
+    SPARes(value);
 }
 </script>
