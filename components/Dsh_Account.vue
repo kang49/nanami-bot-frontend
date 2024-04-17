@@ -1,8 +1,8 @@
 <template>
-    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent pb-[100px]">
+    <div class="w-full min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent pb-[100px] lg:absolute lg:top-0 lg:right-0 lg:pt-[20px] lg:w-[60%] lg:bg-transparent lg:from-transparent lg:to-transparent lg:max-h-[calc(100dvh)] lg:overflow-y-scroll">
         <div class="w-full h-full pt-[70px]">
             <!-- Bar -->
-            <div class="w-full h-max grid grid-cols-3 text-white px-[20px]">
+            <div class="w-full h-max grid grid-cols-3 text-white px-[20px] lg:hidden">
                 <div>
                     <button @click="BackPageBTNHandler" class="fas fa-chevron-right text-[30px]"></button>
                 </div>
@@ -155,10 +155,10 @@
                 <h4 class="text-white text-[16px] font-bold">เซสชั่น</h4>
 
                 <div v-for="i in usr_session" class="w-full h-max flex justify-between items-center mt-[50px] space-x-[20px]">
-                    <i :class="[getDeviceIcon(i.user_agent), getDeviceIconSize(i.user_agent), 'text-white/50']"></i>
-                    <div>
-                        <h4 class="text-white text-[10px]">{{ i.user_agent }}</h4>
-                        <h4 class="text-white text-[10px] font-bold">IP: {{ i.ip }}</h4>
+                    <i :class="[getDeviceIcon(i.user_agent), getDeviceIconSize(i.user_agent), 'text-white/50 w-[50px] ']"></i>
+                    <div class="w-full">
+                        <h4 class="text-white text-[10px] text-left">{{ i.user_agent }}</h4>
+                        <h4 class="text-white text-[10px] font-bold text-left">IP: {{ i.ip }}</h4>
                     </div>    
                     <i @click="SessionDelete(i.user_agent, i.ip)" class="fas fa-times-hexagon text-red-500 text-[20px]"></i>
                 </div>
@@ -291,6 +291,7 @@ async function GetUserData() {
             usr_badges.value = userData.badges || [];
         } else {
             console.error('Failed to fetch user data:', userData);
+            window.location.reload();
         }
     } catch (error) {
         console.error('Error fetching user data:', error);

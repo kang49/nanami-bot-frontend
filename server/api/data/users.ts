@@ -46,7 +46,6 @@ export default defineEventHandler(async (event) => {
                         where: {
                             usr_id_ses: body.usr_id,
                             ses_agent: headers['user-agent'],
-                            ses_ip_address: ip,
                             ses_token_type: { not: null },
                             ses_access_token: { not: null },
                             ses_access_token_exp: { not: null }

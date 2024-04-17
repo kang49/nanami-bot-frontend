@@ -1,32 +1,34 @@
 <template>
-    <div class="w-[70%] min-h-[calc(100dvh)] h-max bg-gradient-to-r from-[#0099FF]/10 to-transparent pl-[10px] overflow-y-scroll">
+    <div class="w-[70%] h-[calc(100dvh)] bg-gradient-to-r from-[#0099FF]/10 to-transparent pl-[10px] lg:pt-[50px]">
         <div class="w-full h-full pt-[70px]">
-            <div class="w-full h-max">
+            <div class="w-full h-full lg:h-full">
                 <button @click="MenuClickHandler('account')"
-                    class="w-full h-max flex justify-start items-center p-[10px] rounded-[20px]"
+                    class="w-full h-max flex justify-start items-center p-[10px] rounded-[20px] lg:w-[40%]"
                     :class="{ 'bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]': currentmenu == 'account' }">
-                    <h3 class="text-white text-[20px] font-bold">บัญชี</h3>
+                    <h3 class="text-white text-[20px] font-bold lg:text-[25px]">บัญชี</h3>
                 </button>
 
-                <div class="w-[60%] h-[1px] bg-white/30 mt-[20px] mb-[20px]"></div>
+                <div class="w-[60%] h-[1px] bg-white/30 mt-[20px] mb-[20px] lg:w-[40%]"></div>
 
                 <h4 class="text-white text-[16px] font-bold mb-[20px]">เซิร์ฟเวอร์</h4>
-                <button v-if="userGuildsLists" v-for="i in userGuildsLists" @click="MenuClickHandler(i.name)"
-                    class="w-full h-max flex justify-start items-center p-[10px] rounded-[20px] space-x-[10px]"
-                    :class="{ 'bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]': currentmenu == i.name }">
-                    <NuxtImg class="w-[40px] rounded-full" :src="DeHashGuildIcon(i.id, i.icon)"></NuxtImg>
-                    <h3 class="text-white text-[16px] text-left font-bold">{{ i.name }}</h3>
-                </button>
-                <div v-else-if="!userGuildsLists && !isGuildsDataErrorMsg" v-for="i in 5"
-                    class="w-[80%] h-[50px] space-y-[10px] rounded-full overflow-hidden relative bg-[#0099FF]/30 animate-pulse mt-[10px]">
-                    <div
-                        class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]">
-                        <div class="w-full h-full transform-gpu scale-x-0 origin-left animate-shimmer">
+                <div class="h-[80%] overflow-y-scroll lg:w-[40%] lg:h-[70%]">
+                    <button v-if="userGuildsLists" v-for="i in userGuildsLists" @click="MenuClickHandler(i.name)"
+                        class="w-full h-max flex justify-start items-center p-[10px] rounded-[20px] space-x-[10px]"
+                        :class="{ 'bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]': currentmenu == i.name }">
+                        <NuxtImg class="w-[40px] rounded-full" :src="DeHashGuildIcon(i.id, i.icon)"></NuxtImg>
+                        <h3 class="text-white text-[16px] text-left font-bold">{{ i.name }}</h3>
+                    </button>
+                    <div v-else-if="!userGuildsLists && !isGuildsDataErrorMsg" v-for="i in 5"
+                        class="w-[80%] h-[50px] space-y-[10px] rounded-full overflow-hidden relative bg-[#0099FF]/30 animate-pulse mt-[10px]">
+                        <div
+                            class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]">
+                            <div class="w-full h-full transform-gpu scale-x-0 origin-left animate-shimmer">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div v-else-if="!userGuildsLists && isGuildsDataErrorMsg" class="w-full h-[30%] flex justify-center items-center">
-                    <h4 class="text-[16px] text-white/50 font-bold">{{ isGuildsDataErrorMsg }}</h4>
+                    <div v-else-if="!userGuildsLists && isGuildsDataErrorMsg" class="w-full h-[30%] flex justify-center items-center">
+                        <h4 class="text-[16px] text-white/50 font-bold">{{ isGuildsDataErrorMsg }}</h4>
+                    </div>
                 </div>
             </div>
         </div>
