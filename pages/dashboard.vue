@@ -12,7 +12,7 @@
                     </div>
                 </transition>
                 <transition name="slide-fade">
-                    <div v-show="currentmenu === 'account' || SPAResponsive.account" key="account" class="w-full h-full">
+                    <div v-show="currentmenu === 'account' && SPAResponsive.account" key="account" class="w-full h-full">
                         <Dsh_Account @update:currentmenu="handleCurrentMenu" />
                     </div>
                 </transition>
@@ -36,10 +36,10 @@ let currentmenu = ref('');
 const user_id = ref(Cookies.get('usr_id'));
 
 //Single Page responsive variable\
-const SPAResponsive = ref({
+const SPAResponsive: Ref<{ menu: boolean; account: boolean; }> = ref({
     menu: false,
     account: false
-})
+});
 
 if (!user_id.value) {
     Cookies.set('is_go_dsh', 'true', { expires: 1 });
@@ -62,19 +62,20 @@ onMounted(() => {
 });
 
 //Responsive logic
-function SPARes() {
-    //account
-    if (window.innerWidth >= 1024) { //LG
-        SPAResponsive.value.menu = true;
-        SPAResponsive.value.account = true;
-    } else{
-        SPAResponsive.value.menu = false;
-        SPAResponsive.value.account = false;
+function SPARes(value: string) {
+    const isLG = window.innerWidth >= 1024;
+    for (const key in SPAResponsive.value) {
+        if (Object.prototype.hasOwnProperty.call(SPAResponsive.value, key)) {
+            (SPAResponsive.value as any)[key] = isLG;
+        }
+    }
+    if (!isLG && currentmenu.value === value) {
+        SPAResponsive.value[value as keyof typeof SPAResponsive.value] = true;
     }
 }
-SPARes();
 
 function handleCurrentMenu(value: string) {
     currentmenu.value = value;
+    SPARes(value);
 }
 </script>
