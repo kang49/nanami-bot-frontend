@@ -70,12 +70,13 @@ Hey everyone 👋, welcome to the README of this project. My name is Keen, and I
 
 I offer my deepest thanks 🙇 to these Open-Source contributions that are a part of this project. 🤍
 
-* [NuxtJS](https://nuxt.com)
-* [VueJS](https://vuejs.org)
+* [Nuxt.js](https://nuxt.com)
+* [Vue.js](https://vuejs.org)
 * [Discord.js](https://discord.js.org)
 * [GithubAPI](https://docs.github.com/en/rest?apiVersion=2022-11-28)
 * [vue-datepicker](https://vue3datepicker.com)
 * [apexcharts](https://apexcharts.com)
+* [primevue](https://primevue.org)
 * [imgur image uploader API](https://imgur.com)
 * [tailwindcss](https://tailwindcss.com)
 * [prisma.js](https://www.prisma.io)
@@ -84,7 +85,7 @@ I offer my deepest thanks 🙇 to these Open-Source contributions that are a par
 * [pm2](https://pm2.keymetrics.io)
 * [promptpay-qr](https://github.com/dtinth/promptpay-qr)
 * [sharp](https://sharp.pixelplumbing.com)
-* [typescript](https://www.typescriptlang.org)
+* [js-cookie](https://github.com/js-cookie)
 
 ## Contributing 🧑🏻‍💻
 
