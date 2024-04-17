@@ -2,8 +2,8 @@
     <div class="w-[70%] h-[calc(100dvh)] bg-gradient-to-r from-[#0099FF]/10 to-transparent pl-[10px] lg:pt-[50px]">
         <div class="w-full h-full pt-[70px]">
             <div class="w-full h-full lg:h-full px-[10px] lg:px-[20px] 2xl:px-[40px]">
-                <button @click="MenuClickHandler('account')"
-                    class="w-full h-max flex justify-start items-center p-[10px] rounded-[20px] lg:w-[40%]"
+                <button @click="MenuClickHandler('account', '', '')"
+                    class="w-full h-max flex justify-start items-center p-[10px] rounded-[20px] select-none outline-none lg:w-[40%]"
                     :class="{ 'bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]': currentmenu == 'account' }">
                     <h3 class="text-white text-[20px] font-bold lg:text-[25px] 2xl:text-[30px]">บัญชี</h3>
                 </button>
@@ -11,23 +11,32 @@
                 <div class="w-[60%] h-[1px] bg-white/30 mt-[20px] mb-[20px] lg:w-[40%]"></div>
 
                 <h4 class="text-white text-[16px] font-bold mb-[20px] lg:text-[20px]">เซิร์ฟเวอร์</h4>
-                <div class="h-[80%] overflow-y-scroll lg:w-[40%] lg:h-[70%]">
-                    <button v-if="userGuildsLists" v-for="i in userGuildsLists" @click="MenuClickHandler(i.name)"
-                        class="w-full h-max flex justify-start items-center p-[10px] rounded-[20px] space-x-[10px] 2xl:space-x-[20px]"
-                        :class="{ 'bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]': currentmenu == i.name }">
-                        <NuxtImg class="w-[40px] rounded-full 2xl:w-[55px]" :src="DeHashGuildIcon(i.id, i.icon)"></NuxtImg>
-                        <h3 class="text-white text-[16px] text-left font-bold 2xl:text-[22px]">{{ i.name }}</h3>
+                <div class="w-[80%] h-[80%] overflow-y-scroll lg:w-[40%] lg:h-[70%]">
+
+                    <!-- Server Select Dropdown -->
+                    <button v-if="userGuildsLists" @click="DropdownHandler" class="w-[70%] h-max p-[10px] bg-white/20 rounded-[5px] flex items-center justify-between space-x-[10px] select-none outline-none">
+                        <NuxtImg v-if="DropdownVar.guildicon && DropdownVar.guildId" class="w-[30px] rounded-full 2xl:w-[55px]" :src="DeHashGuildIcon(DropdownVar.guildId, DropdownVar.guildicon)"></NuxtImg>
+                        <h3 class="text-white w-full text-[16px] text-left font-bold 2xl:text-[22px] truncate">{{DropdownVar.guildname ?? 'เลือกเซิร์ฟเวอร์'}}</h3>
+                        <i class="fas fa-chevron-down text-white transition-all duration-500" :class="{'rotate-180': DropdownVar.isopen}"></i>
                     </button>
-                    <div v-else-if="!userGuildsLists && !isGuildsDataErrorMsg" v-for="i in 5"
-                        class="w-[80%] h-[50px] space-y-[10px] rounded-full overflow-hidden relative bg-[#0099FF]/30 animate-pulse mt-[10px]">
-                        <div
-                            class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]">
-                            <div class="w-full h-full transform-gpu scale-x-0 origin-left animate-shimmer">
+                    <div class="w-[70%] bg-white/20 rounded-[5px] mt-[5px] transition-all duration-300" :class="{ 'opacity-0 translate-y-[20px]': !DropdownVar.isopen, 'opacity-100 translate-y-0': DropdownVar.isopen }">
+                        <!-- Take this v-for in dropdown and resize it be good -->
+                        <button v-if="userGuildsLists" v-for="i in userGuildsLists" @click="MenuClickHandler(i.name, i.icon, i.id)"
+                            class="w-full h-max select-none outline-none flex justify-start items-center p-[10px] space-x-[10px] hover:bg-black/20 2xl:space-x-[20px]">
+                            <NuxtImg class="w-[30px] rounded-full 2xl:w-[55px]" :src="DeHashGuildIcon(i.id, i.icon)"></NuxtImg>
+                            <h3 class="text-white text-[16px] text-left font-bold truncate 2xl:text-[22px]">{{ i.name }}</h3>
+                        </button>
+                        <div v-if="!userGuildsLists && !isGuildsDataErrorMsg" v-for="i in 5"
+                            class="w-[80%] h-[50px] space-y-[10px] rounded-full overflow-hidden relative bg-[#0099FF]/30 animate-pulse mt-[10px]">
+                            <div
+                                class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-r from-[#0099FF]/30 to-transparent to-[70%]">
+                                <div class="w-full h-full transform-gpu scale-x-0 origin-left animate-shimmer">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div v-else-if="!userGuildsLists && isGuildsDataErrorMsg" class="w-full h-[30%] flex justify-center items-center">
-                        <h4 class="text-[16px] text-white/50 font-bold">{{ isGuildsDataErrorMsg }}</h4>
+                        <div v-else-if="!userGuildsLists && isGuildsDataErrorMsg" class="w-full h-[30%] flex justify-center items-center">
+                            <h4 class="text-[16px] text-white/50 font-bold">{{ isGuildsDataErrorMsg }}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,6 +57,17 @@ const usr_tag = ref(Cookies.get('usr_tag'))
 const userGuildsLists = ref();
 let isGuildsDataErrorMsg = ref();
 const emit = defineEmits(['update:currentmenu']);
+const DropdownVar = ref<{
+  isopen: boolean;
+  guildId: string | null;
+  guildname: string | null;
+  guildicon: string | null;
+}>({
+  isopen: false,
+  guildId: null,
+  guildname: null,
+  guildicon: null
+});
 
 onMounted(() => {
     //Animation Scripts
@@ -57,9 +77,20 @@ onMounted(() => {
     }, 200);
 });
 
-function MenuClickHandler(menu: string) {
+function DropdownHandler() {
+    DropdownVar.value.isopen = !DropdownVar.value.isopen;
+}
+
+function MenuClickHandler(menu: string, icon: string, guildId: string) { // Refactoring
     currentmenu.value = menu;
+
+    if (icon && guildId) {
+        DropdownVar.value.guildname = menu;
+        DropdownVar.value.guildicon = icon;
+        DropdownVar.value.guildId = guildId;
+    }
     emit('update:currentmenu', menu);
+    DropdownVar.value.isopen = false;
 }
 
 function DeHashGuildIcon(guildId: string, iconHash: string): string {

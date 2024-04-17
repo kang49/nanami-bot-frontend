@@ -14,7 +14,7 @@
 
             <!-- ProfileCard -->
             <div class="2xl:flex 2xl:justify-center 2xl:w-full">
-                <div class="2xl:w-[50%] 2xl:pb-[100px]">
+                <div class="2xl:w-[50%] lg:pb-[100px]">
                     <div class="w-full h-[200px] px-[20px] mt-[30px]">
                         <div class="w-full h-full rounded-[20px] relative overflow-hidden"
                             :style="{ background: `linear-gradient(90deg, #${colorSettings.main} 0%, #${colorSettings.secondary} 100%)` }">
