@@ -11,11 +11,9 @@
                         <Dsh_Menu @update:currentmenu="handleCurrentMenu" />
                     </div>
                 </transition>
-                <transition name="slide-fade">
-                    <div v-show="currentmenu === 'account' && SPAResponsive.account" key="account" class="w-full h-full">
-                        <Dsh_Account @update:currentmenu="handleCurrentMenu" />
-                    </div>
-                </transition>
+                <div v-show="currentmenu === 'account' && SPAResponsive.account" key="account" class="w-full h-full">
+                    <Dsh_Account @update:currentmenu="handleCurrentMenu" />
+                </div>
             </div>
         </div>
     </div>
